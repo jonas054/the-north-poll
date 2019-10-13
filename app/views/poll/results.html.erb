@@ -2,13 +2,18 @@
 
 <h2>Results</h2>
 
-<% @results.sort.each do |content, votes| %>
-  <p><%= content %>: <%= votes.size %> votes</p>
-<% end %>
+<table>
+  <tr>
+    <th>Choice</th>
+    <th>Number of votes</th>
+  </tr>
+  <% @results.sort.each do |content, votes| %>
+    <tr>
+      <td><%= content %></td>
+      <td><%= votes.size %> vote<%= votes.size == 1 ? '' : 's' %></td>
+    </tr>
+  <% end %>
+</table>
 
 <h2>Average</h2>
-<%= @average %>
-
-<h2>Sum</h2>
-<%= @sum %>
-
+<%= sprintf "%.1f", @average %>
