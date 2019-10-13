@@ -1,0 +1,14 @@
+<h1><%= @poll.title %></h1>
+
+<h2>Results</h2>
+
+<% @results.sort.each do |content, votes| %>
+  <p><%= content %>: <%= votes.size %> votes</p>
+<% end %>
+
+<h2>Average</h2>
+<%= @average %>
+
+<h2>Sum</h2>
+<%= @sum %>
+
