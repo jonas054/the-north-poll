@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'vote/index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root 'vote#index'
+  get '/', to: 'vote#index'
 
   resources :poll, :vote
 end
