@@ -2,9 +2,9 @@
 
 <%= form_with(url: '/vote') do %>
   <ul>
-  <li><%= radio_button("vote", "value", "1") %>1</li>
-  <li><%= radio_button("vote", "value", "2") %>2</li>
-  <li><%= radio_button("vote", "value", "3") %>3</li>
+  <% (1..10).each do |score|  %>
+    <li><%= radio_button("vote", "value", score.to_s) %><%= score %></li>
+  <% end %>
   </ul>
   <%= hidden_field(:poll, :id) %>
   <%= submit_tag("Vote") %>
