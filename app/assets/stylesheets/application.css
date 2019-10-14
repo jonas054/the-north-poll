@@ -24,7 +24,8 @@ h2 {
 
 input[type='radio'] {
     transform: scale(3);
-    width: 40px
+    margin: 2mm 10mm 2mm 20mm;
+    width: 40px;
 }
 
 
