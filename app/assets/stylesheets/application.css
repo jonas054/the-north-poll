@@ -22,6 +22,12 @@ h2 {
     font-size: 18mm;
 }
 
+input[type='radio'] {
+    transform: scale(3);
+    width: 40px
+}
+
+
 * {
     font-size: 14mm;
 }
