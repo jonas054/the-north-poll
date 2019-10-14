@@ -16,4 +16,9 @@ class Poll < ApplicationRecord
       [self]
     end
   end
+
+  def remove_links_to
+    Poll.update(previous_poll_id, next_poll_id: null) if previous_poll_id
+    Poll.update(next_poll_id, previous_poll_id: null) if next_poll_id
+  end
 end

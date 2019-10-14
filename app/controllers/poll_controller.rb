@@ -14,10 +14,22 @@ class PollController < ApplicationController
   end
 
   def show
+    do_housekeeping
     @poll = Poll.find(params[:id])
   end
 
   def results
     @poll = Poll.find(params[:id])
+  end
+
+  # Remove oldest entries in the database, just so it doesn't grow too big on
+  # Heroku.
+  def do_housekeeping
+    if Poll.all.size > 200
+      oldest = Poll.order(:updated_at).limit(1).load.first
+      oldest.remove_links_to
+      oldest.destroy
+      Vote.all.each { |vote| vote.destroy unless vote.poll }
+    end
   end
 end
