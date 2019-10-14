@@ -5,5 +5,6 @@
   <%= radio_button("vote", "value", score.to_s) %><%= score %><br/>
   <% end %>
   <%= hidden_field(:poll, :id) %>
+  <br/>
   <%= submit_tag("Vote") %>
 <% end %>
