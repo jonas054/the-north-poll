@@ -10,13 +10,13 @@
   <% @poll.results.sort.each do |content, votes| %>
     <tr>
       <td><%= content %></td>
-      <td><%= votes.size %> vote<%= votes.size == 1 ? '' : 's' %></td>
+      <td><%= votes.size %> <%= plural_s('vote', votes.size) %></td>
     </tr>
   <% end %>
 </table>
 
-<h2>Average</h2>
-<%= sprintf "%.1f", @poll.average %>
+<h2>Total</h2>
+<%= sprintf "%d %s, average is %.1f", @poll.votes.size, plural_s('vote', @poll.votes.size), @poll.average %>
 
 <% if @poll.next_poll_id %>
   <hr/>
