@@ -1,0 +1,13 @@
+<h1>The North Poll</h1>
+
+<%= form_with(url: '/poll') do %>
+  <%= label_tag(:title, "Title:") %>
+  <%= text_field_tag(:title) %>
+  <%= hidden_field(:previous_poll, :id) %>
+  <%= submit_tag("Create another poll") %> that follows "<%= @previous_poll.title %>"
+<% end %>
+
+<% @previous_poll.chain.each do |poll| %>
+  <br/>
+  <%= link_to poll.title, "/poll/#{poll.id}" %>
+<% end %>

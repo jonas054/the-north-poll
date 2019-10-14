@@ -17,3 +17,8 @@
 
 <h2>Average</h2>
 <%= sprintf "%.1f", @poll.average %>
+
+<% if @poll.next_poll_id %>
+  <hr/>
+  <%= link_to "Vote in next poll >", "/poll/#{@poll.next_poll_id}" %>
+<% end %>
