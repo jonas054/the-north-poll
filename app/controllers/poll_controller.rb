@@ -10,8 +10,5 @@ class PollController < ApplicationController
 
   def results
     @poll = Poll.find(params[:id])
-    @sum = @poll.votes.map { |v| v.content.to_i }.reduce(:+)
-    @results = @poll.votes.group_by { |v| v.content.to_i }
-    @average = @sum.to_f / @poll.votes.size
   end
 end

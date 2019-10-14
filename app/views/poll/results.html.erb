@@ -7,7 +7,7 @@
     <th>Choice</th>
     <th>Number of votes</th>
   </tr>
-  <% @results.sort.each do |content, votes| %>
+  <% @poll.results.sort.each do |content, votes| %>
     <tr>
       <td><%= content %></td>
       <td><%= votes.size %> vote<%= votes.size == 1 ? '' : 's' %></td>
@@ -16,4 +16,4 @@
 </table>
 
 <h2>Average</h2>
-<%= sprintf "%.1f", @average %>
+<%= sprintf "%.1f", @poll.average %>
