@@ -15,11 +15,11 @@
  */
 
 h1 {
-    font-size: 24mm;
+    font-size: 20mm;
 }
 
 h2 {
-    font-size: 18mm;
+    font-size: 16mm;
 }
 
 input[type='radio'] {
@@ -30,5 +30,5 @@ input[type='radio'] {
 
 
 * {
-    font-size: 14mm;
+    font-size: 12mm;
 }
