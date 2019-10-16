@@ -2,9 +2,9 @@ require 'test_helper'
 
 class PollControllerTest < ActionDispatch::IntegrationTest
   test "should redirect create" do
-    post 'http://www.example.com/poll'
+    post 'http://www.example.com/poll', params: { title: 'Jonas' }
     assert_response :redirect
-    assert_redirected_to %r'/poll/\d+'
+    assert_redirected_to %r'/poll/create_linked/\d+'
   end
 
   test "should show a poll" do
