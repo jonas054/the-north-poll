@@ -25,6 +25,10 @@ class PollController < ApplicationController
     @poll = Poll.find(params[:id])
   end
 
+  def list
+    @all = Poll.find(params[:id]).chain
+  end
+
   # Remove oldest entries in the database, just so it doesn't grow too big on
   # Heroku.
   def do_housekeeping

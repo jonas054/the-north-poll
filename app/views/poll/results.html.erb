@@ -19,4 +19,8 @@
 <% if @poll.next_poll_id %>
   <hr/>
   <%= link_to "Vote in next poll >", "/poll/#{@poll.next_poll_id}" %>
+<% elsif @poll.previous_poll_id %>
+  <hr/>
+  That's the last poll in the series.<br/>
+  <%= link_to "View all results.", "/poll/list/#{@poll.id}" %>
 <% end %>
