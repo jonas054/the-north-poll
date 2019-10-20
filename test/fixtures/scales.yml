@@ -1,0 +1,7 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  list: "1,2,3,4,5,6,7,8,9,10"
+
+two:
+  list: "Yes,No"

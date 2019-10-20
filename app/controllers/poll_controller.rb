@@ -3,7 +3,15 @@ class PollController < ApplicationController
     previous_poll_id =
       params[:previous_poll] ? params[:previous_poll][:id] : nil
     params[:title].split(';').each do |title|
-      @poll = Poll.create! title: title, previous_poll_id: previous_poll_id
+      if previous_poll_id
+        scale = Poll.find(previous_poll_id).scale
+      else
+        scale_value = params[:scale][:list]
+        scale = Scale.find_by_list(scale_value) ||
+                Scale.create!(list: scale_value)
+      end
+      @poll = Poll.create! title: title, previous_poll_id: previous_poll_id,
+                           scale: scale
       if previous_poll_id
         Poll.update previous_poll_id, next_poll_id: @poll.id
       end

@@ -1,16 +1,26 @@
 <h1>All results</h1>
 
+<% if @all.first.results.keys.first.is_a?(Integer) %>
+  @integer_votes = true
+<% end %>
+
 <table>
   <tr>
     <th>Poll</th>
-    <th>Average</th>
+    <% if @integer_votes %>
+      <th>Average</th>
+    <% end %>
     <th>Votes</th>
   </tr>
   <% @all.each do |poll| %>
     <tr>
       <td><%= poll.title %></td>
-      <td align="right"><%= format "%.1f", poll.average %></td>
-      <td align="right"><%= poll.votes.map(&:content).map(&:to_i).sort.join(' ') %></td>
+      <% if @integer_votes %>
+        <td align="right"><%= format "%.1f", poll.average %></td>
+        <td align="right"><%= poll.votes.map(&:content).map(&:to_i).sort.join(' ') %></td>
+    <% else %>
+        <td><%= poll.votes.map(&:content).sort.join(' ') %></td>
+    <% end %>
     </tr>
   <% end %>
 </table>

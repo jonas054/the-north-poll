@@ -1,8 +1,18 @@
 class Poll < ApplicationRecord
   has_many :votes
+  belongs_to :scale
+
+  def choices
+    return (1..10).map(&:to_s) unless scale
+    scale.list.split(/\s*,\s*/)
+  end
 
   def results
-    votes.group_by { |v| v.content.to_i }
+    if votes.all? { |v| v.content.to_i.to_s == v.content }
+      votes.group_by { |v| v.content.to_i }
+    else
+      votes.group_by { |v| v.content }
+    end
   end
 
   def average

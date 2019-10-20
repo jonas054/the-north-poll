@@ -1,0 +1,2 @@
+class Scale < ApplicationRecord
+end

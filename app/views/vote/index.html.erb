@@ -2,7 +2,12 @@
 <p>Simple voting for teams</p>
 
 <%= form_with(url: 'poll') do %>
+  <%= radio_button("scale", "list", "1,2,3,4,5,6,7,8,9,10") %>1, 2, 3, 4, 5, 6, 7, 8, 9, 10<br/>
+  <%= radio_button("scale", "list", "Yes,No") %>Yes, No<br/>
+  <%= radio_button("scale", "list", "👍,👎") %>👍, 👎<br/>
+
   <%= label_tag(:title, "Title:") %>
   <%= text_field_tag(:title) %>
+  <br/>
   <%= submit_tag("Create new poll") %>
 <% end %>

@@ -14,8 +14,12 @@
 </table>
 
 <h2>Total</h2>
-<%= sprintf "%d %s, average is %.1f", @poll.votes.size, plural_s('vote', @poll.votes.size), @poll.average %>
 
+<%= sprintf "%d %s", @poll.votes.size, plural_s('vote', @poll.votes.size) %>
+<% if @poll.results.keys.first.is_a?(Integer) %>
+  <%= sprintf ", average is %.1f", @poll.average %>
+<% end %>
+  
 <% if @poll.next_poll_id %>
   <hr/>
   <%= link_to "Vote in next poll >", "/poll/#{@poll.next_poll_id}" %>

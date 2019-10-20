@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_14_150947) do
+ActiveRecord::Schema.define(version: 2019_10_16_180527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,13 @@ ActiveRecord::Schema.define(version: 2019_10_14_150947) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "next_poll_id"
     t.integer "previous_poll_id"
+    t.integer "scale_id"
+  end
+
+  create_table "scales", force: :cascade do |t|
+    t.string "list"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "votes", force: :cascade do |t|
