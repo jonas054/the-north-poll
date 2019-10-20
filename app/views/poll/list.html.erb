@@ -1,11 +1,11 @@
 <h1>All results</h1>
 
-<% @integer_votes = true if @all.first.results.keys.first.is_a?(Integer) %>
+<% @numerical_votes = true if @all.first.can_have_average? %>
 
 <table>
   <tr>
     <th>Poll</th>
-    <% if @integer_votes %>
+    <% if @numerical_votes %>
       <th>Average</th>
     <% end %>
     <th>Votes</th>
@@ -13,7 +13,7 @@
   <% @all.each do |poll| %>
     <tr>
       <td><%= poll.title %></td>
-      <% if @integer_votes %>
+      <% if @numerical_votes %>
         <td align="right"><%= format "%.1f", poll.average %></td>
         <td align="right"><%= poll.votes.map(&:content).map(&:to_i).sort.join(' ') %></td>
     <% else %>

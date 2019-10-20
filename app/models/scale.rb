@@ -6,4 +6,8 @@ class Scale < ApplicationRecord
      %w[Yes No],
      %w[👍 👎]]
   end
+
+  def can_have_average?
+    list.split(',').all? { |item| item.to_i.to_s == item }
+  end
 end

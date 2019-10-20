@@ -21,6 +21,10 @@ class Poll < ApplicationRecord
     votes.map { |v| v.content.to_f }.reduce(:+) / votes.size
   end
 
+  def can_have_average?
+    scale.can_have_average?
+  end
+
   def chain
     if previous_poll_id
       Poll.find(previous_poll_id).chain + [self]
