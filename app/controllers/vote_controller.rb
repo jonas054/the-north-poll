@@ -4,4 +4,7 @@ class VoteController < ApplicationController
     Vote.create! content: params[:vote][:value], poll_id: poll_id
     redirect_to "/poll/#{poll_id}/results"
   end
+
+  def full
+  end
 end

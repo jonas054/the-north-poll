@@ -2,11 +2,11 @@
 <p>Simple voting for teams</p>
 
 <%= form_with(url: 'poll') do %>
-  <% Scale.default_lists.each do |list| %>
+  <% Scale.all_lists.each do |list| %>
     <%= radio_button("scale", "list", list.join(',')) %><%= list.join(' ') %><br/>
   <% end %>
   <%= radio_button("scale", "list", "custom") %><%= text_field_tag(:custom_scale) %><br/>
-  <%= link_to "More choices", "/vote/full" %>
+  <%= link_to "Fewer choices", "/" %>
 
   <br/>
   <br/>
