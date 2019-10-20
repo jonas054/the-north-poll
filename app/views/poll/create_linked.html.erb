@@ -7,7 +7,10 @@
   <%= submit_tag("Create another poll") %> that follows "<%= @previous_poll.title %>"
 <% end %>
 
-<% @previous_poll.chain.each do |poll| %>
+<br/>
+<%= link_to @previous_poll.chain.first.title, "/poll/#{@previous_poll.chain.first.id}" %>
+
+<% @previous_poll.chain[1..-1].each do |poll| %>
   <br/>
-  <%= link_to poll.title, "/poll/#{poll.id}" %>
+  <%= poll.title %>
 <% end %>
