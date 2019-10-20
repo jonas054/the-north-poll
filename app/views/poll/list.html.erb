@@ -1,8 +1,6 @@
 <h1>All results</h1>
 
-<% if @all.first.results.keys.first.is_a?(Integer) %>
-  @integer_votes = true
-<% end %>
+<% @integer_votes = true if @all.first.results.keys.first.is_a?(Integer) %>
 
 <table>
   <tr>
