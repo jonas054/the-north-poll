@@ -32,6 +32,10 @@ class PollController < ApplicationController
     @poll = Poll.find(params[:id])
   end
 
+  def results_async
+    @poll = Poll.find(params[:id])
+  end
+
   def results
     @poll = Poll.find(params[:id])
   end
