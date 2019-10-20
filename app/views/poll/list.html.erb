@@ -1,0 +1,16 @@
+<h1>All results</h1>
+
+<table>
+  <tr>
+    <th>Poll</th>
+    <th>Average</th>
+    <th>Votes</th>
+  </tr>
+  <% @all.each do |poll| %>
+    <tr>
+      <td><%= poll.title %></td>
+      <td align="right"><%= format "%.1f", poll.average %></td>
+      <td align="right"><%= poll.votes.map(&:content).map(&:to_i).sort.join(' ') %></td>
+    </tr>
+  <% end %>
+</table>
