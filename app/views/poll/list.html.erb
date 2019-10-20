@@ -19,7 +19,7 @@
         <td align="right"><%= format "%.1f", poll.average %></td>
         <td align="right"><%= poll.votes.map(&:content).map(&:to_i).sort.join(' ') %></td>
     <% else %>
-        <td><%= poll.votes.map(&:content).sort.join(' ') %></td>
+        <td><%= poll.sum_up %></td>
     <% end %>
     </tr>
   <% end %>

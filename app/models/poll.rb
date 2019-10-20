@@ -2,6 +2,8 @@ class Poll < ApplicationRecord
   has_many :votes
   belongs_to :scale
 
+  include ApplicationHelper
+
   def choices
     return (1..10).map(&:to_s) unless scale
     scale.list.split(/\s*,\s*/)
@@ -25,6 +27,13 @@ class Poll < ApplicationRecord
     else
       [self]
     end
+  end
+
+  def sum_up
+    total = results.sort_by { |_, votes| -votes.size }.map do |key, votes|
+      "#{key}: #{votes.size} #{plural_s('vote', votes.size)}"
+    end
+    total.join(', ')
   end
 
   def remove_links_to
