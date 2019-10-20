@@ -6,9 +6,7 @@
     <%= radio_button("scale", "list", list.join(',')) %><%= list.join(' ') %><br/>
   <% end %>
   <%= radio_button("scale", "list", "custom") %><%= text_field_tag(:custom_scale) %><br/>
-  <%= link_to "More choices", "/vote/full" %>
 
-  <br/>
   <br/>
   <%= label_tag(:title, "Title:") %>
   <%= text_field_tag(:title) %>

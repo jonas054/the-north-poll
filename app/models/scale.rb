@@ -6,8 +6,4 @@ class Scale < ApplicationRecord
      %w[Yes No],
      %w[👍 👎]]
   end
-
-  def self.all_lists
-    (default_lists + all.map(&:list).map { |li| li.split(',') }).uniq
-  end
 end
