@@ -5,6 +5,7 @@
   <% Scale.default_lists.each do |list| %>
     <%= radio_button("scale", "list", list.join(',')) %><%= list.join(' ') %><br/>
   <% end %>
+  <%= radio_button("scale", "list", "custom") %><%= text_field_tag(:custom_scale) %><br/>
 
   <br/>
   <%= label_tag(:title, "Title:") %>

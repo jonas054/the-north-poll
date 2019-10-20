@@ -6,7 +6,11 @@ class PollController < ApplicationController
       if previous_poll_id
         scale = Poll.find(previous_poll_id).scale
       else
-        scale_value = params[:scale][:list]
+        scale_value = if params[:scale]
+                        params[:scale][:list]
+                      else
+                        params[:custom_scale].split.join(',')
+                      end
         scale = Scale.find_by_list(scale_value) ||
                 Scale.create!(list: scale_value)
       end
