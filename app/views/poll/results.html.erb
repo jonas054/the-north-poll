@@ -15,9 +15,10 @@
 
 <h2>Total</h2>
 
-<%= sprintf "%d %s", @poll.votes.size, plural_s('vote', @poll.votes.size) %>
 <% if @poll.results.keys.first.is_a?(Integer) %>
-  <%= sprintf ", average is %.1f", @poll.average %>
+  <%= sprintf "%d %s, average is %.1f", @poll.votes.size, plural_s('vote', @poll.votes.size), @poll.average %>
+<% else %>
+  <%= sprintf "%d %s", @poll.votes.size, plural_s('vote', @poll.votes.size) %>
 <% end %>
   
 <% if @poll.next_poll_id %>
