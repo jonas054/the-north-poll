@@ -19,7 +19,7 @@ class Poll < ApplicationRecord
   end
 
   def average
-    votes.map { |v| v.content.to_f }.reduce(:+) / votes.size
+    votes.map { |v| v.content.to_f }.reduce(0.0, :+) / votes.size
   end
 
   delegate :can_have_average?, to: :scale

@@ -7,6 +7,10 @@ class PollTest < ActiveSupport::TestCase
     assert_equal 7.5, poll.average
   end
 
+  test '#average should return not-a-number for no votes' do
+    assert Poll.create.average.nan?
+  end
+
   test '#results should return all votes' do
     poll = Poll.create(id: 19)
     poll.votes << Vote.create(content: '7') << Vote.create(content: '8')
