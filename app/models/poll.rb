@@ -14,7 +14,7 @@ class Poll < ApplicationRecord
     if votes.all? { |v| v.content.to_i.to_s == v.content }
       votes.group_by { |v| v.content.to_i }
     else
-      votes.group_by { |v| v.content }
+      votes.group_by(&:content)
     end
   end
 

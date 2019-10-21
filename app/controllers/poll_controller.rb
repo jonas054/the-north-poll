@@ -15,9 +15,7 @@ class PollController < ApplicationController
       end
       @poll = Poll.create! title: title, previous_poll_id: previous_poll_id,
                            scale: scale
-      if previous_poll_id
-        Poll.update previous_poll_id, next_poll_id: @poll.id
-      end
+      Poll.update previous_poll_id, next_poll_id: @poll.id if previous_poll_id
       previous_poll_id = @poll.id
     end
     redirect_to "/poll/create_linked/#{@poll.id}"
@@ -40,14 +38,16 @@ class PollController < ApplicationController
     @all = Poll.find(params[:id]).chain
   end
 
+  private
+
   # Remove oldest entries in the database, just so it doesn't grow too big on
   # Heroku.
   def do_housekeeping
-    if Poll.all.size > 200
-      oldest = Poll.order(:updated_at).limit(1).load.first
-      oldest.remove_links_to
-      oldest.destroy
-      Vote.all.each { |vote| vote.destroy unless vote.poll }
-    end
+    return if Poll.count < 200
+
+    oldest = Poll.order(:updated_at).limit(1).load.first
+    oldest.remove_links_to
+    oldest.destroy
+    Vote.all.each { |vote| vote.destroy unless vote.poll }
   end
 end

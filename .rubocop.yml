@@ -2,12 +2,29 @@ inherit_from: .rubocop_todo.yml
 
 AllCops:
   Exclude:
-    - node_modules/**/*
-    - bin/webpack*
     - bin/bundle
+    - bin/rails
+    - bin/rake
+    - bin/webpack*
+    - bin/setup
     - bin/yarn
-    - db/schema.rb
-    - config/environments/production.rb
+    - config/application.rb
+    - config/environments/*.rb
+    - config/initializers/*.rb
     - config/puma.rb
     - config/spring.rb
+    - db/schema.rb
+    - db/seeds.rb
+    - node_modules/**/*
 
+Style/ClassAndModuleChildren:
+  Exclude:
+    - test/channels/application_cable/connection_test.rb
+    - test/test_helper.rb
+
+Style/Encoding:
+  Exclude:
+    - app/models/scale.rb
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
