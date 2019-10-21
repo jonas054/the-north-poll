@@ -3,16 +3,7 @@ class PollController < ApplicationController
     previous_poll_id =
       params[:previous_poll] ? params[:previous_poll][:id] : nil
     params[:title].split(';').each do |title|
-      if previous_poll_id
-        scale = Poll.find(previous_poll_id).scale
-      else
-        scale_value = params[:scale][:list]
-        if scale_value == 'custom'
-          scale_value = params[:custom_scale].split.join(',')
-        end
-        scale = Scale.find_by_list(scale_value) ||
-                Scale.create!(list: scale_value)
-      end
+      scale = get_scale(previous_poll_id)
       @poll = Poll.create! title: title, previous_poll_id: previous_poll_id,
                            scale: scale
       Poll.update previous_poll_id, next_poll_id: @poll.id if previous_poll_id
@@ -39,6 +30,18 @@ class PollController < ApplicationController
   end
 
   private
+
+  def get_scale(previous_poll_id)
+    if previous_poll_id
+      Poll.find(previous_poll_id).scale
+    else
+      scale_value = params[:scale][:list]
+      if scale_value == 'custom'
+        scale_value = params[:custom_scale].split.join(',')
+      end
+      Scale.find_by_list(scale_value) || Scale.create!(list: scale_value)
+    end
+  end
 
   # Remove oldest entries in the database, just so it doesn't grow too big on
   # Heroku.
