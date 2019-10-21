@@ -1,1 +1,13 @@
 inherit_from: .rubocop_todo.yml
+
+AllCops:
+  Exclude:
+    - node_modules/**/*
+    - bin/webpack*
+    - bin/bundle
+    - bin/yarn
+    - db/schema.rb
+    - config/environments/production.rb
+    - config/puma.rb
+    - config/spring.rb
+
