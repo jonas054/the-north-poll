@@ -1,5 +1,5 @@
 class Poll < ApplicationRecord
-  has_many :votes
+  has_many :votes, dependent: :restrict_with_exception
   belongs_to :scale
 
   include ApplicationHelper
@@ -22,9 +22,7 @@ class Poll < ApplicationRecord
     votes.map { |v| v.content.to_f }.reduce(:+) / votes.size
   end
 
-  def can_have_average?
-    scale.can_have_average?
-  end
+  delegate :can_have_average?, to: :scale
 
   def chain
     if previous_poll_id

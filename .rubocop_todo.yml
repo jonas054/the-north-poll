@@ -32,3 +32,6 @@ Style/Documentation:
 # SupportedStyles: percent, brackets
 Style/SymbolArray:
   EnforcedStyle: brackets
+
+Rails/BulkChangeTable:
+  Enabled: false
