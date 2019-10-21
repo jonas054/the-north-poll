@@ -5,5 +5,4 @@ class VoteControllerTest < ActionDispatch::IntegrationTest
     get vote_index_url
     assert_response :success
   end
-
 end

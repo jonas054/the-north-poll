@@ -6,6 +6,7 @@ class Poll < ApplicationRecord
 
   def choices
     return (1..10).map(&:to_s) unless scale
+
     scale.list.split(/\s*,\s*/)
   end
 
