@@ -1,15 +1,16 @@
 class PollController < ApplicationController
-  def create
+  def create # rubocop:disable Metrics/MethodLength
     previous_poll_id =
       params[:previous_poll] ? params[:previous_poll][:id] : nil
-    params[:title].split(';').each do |title|
+    for title in params[:title].split(';') # rubocop:disable Style/For
       scale = get_scale(previous_poll_id)
       @poll = Poll.create! title: title, previous_poll_id: previous_poll_id,
                            scale: scale
-      Poll.update previous_poll_id, next_poll_id: @poll.id if previous_poll_id
-      previous_poll_id = @poll.id
+      poll_id = @poll.id
+      Poll.update previous_poll_id, next_poll_id: poll_id if previous_poll_id
+      previous_poll_id = poll_id
     end
-    redirect_to "/poll/create_linked/#{@poll.id}"
+    redirect_to "/poll/create_linked/#{poll_id}"
   end
 
   def create_linked
