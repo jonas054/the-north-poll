@@ -8,3 +8,11 @@
   <br/>
   <%= submit_tag("Vote") %>
 <% end %>
+
+<br/>
+Don't want to vote?
+<% if @poll.next_poll_id %>
+<%= link_to "Skip to next poll >", "/poll/#{@poll.next_poll_id}" %>
+<% else %>
+<%= link_to "Skip to results >", "/poll/list/#{@poll.id}" %>
+<% end %>

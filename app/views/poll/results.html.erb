@@ -23,7 +23,7 @@
   
 <% if @poll.next_poll_id %>
   <hr/>
-  <%= link_to "Vote in next poll >", "/poll/#{@poll.next_poll_id}" %>
+  <%= link_to "Next poll >", "/poll/#{@poll.next_poll_id}" %>
 <% elsif @poll.previous_poll_id %>
   <hr/>
   That's the last poll in the series.<br/>
