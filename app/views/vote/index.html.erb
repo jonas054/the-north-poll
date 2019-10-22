@@ -2,8 +2,10 @@
 <p>Simple voting for teams</p>
 
 <%= form_with(url: 'poll') do %>
-  <% Scale.default_lists.each do |list| %>
-    <%= radio_button("scale", "list", list.join(',')) %><%= list.join(' ') %><br/>
+  <% Scale.default_lists.each_with_index do |list, ix| %>
+    <%= radio_button("scale", "list", list.join(','), checked: ix == 0) %>
+    <%= list.join(' ') %>
+    <br/>
   <% end %>
   <%= radio_button("scale", "list", "custom") %><%= text_field_tag(:custom_scale) %><br/>
 
