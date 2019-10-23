@@ -27,5 +27,5 @@
 <% elsif @poll.previous_poll_id %>
   <hr/>
   That's the last poll in the series.<br/>
-  <%= link_to "View all results.", "/poll/list/#{@poll.id}" %>
+  <%= link_to "View all results.", "/poll/list_async/#{@poll.id}" %>
 <% end %>
