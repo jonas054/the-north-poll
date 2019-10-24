@@ -26,10 +26,6 @@ class PollController < ApplicationController
     @poll = Poll.find(params[:id])
   end
 
-  def list_async
-    @all = Poll.find(params[:id]).chain
-  end
-
   def list
     @all = Poll.find(params[:id]).chain
   end
