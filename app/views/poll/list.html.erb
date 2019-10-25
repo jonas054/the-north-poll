@@ -1,14 +1,15 @@
 <h1>All results</h1>
 
-<div id="asynch_results">Loading...</div>
-
 <%=
+  @container_id = rand(1_000_000_000)
   render partial: "polling", locals: {
     path: "/poll/total/#{@all.last.id}",
     interval: 3000,
-    container_id: "asynch_results"
+    container_id: @container_id
   }
 %>
+
+<div id="<%= @container_id %>">Loading...</div>
 
 <br/>
 <br/>
