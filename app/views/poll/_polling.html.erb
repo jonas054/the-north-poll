@@ -32,15 +32,6 @@
     request.send();
   };
 
-  var _renderAsyncFunction = function() {
-    _makeRequest();
-    setTimeout(_makeRequest, <%= interval %>);
-  }
-
-  if (document.readyState !== 'loading') {
-    _renderAsyncFunction();
-  } else {
-    document.addEventListener('DOMContentLoaded', _renderAsyncFunction);
-  }
+  setTimeout(_makeRequest, <%= interval %>);
 })();
 </script>
