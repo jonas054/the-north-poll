@@ -5,6 +5,7 @@
   <%= text_field_tag(:title) %>
   <%= hidden_field(:previous_poll, :id) %>
   <br/>
+  <br/>
   <%= submit_tag("Create another poll") %> that follows "<%= @previous_poll.title %>"
 <% end %>
 
