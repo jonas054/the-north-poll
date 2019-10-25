@@ -1,6 +1,5 @@
 # TODO
 
-- Either polling or web sockets to dynamically updates result pages.
 - Add standard deviation next to average.
 - Move links away from the absolute bottom of the page. People risk touching
 - the back button of the browser on a mobile device.
@@ -10,3 +9,7 @@
   generated when the poll is created and that's needed in the URL (or as a
   parameter) when voting.
 - Make it easier to create a copy of a poll with votes at zero.
+
+# DONE
+
+- Polling (asynchronous updates of results)
