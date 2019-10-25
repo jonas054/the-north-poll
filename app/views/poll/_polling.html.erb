@@ -1,6 +1,6 @@
 <script>
 (function() {
-  var _makeRequest = function(currentRetryCount) {
+  var _makeRequest = function() {
     var request = new XMLHttpRequest();
     var asyncRequest = true;
 
@@ -17,18 +17,20 @@
 
     request.onreadystatechange = function() {
       if (request.readyState === 4 && request.status >= 200 && request.status < 400) {
-        document.getElementById('<%= container_id %>').innerHTML = request.response;
+        var element = document.getElementById('<%= container_id %>');
+        if (element) {
+          element.innerHTML = request.response;
+          setTimeout(_makeRequest, <%= interval %>);
+        }
       }
     };
 
     request.send();
   };
 
-  var _interval;
   var _renderAsyncFunction = function() {
-    console.log("_renderAsyncFunction");
     _makeRequest();
-    _interval = setInterval(_makeRequest, <%= interval %>);
+    setTimeout(_makeRequest, <%= interval %>);
   }
 
   if (document.readyState !== 'loading') {
@@ -36,6 +38,5 @@
   } else {
     document.addEventListener('DOMContentLoaded', _renderAsyncFunction);
   }
-  document.addEventListener('click', function() { clearInterval(_interval); });
 })();
 </script>
