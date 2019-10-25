@@ -1,0 +1,41 @@
+<script>
+(function() {
+  var _makeRequest = function(currentRetryCount) {
+    var request = new XMLHttpRequest();
+    var asyncRequest = true;
+
+    request.open('GET', '<%= path %>', asyncRequest);
+
+    var headers = {};
+    var csrfTokenElement = document.querySelector('meta[name="csrf-token"]')
+    if (csrfTokenElement)
+      headers['X-CSRF-Token'] = csrfTokenElement.content
+
+    Object.keys(headers).map(function(key) {
+      request.setRequestHeader(key, headers[key]);
+    });
+
+    request.onreadystatechange = function() {
+      if (request.readyState === 4 && request.status >= 200 && request.status < 400) {
+        document.getElementById('<%= container_id %>').innerHTML = request.response;
+      }
+    };
+
+    request.send();
+  };
+
+  var _interval;
+  var _renderAsyncFunction = function() {
+    console.log("_renderAsyncFunction");
+    _makeRequest();
+    _interval = setInterval(_makeRequest, <%= interval %>);
+  }
+
+  if (document.readyState !== 'loading') {
+    _renderAsyncFunction();
+  } else {
+    document.addEventListener('DOMContentLoaded', _renderAsyncFunction);
+  }
+  document.addEventListener('click', function() { clearInterval(_interval); });
+})();
+</script>

@@ -1,31 +1,20 @@
 <h1><%= @poll.title %></h1>
 
-<table>
-  <tr>
-    <th>Choice</th>
-    <th>Number of votes</th>
-  </tr>
-  <% @poll.results.sort.each do |content, votes| %>
-    <tr>
-      <td><%= content %></td>
-      <td><%= votes.size %> <%= plural_s('vote', votes.size) %></td>
-    </tr>
-  <% end %>
-</table>
+<%=
+  render partial: "polling", locals: {
+    path: "/poll/#{@poll.id}/single_results",
+    interval: 3000,
+    container_id: 237465237
+  }
+%>
 
-<h2>Total</h2>
+<div id="237465237">Loading results...</div>
 
-<% if @poll.results.keys.first.is_a?(Integer) %>
-  <%= sprintf "%d %s, average is %.1f", @poll.votes.size, plural_s('vote', @poll.votes.size), @poll.average %>
-<% else %>
-  <%= sprintf "%d %s", @poll.votes.size, plural_s('vote', @poll.votes.size) %>
-<% end %>
-  
 <% if @poll.next_poll_id %>
   <hr/>
   <%= link_to "Next poll >", "/poll/#{@poll.next_poll_id}" %>
 <% elsif @poll.previous_poll_id %>
   <hr/>
   That's the last poll in the series.<br/>
-  <%= link_to "View all results.", "/poll/list_async/#{@poll.id}" %>
+  <%= link_to "View all results.", "/poll/list/#{@poll.id}" %>
 <% end %>

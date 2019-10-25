@@ -26,12 +26,18 @@ class PollController < ApplicationController
     @poll = Poll.find(params[:id])
   end
 
-  def list_async
-    @all = Poll.find(params[:id]).chain
+  def single_results
+    @poll = Poll.find(params[:id])
+    render partial: 'single_results'
   end
 
   def list
     @all = Poll.find(params[:id]).chain
+  end
+
+  def total
+    @all = Poll.find(params[:id]).chain
+    render partial: 'total'
   end
 
   private
