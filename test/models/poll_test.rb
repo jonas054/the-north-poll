@@ -1,10 +1,9 @@
+# coding: utf-8
 require 'test_helper'
 
 class PollTest < ActiveSupport::TestCase
   test '#average should return the average of vote contents' do
-    poll = Poll.create
-    poll.votes << Vote.create(content: '7') << Vote.create(content: '8')
-    assert_equal 7.5, poll.average
+    assert_equal 2.5, Poll.find(22).average
   end
 
   test '#average should return not-a-number for no votes' do
@@ -12,13 +11,12 @@ class PollTest < ActiveSupport::TestCase
   end
 
   test '#results should return all votes' do
-    poll = Poll.create(id: 19, scale: Scale.create(list: '1,2,3'))
-    poll.votes << Vote.create(content: '7') << Vote.create(content: '8')
-    assert_equal [7, 8], poll.results.keys
-    (7..8).each do |choice|
+    poll = Poll.find(22)
+    assert_equal [2, 3], poll.results.keys
+    poll.results.keys.each do |choice|
       result = poll.results[choice]
       assert_equal 1, result.size
-      assert_equal 19, result.first.poll_id
+      assert_equal 22, result.first.poll_id
       assert_equal choice.to_s, result.first.content
     end
   end

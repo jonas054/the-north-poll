@@ -2,8 +2,8 @@
 
 one:
   poll_id: 22
-  content: "2"
+  content: 2
 
 two:
   poll_id: 22
-  content: "3"
+  content: 3
