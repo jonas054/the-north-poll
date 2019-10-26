@@ -5,13 +5,11 @@ class Poll < ApplicationRecord
   include ActionView::Helpers::TextHelper # pluralize()
 
   def choices
-    return (1..10).map(&:to_s) unless scale
-
     scale.list.split(/\s*,\s*/)
   end
 
   def results
-    if votes.all? { |v| v.content.to_i.to_s == v.content }
+    if can_have_average?
       votes.group_by { |v| v.content.to_i }
     else
       votes.group_by(&:content)

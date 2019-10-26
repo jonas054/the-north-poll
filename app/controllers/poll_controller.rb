@@ -1,46 +1,52 @@
 class PollController < ApplicationController
-  def create # rubocop:disable Metrics/MethodLength
-    previous_poll_id =
-      params[:previous_poll] ? params[:previous_poll][:id] : nil
-    for title in params[:title].split(';') # rubocop:disable Style/For
-      scale = get_scale(previous_poll_id)
-      @poll = Poll.create! title: title, previous_poll_id: previous_poll_id,
-                           scale: scale
-      poll_id = @poll.id
-      Poll.update previous_poll_id, next_poll_id: poll_id if previous_poll_id
-      previous_poll_id = poll_id
+  def create
+    previous_poll_id = params.dig(:previous_poll, :id)
+    params[:title].split(';').each do |title|
+      @poll = create_with_link(title, previous_poll_id)
+      previous_poll_id = @poll.id
     end
-    redirect_to "/poll/create_linked/#{poll_id}"
+    redirect_to "/poll/create_linked/#{@poll.id}"
   end
 
   def create_linked
-    @previous_poll = Poll.find(params[:id])
+    @previous_poll = find_poll
   end
 
   def show
     do_housekeeping
-    @poll = Poll.find(params[:id])
+    @poll = find_poll
   end
 
   def results
-    @poll = Poll.find(params[:id])
+    @poll = find_poll
   end
 
   def single_results
-    @poll = Poll.find(params[:id])
+    @poll = find_poll
     render partial: 'single_results'
   end
 
   def list
-    @all = Poll.find(params[:id]).chain
+    @all = find_poll.chain
   end
 
   def total
-    @all = Poll.find(params[:id]).chain
+    @all = find_poll.chain
     render partial: 'total'
   end
 
   private
+
+  def find_poll
+    Poll.find(params[:id])
+  end
+
+  def create_with_link(title, previous_poll_id)
+    poll = Poll.create! title: title, previous_poll_id: previous_poll_id,
+                        scale: get_scale(previous_poll_id)
+    Poll.update previous_poll_id, next_poll_id: poll.id if previous_poll_id
+    poll
+  end
 
   def get_scale(previous_poll_id)
     if previous_poll_id
@@ -50,7 +56,7 @@ class PollController < ApplicationController
       if scale_value == 'custom'
         scale_value = params[:custom_scale].split.join(',')
       end
-      Scale.find_by(list: scale_value) || Scale.create!(list: scale_value)
+      Scale.find_or_create_by(list: scale_value)
     end
   end
 
