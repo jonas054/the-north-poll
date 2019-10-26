@@ -14,23 +14,21 @@
  *= require_self
  */
 
-@media only screen and (max-width: 1090px) {
-    h1 {
-        font-size: 20mm;
-    }
+h1 {
+    font-size: 20mm;
+}
 
-    h2 {
-        font-size: 16mm;
-    }
+h2 {
+    font-size: 16mm;
+}
 
-    input[type='radio'] {
-        transform: scale(4);
-        margin: 2mm 4mm 6mm 20mm;
-        width: 40px;
-    }
+input[type='radio'] {
+    transform: scale(4);
+    margin: 2mm 4mm 6mm 20mm;
+    width: 40px;
+}
 
 
-    * {
-        font-size: 14mm;
-    }
+* {
+    font-size: 14mm;
 }
