@@ -12,7 +12,7 @@ class PollTest < ActiveSupport::TestCase
   end
 
   test '#results should return all votes' do
-    poll = Poll.create(id: 19)
+    poll = Poll.create(id: 19, scale: Scale.create(list: '1,2,3'))
     poll.votes << Vote.create(content: '7') << Vote.create(content: '8')
     assert_equal [7, 8], poll.results.keys
     (7..8).each do |choice|

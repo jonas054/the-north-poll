@@ -3,7 +3,9 @@
 one:
   id: 22
   title: First poll
+  scale_id: 1
 
 two:
   id: 33
   title: Second poll
+  scale_id: 2
