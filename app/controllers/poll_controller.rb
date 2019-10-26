@@ -27,7 +27,7 @@ class PollController < ApplicationController
   end
 
   def list
-    @all = find_poll.chain
+    @poll = find_poll
   end
 
   def total
