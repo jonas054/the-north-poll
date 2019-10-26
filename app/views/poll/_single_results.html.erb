@@ -1,6 +1,6 @@
 <table>
   <tr>
-    <th>Poll</th>
+    <th>Choice</th>
     <th>Number of votes</th>
   </tr>
   <% @poll.results.sort.each do |content, votes| %>
@@ -13,8 +13,11 @@
 
 <h2>Total</h2>
 
-<% if @poll.results.keys.first.is_a?(Integer) %>
-  <%= sprintf "%s, average is %.1f", pluralize(@poll.votes.size, 'vote'), @poll.average %>
-<% else %>
-  <%= pluralize(@poll.votes.size, 'vote') %>
-<% end %>
+<%=
+  pluralize(@poll.votes.size, 'vote') + if @poll.can_have_average?
+                                          format(", average is %.1f",
+                                                 @poll.average)
+                                          else
+                                            ""
+                                          end
+%>
