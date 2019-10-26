@@ -10,15 +10,17 @@
 
     var headers = {};
     var csrfTokenElement = document.querySelector('meta[name="csrf-token"]')
-    if (csrfTokenElement)
+    if (csrfTokenElement) {
       headers['X-CSRF-Token'] = csrfTokenElement.content
+    }
 
     Object.keys(headers).map(function(key) {
       request.setRequestHeader(key, headers[key]);
     });
 
     request.onreadystatechange = function() {
-      if (request.readyState === 4 && request.status >= 200 && request.status < 400) {
+      if (request.readyState === 4 &&
+          request.status >= 200 && request.status < 400) {
         var element = document.getElementById('<%= container_id %>');
         if (element) {
           element.innerHTML = request.response;
