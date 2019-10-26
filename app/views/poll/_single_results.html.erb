@@ -6,7 +6,7 @@
   <% @poll.results.sort.each do |content, votes| %>
     <tr>
       <td><%= content %></td>
-      <td><%= votes.size %> <%= plural_s('vote', votes.size) %></td>
+      <td><%= pluralize(votes.size, 'vote') %></td>
     </tr>
   <% end %>
 </table>
@@ -14,7 +14,7 @@
 <h2>Total</h2>
 
 <% if @poll.results.keys.first.is_a?(Integer) %>
-  <%= sprintf "%d %s, average is %.1f", @poll.votes.size, plural_s('vote', @poll.votes.size), @poll.average %>
+  <%= sprintf "%s, average is %.1f", pluralize(@poll.votes.size, 'vote'), @poll.average %>
 <% else %>
-  <%= sprintf "%d %s", @poll.votes.size, plural_s('vote', @poll.votes.size) %>
+  <%= pluralize(@poll.votes.size, 'vote') %>
 <% end %>

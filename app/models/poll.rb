@@ -2,7 +2,7 @@ class Poll < ApplicationRecord
   has_many :votes, dependent: :restrict_with_exception
   belongs_to :scale
 
-  include ApplicationHelper
+  include ActionView::Helpers::TextHelper # pluralize()
 
   def choices
     return (1..10).map(&:to_s) unless scale
@@ -34,7 +34,7 @@ class Poll < ApplicationRecord
 
   def sum_up
     total = results.sort_by { |_, votes| -votes.size }.map do |key, votes|
-      "#{key}: #{votes.size} #{plural_s('vote', votes.size)}"
+      "#{key}: #{pluralize(votes.size, 'vote')}"
     end
     total.join(', ')
   end
