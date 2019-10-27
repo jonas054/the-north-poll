@@ -3,6 +3,7 @@ class Poll < ApplicationRecord
   belongs_to :scale
 
   include ActionView::Helpers::TextHelper # pluralize()
+  include PollHelper # to_number()
 
   def choices
     scale.list.split(/\s*,\s*/)
@@ -10,7 +11,7 @@ class Poll < ApplicationRecord
 
   def results
     if can_have_average?
-      votes.group_by { |v| v.content.to_i }
+      votes.group_by { |v| to_number(v.content) }
     else
       votes.group_by(&:content)
     end
