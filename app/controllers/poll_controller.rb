@@ -5,11 +5,14 @@ class PollController < ApplicationController
     previous_poll_id = params.dig(:previous_poll, :id)
 
     if flash[:error]
-      redirect_to(if previous_poll_id
-                    "/poll/create_linked/#{previous_poll_id}"
-                  else
-                    '/'
-                  end)
+      destination = if previous_poll_id
+                      "/poll/create_linked/#{previous_poll_id}"
+                    else
+                      "/?" + %w[title custom_scale].map { |key|
+                        "#{key}=#{params[key.to_sym]}"
+                      }.join('&')
+                    end
+      redirect_to destination
       return
     end
 

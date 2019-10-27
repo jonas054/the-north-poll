@@ -9,12 +9,12 @@
   <% end %>
   <div class="<%= flash.to_hash.dig('error', 'field') == 'custom_scale' ? 'error' : ''%>">
     <%= radio_button("scale", "list", "custom") %>
-    <%= text_field_tag(:custom_scale) %>
+    <%= text_field_tag(:custom_scale, params['custom_scale']) %>
   </div>
   <br/>
 
   <%= label_tag(:title, "Title:") %>
-  <%= text_field_tag(:title, '', class: flash.to_hash.dig('error', 'field') == 'title' ? 'error' : '') %>
+  <%= text_field_tag(:title, params['title'], class: flash.to_hash.dig('error', 'field') == 'title' ? 'error' : '') %>
   <br/>
   <br/>
 
