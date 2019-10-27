@@ -9,6 +9,12 @@ class Scale < ApplicationRecord
   end
 
   def can_have_average?
-    list.split(',').all? { |item| item.to_i.to_s == item }
+    list.split(',').all? { |item| number?(item) }
+  end
+
+  private
+
+  def number?(string)
+    true if Float(string) rescue false # rubocop:disable Style/RescueModifier
   end
 end
