@@ -32,3 +32,12 @@ input[type='radio'] {
 * {
     font-size: 14mm;
 }
+
+.error {
+    border: 3px solid red;
+    width: fit-content;
+}
+
+.error-message {
+    color: red
+}

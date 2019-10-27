@@ -1,6 +1,18 @@
 class PollController < ApplicationController
+  before_action :validate_params, only: [:create]
+
   def create
     previous_poll_id = params.dig(:previous_poll, :id)
+
+    if flash[:error]
+      redirect_to(if previous_poll_id
+                    "/poll/create_linked/#{previous_poll_id}"
+                  else
+                    '/'
+                  end)
+      return
+    end
+
     params[:title].split(';').each do |title|
       @poll = create_with_link(title, previous_poll_id)
       previous_poll_id = @poll.id
@@ -36,6 +48,20 @@ class PollController < ApplicationController
   end
 
   private
+
+  def validate_params
+    if !params[:custom_scale].blank? && params[:scale][:list] != 'custom'
+      flash[:error] = {
+        field: 'custom_scale',
+        text: 'Custom scale filled in but not selected'
+      }
+    elsif params[:title].blank?
+      flash[:error] = {
+        field: 'title',
+        text: 'No title given'
+      }
+    end
+  end
 
   def find_poll
     Poll.find(params[:id])

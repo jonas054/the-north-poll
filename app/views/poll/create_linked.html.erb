@@ -2,9 +2,13 @@
 
 <%= form_with(url: '/poll') do %>
   <%= label_tag(:title, "Title:") %>
-  <%= text_field_tag(:title) %>
+  <%= text_field_tag(:title, '', class: flash.to_hash.dig('error', 'field') == 'title' ? 'error' : '') %>
   <%= hidden_field(:previous_poll, :id) %>
   <br/>
+  <br/>
+  <div class="error-message">
+    <%= flash.to_hash.dig('error', 'text') %>
+  </div>
   <br/>
   <%= submit_tag("Create another poll") %> that follows "<%= @previous_poll.title %>"
 <% end %>

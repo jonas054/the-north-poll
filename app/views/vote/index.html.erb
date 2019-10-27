@@ -7,12 +7,21 @@
     <%= list.join(' ') %>
     <br/>
   <% end %>
-  <%= radio_button("scale", "list", "custom") %><%= text_field_tag(:custom_scale) %><br/>
+  <div class="<%= flash.to_hash.dig('error', 'field') == 'custom_scale' ? 'error' : ''%>">
+    <%= radio_button("scale", "list", "custom") %>
+    <%= text_field_tag(:custom_scale) %>
+  </div>
+  <br/>
 
-  <br/>
   <%= label_tag(:title, "Title:") %>
-  <%= text_field_tag(:title) %>
+  <%= text_field_tag(:title, '', class: flash.to_hash.dig('error', 'field') == 'title' ? 'error' : '') %>
   <br/>
+  <br/>
+
+  <div class="error-message">
+    <%= flash.to_hash.dig('error', 'text') %>
+  </div>
+
   <br/>
   <%= submit_tag("Create new poll") %>
 <% end %>
