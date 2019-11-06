@@ -9,6 +9,13 @@ class Poll < ApplicationRecord
     scale.list.split(/\s*,\s*/)
   end
 
+  def sum_up
+    total = results.sort_by { |_, votes| -votes.size }.map do |key, votes|
+      "#{key}: #{pluralize(votes.size, 'vote')}"
+    end
+    total.join(', ')
+  end
+
   def results
     if can_have_average?
       votes.group_by { |v| to_number(v.content) }
@@ -29,13 +36,6 @@ class Poll < ApplicationRecord
     else
       [self]
     end
-  end
-
-  def sum_up
-    total = results.sort_by { |_, votes| -votes.size }.map do |key, votes|
-      "#{key}: #{pluralize(votes.size, 'vote')}"
-    end
-    total.join(', ')
   end
 
   def remove_links_to

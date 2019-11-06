@@ -2,17 +2,12 @@ class PollController < ApplicationController
   before_action :validate_params, only: [:create]
 
   def create
+    do_housekeeping
+
     previous_poll_id = params.dig(:previous_poll, :id)
 
     if flash[:error]
-      destination = if previous_poll_id
-                      "/poll/create_linked/#{previous_poll_id}"
-                    else
-                      "/?" + %w[title custom_scale].map { |key|
-                        "#{key}=#{params[key.to_sym]}"
-                      }.join('&')
-                    end
-      redirect_to destination
+      redirect_to creation_error_destination(previous_poll_id)
       return
     end
 
@@ -27,11 +22,6 @@ class PollController < ApplicationController
     @previous_poll = find_poll
   end
 
-  def show
-    # do_housekeeping
-    @poll = find_poll
-  end
-
   def results
     @poll = find_poll
   end
@@ -41,9 +31,8 @@ class PollController < ApplicationController
     render partial: 'single_results'
   end
 
-  def list
-    @poll = find_poll
-  end
+  alias list results
+  alias show results
 
   def total
     @all = find_poll.chain
@@ -52,17 +41,24 @@ class PollController < ApplicationController
 
   private
 
+  def creation_error_destination(previous_poll_id)
+    if previous_poll_id
+      "/poll/create_linked/#{previous_poll_id}"
+    else
+      '/?' + %w[title custom_scale].map do |key|
+        "#{key}=#{params[key.to_sym]}"
+      end.join('&')
+    end
+  end
+
   def validate_params
-    if !params[:custom_scale].blank? && params[:scale][:list] != 'custom'
+    if params[:custom_scale].present? && params[:scale][:list] != 'custom'
       flash[:error] = {
         field: 'custom_scale',
         text: 'Custom scale filled in but not selected'
       }
     elsif params[:title].blank?
-      flash[:error] = {
-        field: 'title',
-        text: 'No title given'
-      }
+      flash[:error] = { field: 'title', text: 'No title given' }
     end
   end
 
