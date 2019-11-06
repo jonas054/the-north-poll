@@ -28,7 +28,7 @@ class PollController < ApplicationController
   end
 
   def show
-    do_housekeeping
+    # do_housekeeping
     @poll = find_poll
   end
 
