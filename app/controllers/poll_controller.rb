@@ -92,7 +92,7 @@ class PollController < ApplicationController
 
     oldest = Poll.order(:updated_at).limit(1).load.first
     oldest.remove_links_to
+    Vote.all.each { |vote| vote.destroy if vote.poll_id = oldest.id }
     oldest.destroy
-    Vote.all.each { |vote| vote.destroy unless vote.poll }
   end
 end
