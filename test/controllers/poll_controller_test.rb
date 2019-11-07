@@ -30,15 +30,19 @@ class PollControllerTest < ActionDispatch::IntegrationTest
   test 'should remove old polls from database' do
     assert_equal 2, Poll.count
     assert_equal 2, Vote.count
+    post 'http://www.example.com/poll',
+         params: { title: 'Jonas', scale: { list: 'X,Y,Z' } }
+    assert_equal 3, Scale.count
     210.times do
       post 'http://www.example.com/poll',
            params: { title: 'Jonas', scale: { list: 'Yes,No' } }
-
     end
     # The limit is 200 polls. Then the oldest will be removed as a new one is
     # created. The votes associated with the polls in the fixture are removed,
     # and all the newly created polls have no votes.
     assert_equal 0, Vote.count
     assert_equal 200, Poll.count
+
+    assert_equal 1, Scale.count
   end
 end

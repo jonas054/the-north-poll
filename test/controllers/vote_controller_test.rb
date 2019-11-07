@@ -7,6 +7,7 @@ class VoteControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create vote and redirect to results' do
+    assert_equal 2, votes.size
     assert_equal 2, Vote.all.size
     post 'http://www.example.com/vote',
          params: { poll: { id: 22 }, vote: { value: "10" } }

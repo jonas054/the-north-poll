@@ -1,5 +1,5 @@
 class Poll < ApplicationRecord
-  has_many :votes, dependent: :restrict_with_exception
+  has_many :votes, dependent: :destroy
   belongs_to :scale
 
   include ActionView::Helpers::TextHelper # pluralize()
