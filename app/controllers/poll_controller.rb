@@ -92,7 +92,7 @@ class PollController < ApplicationController
 
     oldest = Poll.order(:updated_at).limit(1).load.first
     oldest.remove_links_to
-    oldest.scale.destroy if oldest.scale.polls == [oldest]
+    oldest.scale.destroy if oldest.scale&.polls == [oldest]
     oldest.destroy
   end
 end
