@@ -1,9 +1,10 @@
 class PollController < ApplicationController
+  SITE = 'the-north-poll.herokuapp.com'.freeze
+
   before_action :validate_params, only: [:create]
+  before_action :do_housekeeping, only: [:create]
 
   def create
-    do_housekeeping
-
     previous_poll_id = params.dig(:previous_poll, :id)
 
     if flash[:error]
@@ -37,13 +38,10 @@ class PollController < ApplicationController
     @poll = find_poll
     if params[:key] != @poll.key
       @poll = nil
-    else
-      url =
-        "https://the-north-poll.herokuapp.com/poll/#{@poll.id}?key=#{@poll.key}"
-      if params.key?(:qr)
-        @chart = GoogleQR.new(data: url, size: '500x500', margin: 4,
-                              error_correction: 'L').to_s
-      end
+    elsif params.key?(:qr)
+      url = "https://#{SITE}/poll/#{@poll.id}?key=#{@poll.key}"
+      @chart = GoogleQR.new(data: url, size: '500x500', margin: 4,
+                            error_correction: 'L').to_s
     end
   end
 
@@ -80,9 +78,9 @@ class PollController < ApplicationController
   end
 
   def create_with_link(title, previous_poll_id)
-    poll = Poll.create! title: title, previous_poll_id: previous_poll_id,
-                        scale: get_scale(previous_poll_id),
-                        key: (1..10).map { '%x' % rand(0x10) }.join
+    key = (1..10).map { format('%<number>x', number: rand(16)) }.join
+    poll = Poll.create!(title: title, previous_poll_id: previous_poll_id,
+                        scale: get_scale(previous_poll_id), key: key)
     Poll.update previous_poll_id, next_poll_id: poll.id if previous_poll_id
     poll
   end

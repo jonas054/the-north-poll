@@ -21,10 +21,7 @@ Style/Documentation:
     - 'app/models/poll.rb'
     - 'app/models/scale.rb'
     - 'app/models/vote.rb'
-    - 'db/migrate/20191012153217_create_polls.rb'
-    - 'db/migrate/20191012153341_create_votes.rb'
-    - 'db/migrate/20191014150947_add_next_poll_id_to_polls.rb'
-    - 'db/migrate/20191016180527_create_scales.rb'
+    - 'db/migrate/2*.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.

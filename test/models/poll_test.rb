@@ -43,7 +43,7 @@ class PollTest < ActiveSupport::TestCase
 
   test '#can_have_average? should return false if not all choices are ' \
        'numbers' do
-    poll = Poll.create(id: 8, scale: Scale.new(list: '½,1,2,3,5,8,13,20,40,100,?,☕️'))
+    poll = Poll.create(scale: Scale.new(list: '½,1,2,3,5,8,13,20,40,100,?,☕️'))
     assert_equal false, poll.can_have_average?
   end
 end

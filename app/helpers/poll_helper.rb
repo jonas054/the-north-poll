@@ -1,7 +1,7 @@
 module PollHelper
-  def to_number(s)
-    Integer(s)
+  def to_number(string)
+    Integer(string)
   rescue StandardError
-    Float(s)
+    Float(string)
   end
 end

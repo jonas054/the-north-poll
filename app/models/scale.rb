@@ -1,7 +1,7 @@
 # coding: utf-8
 
 class Scale < ApplicationRecord
-  has_many :polls
+  has_many :polls, dependent: :destroy
 
   def self.default_lists
     [%w[1 2 3 4 5 6 7 8 9 10],
