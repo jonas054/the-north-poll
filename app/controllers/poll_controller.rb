@@ -41,8 +41,8 @@ class PollController < ApplicationController
       url =
         "https://the-north-poll.herokuapp.com/poll/#{@poll.id}?key=#{@poll.key}"
       if params.key?(:qr)
-        @chart = GoogleQR.new(:data => url, :size => "500x500", :margin => 4,
-                              :error_correction => "L").to_s
+        @chart = GoogleQR.new(data: url, size: '500x500', margin: 4,
+                              error_correction: 'L').to_s
       end
     end
   end
@@ -82,7 +82,7 @@ class PollController < ApplicationController
   def create_with_link(title, previous_poll_id)
     poll = Poll.create! title: title, previous_poll_id: previous_poll_id,
                         scale: get_scale(previous_poll_id),
-                        key: (1..10).map { "%x" % rand(0x10) }.join
+                        key: (1..10).map { '%x' % rand(0x10) }.join
     Poll.update previous_poll_id, next_poll_id: poll.id if previous_poll_id
     poll
   end

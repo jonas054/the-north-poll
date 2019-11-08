@@ -1,9 +1,8 @@
-# coding: utf-8
 require 'test_helper'
 
 class PollTest < ActiveSupport::TestCase
   test 'Poll.all should return fixtures' do
-    assert_equal [22, 33], Poll.all.map { |poll| poll.id }
+    assert_equal [22, 33], Poll.all.map(&:id)
   end
 
   test '#average should return the average of vote contents' do
@@ -27,7 +26,7 @@ class PollTest < ActiveSupport::TestCase
 
   test '#results should return float keys' do
     poll = Poll.create(id: 1, scale: Scale.create(list: '1.5,2,2.5'))
-    poll.votes << Vote.create(content: "1.5") << Vote.create(content: "2")
+    poll.votes << Vote.create(content: '1.5') << Vote.create(content: '2')
     assert_equal [1.5, 2], poll.results.keys
     poll.results.keys.each do |choice|
       result = poll.results[choice]
