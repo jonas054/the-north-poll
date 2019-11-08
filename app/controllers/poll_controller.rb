@@ -32,7 +32,15 @@ class PollController < ApplicationController
   end
 
   alias list results
-  alias show results
+
+  def show
+    @poll = find_poll
+    url = "https://the-north-poll.herokuapp.com/poll/#{@poll.id}"
+    if params.key?(:qr)
+      @chart = GoogleQR.new(:data => url, :size => "500x500", :margin => 4,
+                            :error_correction => "L").to_s
+    end
+  end
 
   def total
     @all = find_poll.chain

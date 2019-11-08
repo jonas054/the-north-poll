@@ -16,3 +16,8 @@ Don't want to vote?
 <% else %>
 <%= link_to "Skip to results >", "/poll/list/#{@poll.id}" %>
 <% end %>
+
+<br/>
+<% if @chart %>
+  <img src="<%= @chart %>" />
+<% end %>
