@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_16_180527) do
+ActiveRecord::Schema.define(version: 2019_11_08_164834) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2019_10_16_180527) do
     t.integer "next_poll_id"
     t.integer "previous_poll_id"
     t.integer "scale_id"
+    t.string "key"
   end
 
   create_table "scales", force: :cascade do |t|
