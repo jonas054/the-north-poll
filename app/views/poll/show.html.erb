@@ -1,29 +1,25 @@
-<% if @poll %>
-  <h1><%= @poll.title %></h1>
-  <%= form_with(url: '/vote') do %>
-    <% @poll.choices.each do |choice|  %>
-    <%= radio_button("vote", "value", choice) %><%= choice %><br/>
-    <% end %>
-    <%= hidden_field(:poll, :id) %>
-    <br/>
-    <%= submit_tag("Vote") %>
+<h1><%= @poll.title %></h1>
+<%= form_with(url: '/vote') do %>
+  <% @poll.choices.each do |choice|  %>
+  <%= radio_button("vote", "value", choice) %><%= choice %><br/>
   <% end %>
-
+  <%= hidden_field(:poll, :id) %>
   <br/>
-  Don't want to vote?
-  <% if @poll.next_poll_id %>
+  <%= submit_tag("Vote") %>
+<% end %>
+
+<br/>
+Don't want to vote?
+<% if @poll.next_poll_id %>
   <%=
     link_to "Skip to next poll >",
             "/poll/#{@next_poll.id}?key=#{@next_poll.key}"
   %>
-  <% else %>
-  <%= link_to "Skip to results >", "/poll/list/#{@poll.id}" %>
-  <% end %>
-  
-  <br/>
-  <% if @chart %>
-    <img src="<%= @chart %>" />
-  <% end %>
 <% else %>
-  <h3>Authorization error</h3>
+  <%= link_to "Skip to results >", "/poll/list/#{@poll.id}" %>
+<% end %>
+
+<br/>
+<% if @chart %>
+  <img src="<%= @chart %>" />
 <% end %>

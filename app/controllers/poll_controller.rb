@@ -37,7 +37,7 @@ class PollController < ApplicationController
   def show
     find_current_and_next
     if params[:key] != @poll.key
-      @poll = nil
+      render 'authorization_error'
     elsif params.key?(:qr)
       url = "https://#{SITE}/poll/#{@poll.id}?key=#{@poll.key}"
       @chart = GoogleQR.new(data: url, size: '500x500', margin: 4,
