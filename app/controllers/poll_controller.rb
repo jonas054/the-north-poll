@@ -16,11 +16,12 @@ class PollController < ApplicationController
       @poll = create_with_link(title, previous_poll_id)
       previous_poll_id = @poll.id
     end
-    redirect_to "/poll/create_linked/#{@poll.id}"
+    redirect_to "/poll/create_linked/#{@poll.id}?key=#{@poll.key}"
   end
 
   def create_linked
     @previous_poll = find_poll
+    render 'authorization_error' if params[:key] != @previous_poll.key
   end
 
   def results
