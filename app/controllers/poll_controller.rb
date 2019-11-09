@@ -24,7 +24,7 @@ class PollController < ApplicationController
   end
 
   def results
-    @poll = find_poll
+    find_current_and_next
   end
 
   def single_results
@@ -35,7 +35,7 @@ class PollController < ApplicationController
   alias list results
 
   def show
-    @poll = find_poll
+    find_current_and_next
     if params[:key] != @poll.key
       @poll = nil
     elsif params.key?(:qr)
@@ -71,6 +71,11 @@ class PollController < ApplicationController
     elsif params[:title].blank?
       flash[:error] = { field: 'title', text: 'No title given' }
     end
+  end
+
+  def find_current_and_next
+    @poll = find_poll
+    @next_poll = Poll.find(@poll.next_poll_id) if @poll&.next_poll_id
   end
 
   def find_poll
