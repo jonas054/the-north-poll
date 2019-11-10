@@ -57,4 +57,19 @@ class PollTest < ActiveSupport::TestCase
     poll = Poll.create(scale: Scale.new(list: '½,1,2,3,5,8,13,20,40,100,?,☕️'))
     assert_equal false, poll.can_have_average?
   end
+
+  test '#remove_links_to should remove link from previous and next poll' do
+    poll1 = Poll.create(scale: Scale.new(list: '1,2,3'))
+    poll2 = Poll.create(scale: Scale.new(list: '1,2,3'),
+                        previous_poll_id: poll1.id)
+    poll3 = Poll.create(scale: Scale.new(list: '1,2,3'),
+                        previous_poll_id: poll2.id)
+    Poll.update(poll1.id, next_poll_id: poll2.id)
+    Poll.update(poll2.id, next_poll_id: poll3.id)
+    Poll.update(poll2.id, previous_poll_id: poll1.id)
+    Poll.update(poll3.id, previous_poll_id: poll2.id)
+    Poll.find(poll2.id).remove_links_to
+    assert_nil Poll.find(poll1.id).next_poll_id
+    assert_nil Poll.find(poll3.id).previous_poll_id
+  end
 end

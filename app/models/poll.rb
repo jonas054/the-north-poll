@@ -40,12 +40,15 @@ class Poll < ApplicationRecord
   end
 
   def remove_links_to
-    if previous_poll_id && Poll.exists?(previous_poll_id)
-      Poll.update(previous_poll_id, next_poll_id: nil)
-    end
-    if next_poll_id && Poll.exists?(next_poll_id)
-      Poll.update(next_poll_id, previous_poll_id: nil)
-    end
+    set_to_nil(previous_poll_id, :next_poll_id)
+    set_to_nil(next_poll_id, :previous_poll_id)
+  end
+
+  private
+
+  def set_to_nil(linked_id, key)
+    Poll.update(linked_id, key => nil) if linked_id && Poll.exists?(linked_id)
+  end
 
   def mapped_mean
     votes.map { |v| yield v }.reduce(0.0, :+) / votes.size
