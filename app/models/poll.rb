@@ -35,10 +35,10 @@ class Poll < ApplicationRecord
   end
 
   def remove_links_to
-    if previous_poll_id && Poll.find(previous_poll_id)
+    if previous_poll_id && Poll.exists?(previous_poll_id)
       Poll.update(previous_poll_id, next_poll_id: nil)
     end
-    if next_poll_id && Poll.find(next_poll_id)
+    if next_poll_id && Poll.exists?(next_poll_id)
       Poll.update(next_poll_id, previous_poll_id: nil)
     end
   end
