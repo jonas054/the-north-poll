@@ -102,7 +102,7 @@ class PollController < ApplicationController
     else
       scale_value = params[:scale][:list]
       if scale_value == 'custom'
-        scale_value = params[:custom_scale].split.join(',')
+        scale_value = Scale.encode(params[:custom_scale])
       end
       Scale.find_or_create_by(list: scale_value)
     end

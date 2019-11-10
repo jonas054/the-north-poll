@@ -10,6 +10,15 @@ class Scale < ApplicationRecord
      %w[👍 👎]]
   end
 
+  def self.encode(string)
+    array = if string.include?(';')
+              string.split(/\s*;\s*/)
+            else
+              string.split
+            end
+    array.join(',')
+  end
+
   def can_have_average?
     choices.all? { |item| number?(item) }
   end

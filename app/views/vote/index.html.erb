@@ -24,7 +24,7 @@
     <%= radio_button("scale", "list", "custom") %>
     <%= text_field_tag(:custom_scale, params['custom_scale'], onfocus: 'unhide("scalehelp")', onfocusout: 'hide("scalehelp")') %>
   </div>
-  <span hidden id="scalehelp" class="help">Enter a custom set of choices for the poll. Use space as separator.</span>
+  <span hidden id="scalehelp" class="help">Enter a custom set of choices for the poll. Use space or semi-colon as separator.</span>
   <br/>
   <br/>
 
