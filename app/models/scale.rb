@@ -11,7 +11,11 @@ class Scale < ApplicationRecord
   end
 
   def can_have_average?
-    list.split(',').all? { |item| number?(item) }
+    choices.all? { |item| number?(item) }
+  end
+
+  def choices
+    list.split(',')
   end
 
   private
