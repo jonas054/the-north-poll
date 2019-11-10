@@ -13,6 +13,17 @@ class PollTest < ActiveSupport::TestCase
     assert Poll.create.average.nan?
   end
 
+  test '#standard_deviation should return the standard deviation of vote ' \
+       'contents' do
+    poll = Poll.create(id: 1, scale: Scale.create(list: '1,2,3,4,5,6,7,8,9,10'))
+    poll.votes << Vote.create(content: '1')
+    assert_equal 0, poll.standard_deviation
+    poll.votes << Vote.create(content: '1')
+    assert_equal 0, poll.standard_deviation
+    poll.votes << Vote.create(content: '3') << Vote.create(content: '3')
+    assert_equal 1, poll.standard_deviation # sqrt((1+1+1+1)/4)
+  end
+
   test '#results should return all votes' do
     poll = Poll.find(22)
     assert_equal [2, 3], poll.results.keys

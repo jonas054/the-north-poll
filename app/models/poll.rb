@@ -20,8 +20,13 @@ class Poll < ApplicationRecord
     end
   end
 
+  def standard_deviation
+    avg = average
+    Math.sqrt(mapped_mean { |v| (v.content.to_f - avg)**2 })
+  end
+
   def average
-    votes.map { |v| v.content.to_f }.reduce(0.0, :+) / votes.size
+    mapped_mean { |v| v.content.to_f }
   end
 
   delegate :can_have_average?, :choices, to: :scale
@@ -41,5 +46,8 @@ class Poll < ApplicationRecord
     if next_poll_id && Poll.exists?(next_poll_id)
       Poll.update(next_poll_id, previous_poll_id: nil)
     end
+
+  def mapped_mean
+    votes.map { |v| yield v }.reduce(0.0, :+) / votes.size
   end
 end

@@ -5,6 +5,7 @@
     <th>Poll</th>
     <% if @numerical_votes %>
       <th>Average</th>
+      <th>Std dev</th>
     <% end %>
     <th>Votes</th>
   </tr>
@@ -13,6 +14,7 @@
       <td><%= poll.title %></td>
       <% if @numerical_votes %>
         <td align="right"><%= format "%.1f", poll.average %></td>
+        <td align="right"><%= format "%.1f", poll.standard_deviation %></td>
         <td align="right"><%= poll.votes.map(&:content).map { |s| to_number(s) }.sort.join(' ') %></td>
       <% else %>
         <td><%= poll.sum_up %></td>
