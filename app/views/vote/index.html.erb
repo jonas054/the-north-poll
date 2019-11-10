@@ -4,7 +4,11 @@
 <script>
   function unhide(id) {
     document.getElementById(id).removeAttribute("hidden");
+    if (id === "scalehelp") {
+      document.getElementById("scale_list_custom").checked = true;
+    }
   }
+
   function hide(id) {
     document.getElementById(id).setAttribute("hidden", true);
   }
