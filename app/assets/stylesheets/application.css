@@ -39,5 +39,10 @@ input[type='radio'] {
 }
 
 .error-message {
-    color: red
+    color: red;
+}
+
+.help {
+    color: gray;
+    font-size: 9mm;
 }
