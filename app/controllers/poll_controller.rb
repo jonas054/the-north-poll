@@ -69,6 +69,11 @@ class PollController < ApplicationController
         field: 'custom_scale',
         text: 'Custom scale filled in but not selected'
       }
+    elsif !params[:custom_scale].present? && params[:scale][:list] == 'custom'
+      flash[:error] = {
+        field: 'custom_scale',
+        text: 'Custom scale selected but not filled in'
+      }
     elsif params[:title].blank?
       flash[:error] = { field: 'title', text: 'No title given' }
     end
