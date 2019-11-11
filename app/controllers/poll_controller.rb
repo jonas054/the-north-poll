@@ -40,7 +40,7 @@ class PollController < ApplicationController
     if params[:key] != @poll.key
       render 'authorization_error'
     elsif params.key?(:qr)
-      url = "https://#{SITE}/poll/#{@poll.id}?key=#{@poll.key}"
+      url = "https://#{SITE}/poll/#{@poll.id}?qr&key=#{@poll.key}"
       @chart = GoogleQR.new(data: url, size: '500x500', margin: 4,
                             error_correction: 'L').to_s
     end
