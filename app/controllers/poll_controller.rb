@@ -101,7 +101,7 @@ class PollController < ApplicationController
   def create_with_link(title, previous_poll_id)
     poll = Poll.create!(title: title, previous_poll_id: previous_poll_id,
                         scale: get_scale(previous_poll_id),
-                        key: rand(1e6).to_s)
+                        key: rand(1e4).to_s)
     Poll.update previous_poll_id, next_poll_id: poll.id if previous_poll_id
     poll
   end
