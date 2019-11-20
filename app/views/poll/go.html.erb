@@ -1,0 +1,18 @@
+<h1>The North Poll</h1>
+
+<%= form_with(url: '/poll/get') do %>
+<div class="row">
+  <div class="column">
+    <%= label_tag(:code, "Enter code:") %>
+  </div>
+  <div class="column">
+    <%= text_field_tag(:code, params[:code], id: "codefield") %>
+  </div>
+</div>
+<br/>
+<%= submit_tag("Go to poll") %>
+<% end %>
+
+<script>
+  document.getElementById("codefield").focus();
+</script>
