@@ -21,5 +21,14 @@ Don't want to vote?
 
 <br/>
 <% if @chart %>
-  <img src="<%= @chart %>" />
+<table>
+  <tr>
+    <td class="noborder">
+      <img src="<%= @chart %>" />
+    </td>
+    <td class="noborder">
+      Code: <%= @poll.key %>
+    </td>
+  </tr>
+</table>
 <% end %>

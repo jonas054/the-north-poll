@@ -38,6 +38,10 @@ input[type='radio'] {
     width: fit-content;
 }
 
+.noborder {
+    border: 0px;
+}
+
 .error-message {
     color: red;
 }
@@ -45,4 +49,16 @@ input[type='radio'] {
 .help {
     color: gray;
     font-size: 11mm;
+}
+
+.column {
+    float: left;
+    width: 30%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
 }

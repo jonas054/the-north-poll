@@ -4,6 +4,15 @@ class PollController < ApplicationController
   before_action :validate_params, only: [:create]
   before_action :do_housekeeping, only: [:create]
 
+  def go
+  end
+
+  def get
+    key = params[:code]
+    poll = Poll.find_by(key: key)
+    redirect_to "/poll/#{poll.id}?key=#{key}"
+  end
+
   def create
     previous_poll_id = params.dig(:previous_poll, :id)
 
@@ -92,7 +101,7 @@ class PollController < ApplicationController
   def create_with_link(title, previous_poll_id)
     poll = Poll.create!(title: title, previous_poll_id: previous_poll_id,
                         scale: get_scale(previous_poll_id),
-                        key: rand(1e10).to_s(16))
+                        key: rand(1e6).to_s)
     Poll.update previous_poll_id, next_poll_id: poll.id if previous_poll_id
     poll
   end

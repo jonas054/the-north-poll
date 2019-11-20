@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'go', controller: 'poll', action: 'go'
+  post 'poll/get'
   get 'poll/new'
   get 'poll/:id/results', controller: 'poll', action: 'results'
   get 'poll/:id/single_results', controller: 'poll', action: 'single_results'
