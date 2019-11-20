@@ -4,6 +4,9 @@ class PollController < ApplicationController
   before_action :validate_params, only: [:create]
   before_action :do_housekeeping, only: [:create]
 
+  def index
+  end
+
   def go
   end
 

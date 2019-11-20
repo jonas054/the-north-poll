@@ -8,9 +8,7 @@ Rails.application.routes.draw do
   get 'poll/list/:id', controller: 'poll', action: 'list'
   get 'poll/total/:id', controller: 'poll', action: 'total'
   get 'vote/index'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  root 'vote#index'
-  get '/', to: 'vote#index'
+  root 'poll#go'
 
   resources :poll, :vote
 end
