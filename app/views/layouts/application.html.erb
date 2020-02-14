@@ -12,6 +12,12 @@
   </head>
 
   <body>
+    <h1>
+      <%=
+        link_to image_tag('iconfinder_compass-direction-navigation_5494256.png'), "/"
+        %>
+      <span class="appname">The North Poll</span>
+    </h1>
     <%= content_for :render_async %>
     <%= yield %>
   </body>

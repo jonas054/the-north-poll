@@ -22,6 +22,10 @@ h2 {
     font-size: 16mm;
 }
 
+.appname {
+    font-size: 30mm;
+}
+
 input[type='radio'] {
     transform: scale(4);
     margin: 2mm 4mm 6mm 20mm;
