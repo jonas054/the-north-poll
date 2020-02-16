@@ -31,10 +31,13 @@ h2 {
     vertical-align: bottom;
 }
 
+.radiofield {
+    vertical-align: text-top;
+}
+
 input[type='radio'] {
     transform: scale(4);
-    margin: 2mm 4mm 6mm 20mm;
-    width: 40px;
+    margin: 7mm 9mm 6mm 20mm;
 }
 
 

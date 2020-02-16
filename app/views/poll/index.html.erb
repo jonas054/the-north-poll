@@ -20,7 +20,7 @@
   <div class="<%= flash.to_hash.dig('error', 'field') == 'custom_scale' ? 'error' : ''%>">
     <%= radio_button("scale", "list", "custom") %>
     <%= text_field_tag(:custom_scale, params['custom_scale'], onfocus:
-    'unhide("scalehelp")', onfocusout: 'hide("scalehelp")', class: "radiotext") %>
+    'unhide("scalehelp")', onfocusout: 'hide("scalehelp")', class: "radiofield") %>
   </div>
   <span hidden id="scalehelp" class="help">Enter a custom set of choices for the poll. Use space or semi-colon as separator.</span>
   <br/>
