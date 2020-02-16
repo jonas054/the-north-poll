@@ -14,12 +14,13 @@
 <%= form_with(url: 'poll') do %>
   <% Scale.default_lists.each_with_index do |list, ix| %>
     <%= radio_button("scale", "list", list.join(','), checked: ix == 0) %>
-    <span><%= list.join(' ') %></span>
+    <span class="radiotext"><%= list.join(' ') %></span>
     <br/>
   <% end %>
   <div class="<%= flash.to_hash.dig('error', 'field') == 'custom_scale' ? 'error' : ''%>">
     <%= radio_button("scale", "list", "custom") %>
-    <%= text_field_tag(:custom_scale, params['custom_scale'], onfocus: 'unhide("scalehelp")', onfocusout: 'hide("scalehelp")') %>
+    <%= text_field_tag(:custom_scale, params['custom_scale'], onfocus:
+    'unhide("scalehelp")', onfocusout: 'hide("scalehelp")', class: "radiotext") %>
   </div>
   <span hidden id="scalehelp" class="help">Enter a custom set of choices for the poll. Use space or semi-colon as separator.</span>
   <br/>

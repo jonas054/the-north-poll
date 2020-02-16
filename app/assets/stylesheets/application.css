@@ -24,6 +24,11 @@ h2 {
 
 .appname {
     font-size: 30mm;
+    vertical-align: top;
+}
+
+.radiotext {
+    vertical-align: bottom;
 }
 
 input[type='radio'] {

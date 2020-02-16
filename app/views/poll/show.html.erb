@@ -1,7 +1,9 @@
 <h1><%= @poll.title %></h1>
 <%= form_with(url: '/vote') do %>
   <% @poll.choices.each do |choice|  %>
-  <%= radio_button("vote", "value", choice) %><%= choice %><br/>
+  <%= radio_button("vote", "value", choice) %>
+  <span class="radiotext"><%= choice %></span>
+  <br/>
   <% end %>
   <%= hidden_field(:poll, :id) %>
   <br/>
