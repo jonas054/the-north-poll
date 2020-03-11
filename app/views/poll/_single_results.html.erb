@@ -14,7 +14,7 @@
 <h2>Total</h2>
 
 <%=
-  pluralize(@poll.votes.size, 'vote') +
+  pluralize(@poll.current_votes.size, 'vote') +
     if @poll.can_have_average?
       format(", average: %.1f, standard deviation: %.1f",
              @poll.average, @poll.standard_deviation)

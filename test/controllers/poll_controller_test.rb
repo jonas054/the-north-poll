@@ -45,4 +45,17 @@ class PollControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal 1, Scale.count
   end
+
+  test 'should archive old votes' do
+    post 'http://www.example.com/poll',
+         params: { title: 'ABC', scale: { list: 'Yes,No' } }
+    poll = Poll.where(title: 'ABC').first
+    poll.votes << Vote.create(updated_at: 1.year.ago) << Vote.create
+    assert !poll.votes.first.is_archived
+    assert !poll.votes.last.is_archived
+    get "http://www.example.com/poll/#{poll.id}"
+    assert_response :success
+    assert poll.votes.first.is_archived
+    assert !poll.votes.last.is_archived
+  end
 end

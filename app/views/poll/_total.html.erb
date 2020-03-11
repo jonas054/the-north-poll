@@ -15,7 +15,7 @@
       <% if @numerical_votes %>
         <td align="right"><%= format "%.1f", poll.average %></td>
         <td align="right"><%= format "%.1f", poll.standard_deviation %></td>
-        <td align="right"><%= poll.votes.map(&:content).map { |s| to_number(s) }.sort.join(' ') %></td>
+        <td align="right"><%= poll.current_votes.map(&:content).map { |s| to_number(s) }.sort.join(' ') %></td>
       <% else %>
         <td><%= poll.sum_up %></td>
       <% end %>
