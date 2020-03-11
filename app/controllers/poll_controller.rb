@@ -122,15 +122,20 @@ class PollController < ApplicationController
     end
   end
 
-  # Remove oldest entries in the database, just so it doesn't grow too big on
-  # Heroku.
+  # Remove old polls with only old votes. Also remove scales that are
+  # no longer used.
   def do_housekeeping
-    return if Poll.count < 200
+    age_limit = 1.month.ago
+    oldest = Poll.all.select do |poll|
+      poll.updated_at < age_limit &&
+        poll.votes.all? { |vote| vote.updated_at < age_limit }
+    end
 
-    oldest = Poll.order(:updated_at).limit(1).load.first
-    oldest.remove_links_to
-    oldest.scale.destroy if oldest.scale&.polls == [oldest]
-    oldest.destroy
+    oldest.each do |old|
+      old.remove_links_to
+      old.scale.destroy if old.scale&.polls == [old]
+      old.destroy
+    end
   end
 
   def archive_old_votes
