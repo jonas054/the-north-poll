@@ -1,11 +1,6 @@
 require 'test_helper'
 
 class VoteControllerTest < ActionDispatch::IntegrationTest
-  test 'should get index' do
-    get vote_index_url
-    assert_response :success
-  end
-
   test 'should create vote and redirect to results' do
     assert_equal 2, votes.size
     assert_equal 2, Vote.all.size

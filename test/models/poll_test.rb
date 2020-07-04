@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'test_helper'
 
 class PollTest < ActiveSupport::TestCase
@@ -22,6 +23,16 @@ class PollTest < ActiveSupport::TestCase
     assert_equal 0, poll.standard_deviation
     poll.votes << Vote.create(content: '3') << Vote.create(content: '3')
     assert_equal 1, poll.standard_deviation # sqrt((1+1+1+1)/4)
+  end
+
+  test '#current_votes should return votes that are not archived' do
+    poll = Poll.create(id: 1, scale: Scale.create(list: '1,2,3,4,5,6,7,8,9,10'))
+    poll.votes << Vote.create(content: '1', is_archived: false)
+    assert_equal 0, poll.standard_deviation
+    poll.votes << Vote.create(content: '1', is_archived: true)
+    assert_equal 0, poll.standard_deviation
+    poll.votes << Vote.create(content: '3') << Vote.create(content: '3')
+    assert_equal %w[1 3 3], poll.current_votes.map(&:content)
   end
 
   test '#results should return all votes' do

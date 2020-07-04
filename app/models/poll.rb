@@ -5,6 +5,10 @@ class Poll < ApplicationRecord
   include ActionView::Helpers::TextHelper # pluralize()
   include PollHelper # to_number()
 
+  def current_votes
+    votes.where(is_archived: false)
+  end
+
   def sum_up
     total = results.sort_by { |_, votes| -votes.size }.map do |key, votes|
       "#{key}: #{pluralize(votes.size, 'vote')}"
@@ -14,9 +18,9 @@ class Poll < ApplicationRecord
 
   def results
     if can_have_average?
-      votes.group_by { |v| to_number(v.content) }
+      current_votes.group_by { |v| to_number(v.content) }
     else
-      votes.group_by(&:content)
+      current_votes.group_by(&:content)
     end
   end
 
@@ -51,6 +55,6 @@ class Poll < ApplicationRecord
   end
 
   def mapped_mean
-    votes.map { |v| yield v }.reduce(0.0, :+) / votes.size
+    current_votes.map { |v| yield v }.reduce(0.0, :+) / current_votes.size
   end
 end
