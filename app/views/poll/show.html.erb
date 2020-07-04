@@ -3,9 +3,10 @@
     <%= @poll.title %>
   </h3>
   <%= form_with(url: "/poll/#{@poll.id}/title") do %>
+    <div class="rename-form">
     <%= text_field_tag(:title, @poll.title) %>
-    <br/>
     <%= submit_tag("Rename") %>
+    </div>
     <br/>
     <br/>
   <% end %>

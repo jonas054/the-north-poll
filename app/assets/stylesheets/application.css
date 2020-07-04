@@ -35,6 +35,14 @@ h2 {
     vertical-align: text-top;
 }
 
+.rename-form {
+    display: inline-flex;
+}
+
+.rename-form input {
+    margin: 5mm 5mm;
+}
+
 input[type='radio'] {
     transform: scale(4);
     margin: 7mm 9mm 6mm 20mm;
