@@ -13,6 +13,11 @@
 
 <br/>
 <% first = @previous_poll.chain.first %>
+
+<h3>Link to edit and vote:</h3>
+<%= link_to first.title, "/poll/#{first.id}?qr&key=#{first.key}&editkey=#{first.editkey}" %>
+
+<h3>Link to vote:</h3>
 <%= link_to first.title, "/poll/#{first.id}?qr&key=#{first.key}" %>
 
 <% @previous_poll.chain[1..-1].each do |poll| %>

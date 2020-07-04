@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get 'poll/create_linked/:id', controller: 'poll', action: 'create_linked'
   get 'poll/list/:id', controller: 'poll', action: 'list'
   get 'poll/total/:id', controller: 'poll', action: 'total'
+  post 'poll/:id/title', controller: 'poll', action: 'set_title'
+  get 'poll/title/:id', controller: 'poll', action: 'title'
   get 'vote/index'
   root 'poll#go'
 

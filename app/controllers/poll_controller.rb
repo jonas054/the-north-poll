@@ -39,11 +39,17 @@ class PollController < ApplicationController
 
   def results
     find_current_and_next
+    @edit_mode = params[:editkey] == @poll.editkey
   end
 
   def single_results
     @poll = find_poll
     render partial: 'single_results'
+  end
+
+  def title
+    @poll = find_poll
+    render partial: 'title'
   end
 
   alias list results
@@ -57,6 +63,13 @@ class PollController < ApplicationController
       @chart = GoogleQR.new(data: url, size: '500x500', margin: 4,
                             error_correction: 'L').to_s
     end
+    @edit_mode = params[:editkey] == @poll.editkey
+  end
+
+  def set_title
+    @poll = find_poll
+    Poll.update params[:id], title: params[:title]
+    redirect_to "/poll/#{@poll.id}?key=#{@poll.key}&editkey=#{@poll.editkey}"
   end
 
   def total

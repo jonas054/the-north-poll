@@ -1,4 +1,28 @@
-<h1><%= @poll.title %></h1>
+<% if @edit_mode %>
+  <h3>
+    <%= @poll.title %>
+  </h3>
+  <%= form_with(url: "/poll/#{@poll.id}/title") do %>
+    <%= text_field_tag(:title, @poll.title) %>
+    <br/>
+    <%= submit_tag("Rename") %>
+    <br/>
+    <br/>
+  <% end %>
+<% else %>
+  <%=
+    container_id = rand(1_000_000_000)
+    render partial: "polling", locals: {
+      path: "/poll/title/#{@poll.id}",
+      interval: 3000,
+      container_id: container_id
+    }
+  %>
+  
+  <h3>
+    <div id="<%= container_id %>"><%= @poll.title %>...</div>
+  </h3>
+<% end %>
 <%= form_with(url: '/vote') do %>
   <% @poll.choices.each do |choice|  %>
   <%= radio_button("vote", "value", choice) %>
@@ -6,6 +30,9 @@
   <br/>
   <% end %>
   <%= hidden_field(:poll, :id) %>
+  <% if @edit_mode %>
+    <%= hidden_field(:poll, :editkey) %>
+  <% end %>
   <br/>
   <%= submit_tag("Vote") %>
 <% end %>
@@ -13,9 +40,10 @@
 <br/>
 Don't want to vote?
 <% if @poll.next_poll_id %>
+  <% edit_privilege = @edit_mode ? "&editkey=#{@next_poll.editkey}" : '' %>
   <%=
     link_to "Skip to next poll >",
-            "/poll/#{@next_poll.id}?key=#{@next_poll.key}"
+            "/poll/#{@next_poll.id}?key=#{@next_poll.key}#{edit_privilege}"
   %>
 <% else %>
   <%= link_to "Skip to results >", "/poll/list/#{@poll.id}" %>

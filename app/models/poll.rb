@@ -1,6 +1,10 @@
+require 'digest/sha1'
+
 class Poll < ApplicationRecord
   has_many :votes, dependent: :destroy
   belongs_to :scale
+
+  SECRET = 432473648
 
   include ActionView::Helpers::TextHelper # pluralize()
   include PollHelper # to_number()
@@ -14,6 +18,10 @@ class Poll < ApplicationRecord
       "#{key}: #{pluralize(votes.size, 'vote')}"
     end
     total.join(', ')
+  end
+
+  def editkey
+    Digest::SHA1.hexdigest((key.to_i + SECRET).to_s)
   end
 
   def results
