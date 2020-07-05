@@ -31,9 +31,7 @@
   <br/>
   <% end %>
   <%= hidden_field(:poll, :id) %>
-  <% if @edit_mode %>
-    <%= hidden_field(:poll, :editkey) %>
-  <% end %>
+  <%= hidden_field(:poll, :editkey) if @edit_mode %>
   <br/>
   <%= submit_tag("Vote") %>
 <% end %>
