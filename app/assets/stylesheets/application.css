@@ -40,7 +40,11 @@ h2 {
 }
 
 .rename-form input {
-    margin: 5mm 5mm;
+    margin: 2mm 2mm;
+}
+
+.rename-form input[type='text'] {
+    width: 70%;
 }
 
 input[type='radio'] {
