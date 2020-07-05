@@ -32,6 +32,10 @@ class Poll < ApplicationRecord
     end
   end
 
+  def can_have_average?
+    current_votes.all? { |vote| number?(vote.content) }
+  end
+
   def standard_deviation
     avg = average
     Math.sqrt(mapped_mean { |v| (v.content.to_f - avg)**2 })
@@ -41,7 +45,7 @@ class Poll < ApplicationRecord
     mapped_mean { |v| v.content.to_f }
   end
 
-  delegate :can_have_average?, :choices, to: :scale
+  delegate :choices, to: :scale
 
   def chain
     if previous_poll_id
@@ -57,6 +61,10 @@ class Poll < ApplicationRecord
   end
 
   private
+
+  def number?(string)
+    true if Float(string) rescue false # rubocop:disable Style/RescueModifier
+  end
 
   def set_to_nil(linked_id, key)
     Poll.update(linked_id, key => nil) if linked_id && Poll.exists?(linked_id)

@@ -20,17 +20,7 @@ class Scale < ApplicationRecord
     array.join(',')
   end
 
-  def can_have_average?
-    choices.all? { |item| number?(item) }
-  end
-
   def choices
     list.split(',')
-  end
-
-  private
-
-  def number?(string)
-    true if Float(string) rescue false # rubocop:disable Style/RescueModifier
   end
 end

@@ -63,10 +63,24 @@ class PollTest < ActiveSupport::TestCase
     assert_equal true, poll.can_have_average?
   end
 
-  test '#can_have_average? should return false if not all choices are ' \
+  test '#can_have_average? should return false if not all votes are ' \
        'numbers' do
-    poll = Poll.create(scale: Scale.new(list: '½,1,2,3,5,8,13,20,40,100,?,☕️'))
+    poll = Poll.create(scale: Scale.new(list: '☕️,½,1,2,3,5,8,13,20,40,100,?'))
+    poll.votes << Vote.create(content: '1') << Vote.create(content: '☕️')
     assert_equal false, poll.can_have_average?
+  end
+
+  test 'can_have_average? returns true for a list containing only integers' do
+    poll = Poll.create(scale: Scale.new(list: '1,2,3,4,5,6,7,8,9,10'))
+    poll.votes << Vote.create(content: '1') << Vote.create(content: '2')
+    assert poll.can_have_average?
+  end
+
+  test 'can_have_average? returns true for a list containing integers and ' \
+       'floats' do
+    poll = Poll.create(scale: Scale.new(list: '1,1.5,2,2.5,3'))
+    poll.votes << Vote.create(content: '1.5') << Vote.create(content: '2')
+    assert poll.can_have_average?
   end
 
   test '#remove_links_to should remove link from previous and next poll' do
