@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'poll/total/:id', controller: 'poll', action: 'total'
   post 'poll/:id/title', controller: 'poll', action: 'set_title'
   get 'poll/title/:id', controller: 'poll', action: 'title'
+  get 'poll/skip/:id', controller: 'poll', action: 'skip'
   get 'vote/index'
   root 'poll#go'
 

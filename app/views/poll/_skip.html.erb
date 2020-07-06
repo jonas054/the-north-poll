@@ -1,0 +1,12 @@
+<br/>
+Don't want to vote?
+<br/>
+<% if @poll.next_poll_id %>
+  <% edit_privilege = @edit_mode ? "&editkey=#{@next_poll.editkey}" : '' %>
+  <%=
+    link_to "Skip to next poll (#{@next_poll.title}) >",
+            "/poll/#{@next_poll.id}?key=#{@next_poll.key}#{edit_privilege}"
+  %>
+<% else %>
+  <%= link_to "Skip to results >", "/poll/list/#{@poll.id}" %>
+<% end %>

@@ -52,6 +52,12 @@ class PollController < ApplicationController
     render partial: 'title'
   end
 
+  def skip
+    find_current_and_next
+    @edit_mode = params[:editkey] == @poll.editkey
+    render partial: 'skip'
+  end
+
   alias list results
 
   def show

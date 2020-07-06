@@ -1,4 +1,4 @@
-<% @numerical_votes = true if @all.first.can_have_average? %>
+<% @numerical_votes = true if @all.all?(&:can_have_average?) %>
 
 <table>
   <tr>
