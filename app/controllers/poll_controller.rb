@@ -38,12 +38,12 @@ class PollController < ApplicationController
   end
 
   def results
-    find_current_and_next
+    @poll = find_poll
     @edit_mode = params[:editkey] == @poll.editkey
   end
 
   def single_results
-    @poll = find_poll
+    find_current_and_next
     render partial: 'single_results'
   end
 

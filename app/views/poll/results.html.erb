@@ -10,16 +10,3 @@
 %>
 
 <div id="<%= container_id %>">Loading...</div>
-
-<% if @poll.next_poll_id %>
-  <hr/>
-  <%=
-    edit_privilege = @edit_mode ? "&editkey=#{@next_poll.editkey}" : ''
-    link_to "Next poll >",
-            "/poll/#{@next_poll.id}?key=#{@next_poll.key}#{edit_privilege}"
-  %>
-<% elsif @poll.previous_poll_id %>
-  <hr/>
-  That's the last poll in the series.<br/>
-  <%= link_to "View all results.", "/poll/list/#{@poll.id}" %>
-<% end %>
