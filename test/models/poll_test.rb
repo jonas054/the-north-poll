@@ -1,4 +1,3 @@
-# coding: utf-8
 require 'test_helper'
 
 class PollTest < ActiveSupport::TestCase
@@ -38,7 +37,7 @@ class PollTest < ActiveSupport::TestCase
   test '#results should return all votes' do
     poll = Poll.find(22)
     assert_equal [2, 3], poll.results.keys
-    poll.results.keys.each do |choice|
+    poll.results.each_key do |choice|
       result = poll.results[choice]
       assert_equal 1, result.size
       assert_equal 22, result.first.poll_id
@@ -50,7 +49,7 @@ class PollTest < ActiveSupport::TestCase
     poll = Poll.create(id: 1, scale: Scale.create(list: '1.5,2,2.5'))
     poll.votes << Vote.create(content: '1.5') << Vote.create(content: '2')
     assert_equal [1.5, 2], poll.results.keys
-    poll.results.keys.each do |choice|
+    poll.results.each_key do |choice|
       result = poll.results[choice]
       assert_equal 1, result.size
       assert_equal 1, result.first.poll_id

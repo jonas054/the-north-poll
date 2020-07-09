@@ -134,9 +134,7 @@ class PollController < ApplicationController
       Poll.find(previous_poll_id).scale
     else
       scale_value = params[:scale][:list]
-      if scale_value == 'custom'
-        scale_value = Scale.encode(params[:custom_scale])
-      end
+      scale_value = Scale.encode(params[:custom_scale]) if scale_value == 'custom'
       Scale.find_or_create_by(list: scale_value)
     end
   end
@@ -158,7 +156,7 @@ class PollController < ApplicationController
   end
 
   def archive_old_votes
-    Vote.all.where(["updated_at < ?", 3.days.ago]).each do |vote|
+    Vote.all.where(['updated_at < ?', 3.days.ago]).each do |vote|
       vote.is_archived = true
       vote.save
     end

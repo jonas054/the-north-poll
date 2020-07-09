@@ -68,9 +68,9 @@ Style/ClassAndModuleChildren:
     - test/channels/application_cable/connection_test.rb
     - test/test_helper.rb
 
-Style/Encoding:
-  Exclude:
-    - app/models/scale.rb
-
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Style/EmptyMethod:
+  Exclude:
+    - 'app/controllers/*_controller.rb'

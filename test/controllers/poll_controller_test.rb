@@ -54,11 +54,11 @@ class PollControllerTest < ActionDispatch::IntegrationTest
          params: { title: 'ABC', scale: { list: 'Yes,No' } }
     poll = Poll.where(title: 'ABC').first
     poll.votes << Vote.create(updated_at: 1.year.ago) << Vote.create
-    assert !poll.votes.first.is_archived
-    assert !poll.votes.last.is_archived
+    assert_not poll.votes.first.is_archived
+    assert_not poll.votes.last.is_archived
     get "http://www.example.com/poll/#{poll.id}"
     assert_response :success
     assert poll.votes.first.is_archived
-    assert !poll.votes.last.is_archived
+    assert_not poll.votes.last.is_archived
   end
 end

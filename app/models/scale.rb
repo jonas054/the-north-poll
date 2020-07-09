@@ -1,5 +1,3 @@
-# coding: utf-8
-
 class Scale < ApplicationRecord
   has_many :polls, dependent: :destroy
 
