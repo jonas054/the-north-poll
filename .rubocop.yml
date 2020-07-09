@@ -39,6 +39,12 @@ Lint/RaiseException:
 Lint/StructNewOverride:
   Enabled: true
 
+Style/AccessorGrouping:
+  Enabled: true
+
+Style/BisectedAttrAccessor:
+  Enabled: true
+
 Style/ExponentialNotation:
   Enabled: true
 
@@ -49,6 +55,9 @@ Style/HashTransformKeys:
   Enabled: true
 
 Style/HashTransformValues:
+  Enabled: true
+
+Style/RedundantAssignment:
   Enabled: true
 
 Style/RedundantFetchBlock:
