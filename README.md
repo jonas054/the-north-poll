@@ -1,15 +1,39 @@
-# TODO
+# The North Poll
 
-- Move links away from the absolute bottom of the page. People risk touching
-  the back button of the browser on a mobile device.
-- Make it easier to create a copy of a poll with votes at zero.
+The North Poll is an online voting app designed for teams that want to
+vote on issues quickly and without hassle.
 
-# DONE
+The original use case was [OKR](https://en.wikipedia.org/wiki/OKR)
+confidence levels.
 
-- Polling (asynchronous updates of results)
-- Protect from voting in other people's poll. There should be a key that's
-  generated when the poll is created and that's needed in the URL (or as a
-  parameter) when voting.
-- Add standard deviation next to average.
-- Make it easier to distribute an invitation to vote. Should be a URL that's
-  always the same plus a (4 digit) number that's entered on the page.
+## Features
+
+##### A number of preset scales to choose from
+
+By _scale_, we mean the choices available in a vote, for examples the
+numbers 1 through 10, the Fibonacci series used for
+[planning poker](https://en.wikipedia.org/wiki/Planning_poker), or the
+thumbs up, thumbs down, and shrugging icons.
+
+##### Custom scales
+
+It's also possible to define your own scale for a single or series of
+poll. Just give them on the creation page with space or semi-colon
+between each item.
+
+##### Series of polls
+
+In a series of polls the choices are the same for each poll. A combined result
+is presented at the end.
+
+##### Live editing of poll titles
+
+The creator of a poll is directed to a page with links after the poll is
+created. One link goes to the poll and includes editing priviledges, another
+link goes to the same page but without priviledges. The second link is for
+distribution to participants.
+
+##### Calculation of averages and standard deviation
+
+When all choices are numeric, average and standard deviation is presented on
+the result pages.
