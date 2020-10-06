@@ -69,6 +69,7 @@ class PollController < ApplicationController
       @chart = GoogleQR.new(data: url, size: '500x500', margin: 4,
                             error_correction: 'L').to_s
     end
+    @choices_class = 'two-columns' if @poll.choices.size > 5
     @edit_mode = params[:editkey] == @poll.editkey
   end
 

@@ -25,6 +25,7 @@
   </h3>
 <% end %>
 <%= form_with(url: '/vote') do %>
+  <div class="<%= @choices_class %>">
   <% @poll.choices.each do |choice|  %>
     <%= radio_button("vote", "value", choice) %>
     <span class="radiotext"><%= choice %></span>
@@ -32,6 +33,7 @@
   <% end %>
   <%= hidden_field(:poll, :id) %>
   <%= hidden_field(:poll, :editkey) if @edit_mode %>
+  </div>
   <br/>
   <%= submit_tag("Vote") %>
 <% end %>
