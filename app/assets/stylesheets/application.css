@@ -29,6 +29,7 @@ h2 {
 
 .radiotext {
     vertical-align: bottom;
+    font-size: 16mm;
 }
 
 .radiofield {
@@ -48,7 +49,8 @@ h2 {
 }
 
 input[type='radio'] {
-    transform: scale(4);
+    height: 1em;
+    width: 1em;
     margin: 7mm 9mm 6mm 20mm;
 }
 
