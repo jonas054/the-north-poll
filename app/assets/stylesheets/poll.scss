@@ -7,6 +7,8 @@ td, th {
     padding: 10px;
 }
 
-.two-columns {
-   column-count: 2
+div.two-columns {
+    column-count: 2;
+    padding-top: 2mm;
+    padding-bottom: 2mm;
 }
