@@ -28,7 +28,8 @@ h2 {
 }
 
 .radiotext {
-    font-size: 16mm;
+    font-size: 20mm;
+    vertical-align: super;
 }
 
 .radiofield {
