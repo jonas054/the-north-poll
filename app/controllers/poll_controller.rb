@@ -89,9 +89,10 @@ class PollController < ApplicationController
 
   def creation_error_destination(previous_poll_id)
     if previous_poll_id
-      "/poll/create_linked/#{previous_poll_id}"
+      previous_poll = Poll.find(previous_poll_id)
+      "/poll/create_linked/#{previous_poll_id}?key=#{previous_poll.key}"
     else
-      '/?' + %w[title custom_scale].map do |key|
+      '/poll?' + %w[title custom_scale].map do |key|
         "#{key}=#{params[key.to_sym]}"
       end.join('&')
     end
