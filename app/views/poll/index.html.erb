@@ -14,7 +14,7 @@
 <%= form_with(url: 'poll') do %>
   <% Scale.default_lists.each_with_index do |list, ix| %>
     <%= radio_button("scale", "list", list.join(','), checked: ix == 0) %>
-    <span class="radiotext"><%= list.join(' ') %></span>
+    <span class="scaletext"><%= list.join(' ') %></span>
     <br/>
   <% end %>
   <div class="<%= flash.to_hash.dig('error', 'field') == 'custom_scale' ? 'error' : ''%>">

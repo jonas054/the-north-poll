@@ -32,6 +32,11 @@ h2 {
     vertical-align: super;
 }
 
+.scaletext {
+    font-size: 16mm;
+    vertical-align: super;
+}
+
 .radiofield {
     vertical-align: text-top;
 }
