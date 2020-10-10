@@ -17,7 +17,7 @@
     <span class="scaletext"><%= list.join(' ') %></span>
     <br/>
   <% end %>
-  <div class="<%= flash.to_hash.dig('error', 'field') == 'custom_scale' ? 'error' : ''%>">
+  <div style="display: flex;" class="<%= flash.to_hash.dig('error', 'field') == 'custom_scale' ? 'error' : ''%>">
     <%= radio_button("scale", "list", "custom") %>
     <%= text_field_tag(:custom_scale, params['custom_scale'], onfocus:
     'unhide("scalehelp")', onfocusout: 'hide("scalehelp")', class: "radiofield") %>
