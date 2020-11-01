@@ -1,4 +1,4 @@
-<% if @edit_mode %>
+<% if @edit_mode && @poll.votes.size > 0 %>
   <%= @poll.title %> (<%= pluralize(@poll.votes.size, 'vote') %>)
 <% else %>
   <%= @poll.title %>
