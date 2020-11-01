@@ -25,11 +25,11 @@ class Poll < ApplicationRecord
   end
 
   def results
+    res = current_votes.group_by(&:content)
     if can_have_average?
-      current_votes.group_by { |v| to_number(v.content) }
-    else
-      current_votes.group_by(&:content)
+      res = Hash[*res.sort_by { |k, _| to_number(k) }.flatten(1)]
     end
+    res
   end
 
   def can_have_average?
@@ -38,11 +38,11 @@ class Poll < ApplicationRecord
 
   def standard_deviation
     avg = average
-    Math.sqrt(mapped_mean { |v| (v.content.to_f - avg)**2 })
+    Math.sqrt(mapped_mean { |v| (to_number(v.content) - avg)**2 })
   end
 
   def average
-    mapped_mean { |v| v.content.to_f }
+    mapped_mean { |v| to_number(v.content) }
   end
 
   delegate :choices, to: :scale
@@ -63,7 +63,7 @@ class Poll < ApplicationRecord
   private
 
   def number?(string)
-    true if Float(string) rescue false # rubocop:disable Style/RescueModifier
+    string =~ /\d+/
   end
 
   def set_to_nil(linked_id, key)

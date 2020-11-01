@@ -1,7 +1,8 @@
 module PollHelper
   def to_number(string)
-    Integer(string)
+    digits = string[/\d+\.?\d*/]
+    Integer(digits)
   rescue StandardError
-    Float(string)
+    Float(digits)
   end
 end

@@ -3,7 +3,7 @@
     <th>Choice</th>
     <th>Number of votes</th>
   </tr>
-  <% @poll.results.sort.each do |content, votes| %>
+  <% @poll.results.each do |content, votes| %>
     <tr>
       <td><%= content %></td>
       <td><%= pluralize(votes.size, 'vote') %></td>
