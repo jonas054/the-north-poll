@@ -50,6 +50,7 @@ class PollController < ApplicationController
 
   def title
     @poll = find_poll
+    @edit_mode = params[:editkey] == @poll.editkey
     render partial: 'title'
   end
 
