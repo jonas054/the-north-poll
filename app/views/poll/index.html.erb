@@ -12,25 +12,34 @@
 </script>
 
 <%= form_with(url: 'poll') do %>
-  <% Scale.default_lists.each_with_index do |list, ix| %>
-    <%= radio_button("scale", "list", list.join(','), checked: ix == 0) %>
-    <span class="scaletext"><%= list.join(' ') %></span>
-    <br/>
-  <% end %>
-  <div style="display: flex;" class="<%= flash.to_hash.dig('error', 'field') == 'custom_scale' ? 'error' : ''%>">
-    <%= radio_button("scale", "list", "custom") %>
-    <%= text_field_tag(:custom_scale, params['custom_scale'], onfocus:
-    'unhide("scalehelp")', onfocusout: 'hide("scalehelp")', class: "radiofield") %>
-  </div>
-  <span hidden id="scalehelp" class="help">Enter a custom set of choices for the poll. Use space or semi-colon as separator.</span>
-  <br/>
-  <br/>
-
   <%= label_tag(:title, "Title:") %>
   <%= text_field_tag(:title, params['title'], onfocus: 'unhide("titlehelp")', onfocusout: 'hide("titlehelp")', class: flash.to_hash.dig('error', 'field') == 'title' ? 'error' : '') %>
   <br/>
   <span hidden id="titlehelp" class="help">To enter titles for a whole series of polls, use semi-colon as separator.</span>
-  <br/>
+<table>
+  <tbody>
+  <% Scale.default_lists.each_with_index do |list, ix| %>
+  <tr>
+  <td style="border: 0px">
+    <%= radio_button("scale", "list", list.join(','), checked: ix == 0) %>
+  </td>
+  <td style="border: 0px">
+    <span class="scaletext"><%= list.join(' ') %></span>
+  </td>
+  </tr>
+  <% end %>
+  <tr class="<%= flash.to_hash.dig('error', 'field') == 'custom_scale' ? 'error' : ''%>">
+  <td style="border: 0px">
+    <%= radio_button("scale", "list", "custom") %>
+  </td>
+  <td style="border: 0px">
+    <%= text_field_tag(:custom_scale, params['custom_scale'], onfocus:
+    'unhide("scalehelp")', onfocusout: 'hide("scalehelp")', class: "radiofield") %>
+    <span hidden id="scalehelp" class="help">Enter a custom set of choices for the poll. Use space or semi-colon as separator.</span>
+  </td>
+  </tr>
+  </tbody>
+</table>
 
   <div class="error-message">
     <%= flash.to_hash.dig('error', 'text') %>
