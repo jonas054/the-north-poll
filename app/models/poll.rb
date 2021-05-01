@@ -26,9 +26,7 @@ class Poll < ApplicationRecord
 
   def results
     res = current_votes.group_by(&:content)
-    if can_have_average?
-      res = Hash[*res.sort_by { |k, _| to_number(k) }.flatten(1)]
-    end
+    res = Hash[*res.sort_by { |k, _| to_number(k) }.flatten(1)] if can_have_average?
     res
   end
 
@@ -70,7 +68,7 @@ class Poll < ApplicationRecord
     Poll.update(linked_id, key => nil) if linked_id && Poll.exists?(linked_id)
   end
 
-  def mapped_mean
-    current_votes.map { |v| yield v }.reduce(0.0, :+) / current_votes.size
+  def mapped_mean(&block)
+    current_votes.map(&block).reduce(0.0, :+) / current_votes.size
   end
 end

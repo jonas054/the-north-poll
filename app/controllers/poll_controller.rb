@@ -72,9 +72,7 @@ class PollController < ApplicationController
                             error_correction: 'L').to_s
     end
     choices = @poll.choices
-    if choices.size > 5 && choices.all? { |choice| choice.chars.length < 6 }
-      @choices_class = 'two-columns'
-    end
+    @choices_class = 'two-columns' if choices.size > 5 && choices.all? { |choice| choice.chars.length < 6 }
     @edit_mode = params[:editkey] == @poll.editkey
   end
 

@@ -4,6 +4,7 @@ require:
   - rubocop-rails
 
 AllCops:
+  NewCops: enable
   Exclude:
     - bin/bundle
     - bin/rails
@@ -21,7 +22,6 @@ AllCops:
     - node_modules/**/*
     - tmp/**/*
     - .git/**/*
-
 
 Layout/EmptyLinesAroundAttributeAccessor:
   Enabled: true
@@ -85,3 +85,10 @@ Style/FrozenStringLiteralComment:
 Style/EmptyMethod:
   Exclude:
     - 'app/controllers/*_controller.rb'
+
+Style/Documentation:
+  inherit_mode:
+    merge:
+      - Exclude
+  Exclude:
+    - test/**/*.rb
