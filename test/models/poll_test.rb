@@ -13,8 +13,7 @@ class PollTest < ActiveSupport::TestCase
     assert Poll.create.average.nan?
   end
 
-  test '#standard_deviation should return the standard deviation of vote ' \
-       'contents' do
+  test '#standard_deviation should return the standard deviation of vote contents' do
     poll = Poll.create(id: 1, scale: Scale.create(list: '1,2,3,4,5,6,7,8,9,10'))
     poll.votes << Vote.create(content: '1')
     assert_equal 0, poll.standard_deviation
@@ -62,8 +61,7 @@ class PollTest < ActiveSupport::TestCase
     assert_equal true, poll.can_have_average?
   end
 
-  test '#can_have_average? should return false if not all votes are ' \
-       'numbers' do
+  test '#can_have_average? should return false if not all votes are numbers' do
     poll = Poll.create(scale: Scale.new(list: '☕️,½,1,2,3,5,8,13,20,40,100,?'))
     poll.votes << Vote.create(content: '1') << Vote.create(content: '☕️')
     assert_equal false, poll.can_have_average?
@@ -75,8 +73,7 @@ class PollTest < ActiveSupport::TestCase
     assert poll.can_have_average?
   end
 
-  test 'can_have_average? returns true for a list containing integers and ' \
-       'floats' do
+  test 'can_have_average? returns true for a list containing integers and floats' do
     poll = Poll.create(scale: Scale.new(list: '1,1.5,2,2.5,3'))
     poll.votes << Vote.create(content: '1.5') << Vote.create(content: '2')
     assert poll.can_have_average?
@@ -84,10 +81,8 @@ class PollTest < ActiveSupport::TestCase
 
   test '#remove_links_to should remove link from previous and next poll' do
     poll1 = Poll.create(scale: Scale.new(list: '1,2,3'))
-    poll2 = Poll.create(scale: Scale.new(list: '1,2,3'),
-                        previous_poll_id: poll1.id)
-    poll3 = Poll.create(scale: Scale.new(list: '1,2,3'),
-                        previous_poll_id: poll2.id)
+    poll2 = Poll.create(scale: Scale.new(list: '1,2,3'), previous_poll_id: poll1.id)
+    poll3 = Poll.create(scale: Scale.new(list: '1,2,3'), previous_poll_id: poll2.id)
     Poll.update(poll1.id, next_poll_id: poll2.id)
     Poll.update(poll2.id, next_poll_id: poll3.id)
     Poll.update(poll2.id, previous_poll_id: poll1.id)

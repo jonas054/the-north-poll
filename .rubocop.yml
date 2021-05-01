@@ -29,6 +29,9 @@ Layout/EmptyLinesAroundAttributeAccessor:
 Layout/SpaceAroundMethodCallOperator:
   Enabled: true
 
+Layout/RedundantLineBreak:
+  Enabled: true
+
 Lint/DeprecatedOpenSSLConstant:
   Enabled: true
 
@@ -92,3 +95,6 @@ Style/Documentation:
       - Exclude
   Exclude:
     - test/**/*.rb
+
+Metrics/LineLength:
+  Max: 90

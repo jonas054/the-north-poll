@@ -72,7 +72,9 @@ class PollController < ApplicationController
                             error_correction: 'L').to_s
     end
     choices = @poll.choices
-    @choices_class = 'two-columns' if choices.size > 5 && choices.all? { |choice| choice.chars.length < 6 }
+    @choices_class = 'two-columns' if choices.size > 5 && choices.all? do |choice|
+                                        choice.chars.length < 6
+                                      end
     @edit_mode = params[:editkey] == @poll.editkey
   end
 
@@ -95,23 +97,18 @@ class PollController < ApplicationController
       "/poll/create_linked/#{previous_poll_id}?key=#{previous_poll.key}"
     else
       '/poll?' + %w[title custom_scale].map do |key|
-        "#{key}=#{params[key.to_sym]}"
-      end.join('&')
+                   "#{key}=#{params[key.to_sym]}"
+                 end.join('&')
     end
   end
 
   def validate_params
     if params[:custom_scale].present? && params[:scale][:list] != 'custom'
-      flash[:error] = {
-        field: 'custom_scale',
-        text: 'Custom scale filled in but not selected'
-      }
-    elsif params[:custom_scale].blank? &&
-          params.dig(:scale, :list) == 'custom'
-      flash[:error] = {
-        field: 'custom_scale',
-        text: 'Custom scale selected but not filled in'
-      }
+      flash[:error] =
+        { field: 'custom_scale', text: 'Custom scale filled in but not selected' }
+    elsif params[:custom_scale].blank? && params.dig(:scale, :list) == 'custom'
+      flash[:error] =
+        { field: 'custom_scale', text: 'Custom scale selected but not filled in' }
     elsif params[:title].blank?
       flash[:error] = { field: 'title', text: 'No title given' }
     end
