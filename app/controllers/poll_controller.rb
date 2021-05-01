@@ -72,9 +72,9 @@ class PollController < ApplicationController
                             error_correction: 'L').to_s
     end
     choices = @poll.choices
-    @choices_class = 'two-columns' if choices.size > 5 && choices.all? do |choice|
-                                        choice.chars.length < 6
-                                      end
+    if choices.size > 5 && choices.all? { |choice| choice.chars.length < 6 }
+      @choices_class = 'two-columns'
+    end
     @edit_mode = params[:editkey] == @poll.editkey
   end
 
@@ -96,9 +96,8 @@ class PollController < ApplicationController
       previous_poll = Poll.find(previous_poll_id)
       "/poll/create_linked/#{previous_poll_id}?key=#{previous_poll.key}"
     else
-      '/poll?' + %w[title custom_scale].map do |key|
-                   "#{key}=#{params[key.to_sym]}"
-                 end.join('&')
+      '/poll?' +
+        %w[title custom_scale].map { |key| "#{key}=#{params[key.to_sym]}" }.join('&')
     end
   end
 
