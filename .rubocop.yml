@@ -96,5 +96,5 @@ Style/Documentation:
   Exclude:
     - test/**/*.rb
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 90
