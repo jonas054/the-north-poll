@@ -96,7 +96,7 @@ class PollController < ApplicationController
       previous_poll = Poll.find(previous_poll_id)
       "/poll/create_linked/#{previous_poll_id}?key=#{previous_poll.key}"
     else
-      '/poll?' +
+      '/poll?' + # rubocop:disable Style/StringConcatenation
         %w[title custom_scale].map { |key| "#{key}=#{params[key.to_sym]}" }.join('&')
     end
   end

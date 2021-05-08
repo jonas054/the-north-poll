@@ -4,7 +4,7 @@ class Poll < ApplicationRecord
   has_many :votes, dependent: :destroy
   belongs_to :scale
 
-  SECRET = 432473648
+  SECRET = 432_473_648
 
   include ActionView::Helpers::TextHelper # pluralize()
   include PollHelper # to_number()

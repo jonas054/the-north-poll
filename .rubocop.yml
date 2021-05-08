@@ -44,6 +44,10 @@ Lint/RaiseException:
 Lint/StructNewOverride:
   Enabled: true
 
+Rails/BulkChangeTable:
+  Exclude:
+    - 'db/migrate/20191014150947_add_next_poll_id_to_polls.rb'
+
 Style/AccessorGrouping:
   Enabled: true
 
@@ -95,6 +99,8 @@ Style/Documentation:
       - Exclude
   Exclude:
     - test/**/*.rb
+    - db/migrate/*.rb
+
 
 Layout/LineLength:
   Max: 90
