@@ -19,7 +19,7 @@
 <table>
   <tbody>
   <% Scale.default_lists.each_with_index do |list, ix| %>
-  <tr>
+  <tr class="striped">
   <td style="border: 0px">
     <%= radio_button("scale", "list", list.join(','), checked: ix == 0) %>
   </td>
@@ -28,7 +28,7 @@
   </td>
   </tr>
   <% end %>
-  <tr class="<%= flash.to_hash.dig('error', 'field') == 'custom_scale' ? 'error' : ''%>">
+  <tr class="striped <%= flash.to_hash.dig('error', 'field') == 'custom_scale' ? 'error' : ''%>">
   <td style="border: 0px">
     <%= radio_button("scale", "list", "custom") %>
   </td>

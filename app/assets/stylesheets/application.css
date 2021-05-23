@@ -87,6 +87,10 @@ input[type='radio'] {
     width: 30%;
 }
 
+tr.striped:nth-child(even) {
+    background-color: aliceblue;
+}
+
 /* Clear floats after the columns */
 .row:after {
   content: "";
