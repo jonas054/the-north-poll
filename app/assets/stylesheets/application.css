@@ -94,11 +94,11 @@ tr.striped:nth-child(even) {
 }
 
 span.invisible-even {
-    color: aliceblue;
+    color: white;
 }
 
 span.invisible-odd {
-    color: white;
+    color: aliceblue;
 }
 
 /* Clear floats after the columns */
