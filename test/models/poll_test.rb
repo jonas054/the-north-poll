@@ -56,15 +56,28 @@ class PollTest < ActiveSupport::TestCase
     end
   end
 
-  test '#can_have_average? should return true if all choices are numbers' do
+  test '#can_have_average? should return false if there are no votes' do
     poll = Poll.create(id: 7, scale: Scale.new(list: '1,2,3,4,5,6,7,8,9,10'))
-    assert_equal true, poll.can_have_average?
+    assert_equal false, poll.can_have_average?
   end
 
-  test '#can_have_average? should return false if not all votes are numbers' do
+  test '#can_have_average? should return false if only one vote is a number' do
     poll = Poll.create(scale: Scale.new(list: '☕️,½,1,2,3,5,8,13,20,40,100,?'))
     poll.votes << Vote.create(content: '1') << Vote.create(content: '☕️')
     assert_equal false, poll.can_have_average?
+    assert_equal ['1', '☕️'], poll.results.keys
+  end
+
+  test '#can_have_average? should return true if two votes are numbers' do
+    poll = Poll.create(scale: Scale.new(list: '🐞 1,🐀 2,🐩 3,🐑 5,🐬 8,🐪 13,🐳 20,🤷‍♂️,' \
+                                              '🕷 1,🦂 2,🐍 3,🐆 5,🦈 8,🦏 13,🦖 20'))
+    poll.votes <<
+      Vote.create(content: '🐩 3') <<
+      Vote.create(content: '🐑 5') <<
+      Vote.create(content: '🤷‍♂️')
+    assert_equal true, poll.can_have_average?
+    assert_equal 4, poll.average
+    assert_equal ['🐩 3', '🐑 5', '🤷‍♂️'], poll.results.keys
   end
 
   test 'can_have_average? returns true for a list containing only integers' do

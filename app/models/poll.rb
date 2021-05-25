@@ -26,12 +26,16 @@ class Poll < ApplicationRecord
 
   def results
     res = current_votes.group_by(&:content)
-    res = Hash[*res.sort_by { |k, _| to_number(k) }.flatten(1)] if can_have_average?
-    res
+    if can_have_average?
+      Hash[*res.sort_by { |k, _| number?(k) ? to_number(k) : 1_000_000_000 }
+               .flatten(1)]
+    else
+      res
+    end
   end
 
   def can_have_average?
-    current_votes.all? { |vote| number?(vote.content) }
+    current_votes.count { |vote| number?(vote.content) } > 1
   end
 
   def standard_deviation
@@ -60,15 +64,19 @@ class Poll < ApplicationRecord
 
   private
 
-  def number?(string)
-    string =~ /\d+/
-  end
-
   def set_to_nil(linked_id, key)
     Poll.update(linked_id, key => nil) if linked_id && Poll.exists?(linked_id)
   end
 
   def mapped_mean(&block)
-    current_votes.map(&block).reduce(0.0, :+) / current_votes.size
+    numerical_votes.map(&block).reduce(0.0, :+) / numerical_votes.size
+  end
+
+  def numerical_votes
+    current_votes.select { |v| number?(v.content) }
+  end
+
+  def number?(string)
+    string =~ /\d+/
   end
 end
