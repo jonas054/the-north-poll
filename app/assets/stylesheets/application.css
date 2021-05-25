@@ -32,9 +32,11 @@ h2 {
     vertical-align: super;
 }
 
-.scaletext {
+p.scaletext {
     font-size: 16mm;
     vertical-align: super;
+    margin-block-start: 0.1em;
+    margin-block-end: 0.1em;
 }
 
 .radiofield {
@@ -89,6 +91,14 @@ input[type='radio'] {
 
 tr.striped:nth-child(even) {
     background-color: aliceblue;
+}
+
+span.invisible-even {
+    color: aliceblue;
+}
+
+span.invisible-odd {
+    color: white;
 }
 
 /* Clear floats after the columns */

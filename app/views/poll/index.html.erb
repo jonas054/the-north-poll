@@ -24,7 +24,14 @@
     <%= radio_button("scale", "list", list.join(','), checked: ix == 0) %>
   </td>
   <td style="border: 0px">
-    <span class="scaletext"><%= list.join(' ') %></span>
+    <p class="scaletext">
+      <% list[0..-2].each do |choice| %>
+        <% invisible_class = 'invisible-' + (ix % 2 == 0 ? 'even' : 'odd') %>
+        <%= choice %>
+        <span class="<%= invisible_class %>">;</span>
+      <% end %>
+      <%= list.last %>
+    </p>
   </td>
   </tr>
   <% end %>
