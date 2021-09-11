@@ -1,4 +1,4 @@
-require 'google-qr'
+require 'google_qr'
 
 module ApplicationHelper
 end
