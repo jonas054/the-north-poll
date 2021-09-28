@@ -6,6 +6,8 @@ vote on issues quickly and without hassle.
 The original use case was [OKR](https://en.wikipedia.org/wiki/OKR)
 confidence levels.
 
+![image](https://user-images.githubusercontent.com/336720/135056201-a93c5e8c-1c51-4c97-b2c7-74aa4802e50c.png)
+
 ## Features
 
 ##### A number of preset scales to choose from
