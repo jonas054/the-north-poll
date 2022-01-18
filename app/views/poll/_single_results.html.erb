@@ -6,7 +6,10 @@
   <% @poll.results.each do |content, votes| %>
     <tr>
       <td><%= content %></td>
-      <td><%= pluralize(votes.size, 'vote') %></td>
+      <td>
+        <%= '🟦' * votes.size %>
+        <%= " #{votes.size}" %>
+      </td>
     </tr>
   <% end %>
 </table>
