@@ -69,7 +69,7 @@ class PollController < ApplicationController
     elsif params.key?(:qr)
       url = if @poll.title == 'RA-1234'
               # Rickrolling easter egg.
-              'https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=6s'
+              'https://tinyurl.com/yckkezm3'
             else
               "https://#{SITE}/poll/#{@poll.id}?qr&key=#{@poll.key}"
             end
