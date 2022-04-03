@@ -67,14 +67,7 @@ class PollController < ApplicationController
     if params[:key] != @poll.key
       render 'authorization_error'
     elsif params.key?(:qr)
-      url = if @poll.title == 'RA-1234'
-              # Rickrolling easter egg.
-              'https://tinyurl.com/yckkezm3'
-            else
-              "https://#{SITE}/poll/#{@poll.id}?qr&key=#{@poll.key}"
-            end
-      @chart = GoogleQr.new(data: url, size: '500x500', margin: 4,
-                            error_correction: 'L').to_s
+      @chart = qr_code
     end
     choices = @poll.choices
     if choices.size > 5 && choices.all? { |choice| choice.chars.length < 6 }
@@ -95,6 +88,15 @@ class PollController < ApplicationController
   end
 
   private
+
+  def qr_code
+    url = "https://#{SITE}/poll/#{@poll.id}?qr&key=#{@poll.key}"
+
+    # Rickrolling easter egg.
+    url = 'https://tinyurl.com/yckkezm3' if @poll.title == 'RA-1234'
+
+    GoogleQr.new(data: url, size: '500x500', margin: 4, error_correction: 'L').to_s
+  end
 
   def creation_error_destination(previous_poll_id)
     if previous_poll_id
