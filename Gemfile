@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '~> 3.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
-gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
+gem 'rails', '~> 6.1.5'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -35,7 +35,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'listen', '~> 3.3'
   # Access an interactive console on exception pages or by calling 'console'
   # anywhere in the code.
   gem 'web-console', '>= 4.1.0'
@@ -43,9 +42,10 @@ group :development do
   # request in your browser.  Can be configured to work on production as well
   # see:
   # https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
+  gem 'listen', '~> 3.3'
   gem 'rack-mini-profiler', '~> 2.0'
-  gem 'rubocop', '~> 1.20.0'
-  gem 'rubocop-rails', '~> 2.12.2'
+  gem 'rubocop', '~> 1.26.1'
+  gem 'rubocop-rails', '~> 2.14.2'
   # Spring speeds up development by keeping your application running in the
   # background. Read more: https://github.com/rails/spring
   gem 'spring'
@@ -55,7 +55,7 @@ group :test do
   gem 'simplecov', '~> 0.13.0'
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 3.26'
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '>= 4.0.0.rc1'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
 end
