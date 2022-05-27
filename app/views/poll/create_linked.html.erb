@@ -1,3 +1,14 @@
+<%=
+  container_class = "liveupdate-#{rand(1_000_000_000)}"
+  first = @previous_poll.chain.first
+  edit_privilege = @edit_mode ? "?editkey=#{@poll.editkey}" : ''
+  render partial: "polling", locals: {
+    path: "/poll/title/#{first.id}#{edit_privilege}",
+    interval: 3000,
+    container_class: container_class
+  }
+%>
+
 <%= form_with(url: '/poll') do %>
   <%= label_tag(:title, "Title:") %>
   <%= text_field_tag(:title, '', class: flash.to_hash.dig('error', 'field') == 'title' ? 'error' : '') %>
@@ -12,13 +23,12 @@
 <% end %>
 
 <br/>
-<% first = @previous_poll.chain.first %>
 
 <h3>Link to edit and vote:</h3>
-<%= link_to first.title, "/poll/#{first.id}?qr&key=#{first.key}&editkey=#{first.editkey}" %>
+<a class="<%= container_class %>" href="/poll/<%= first.id%>?qr&amp;key=<%= first.key %>&editkey=<%= first.editkey %>">---</a>
 
 <h3>Link to vote:</h3>
-<%= link_to first.title, "/poll/#{first.id}?qr&key=#{first.key}" %>
+<a class="<%= container_class %>" href="/poll/<%= first.id%>?qr&amp;key=<%= first.key %>">---</a>
 
 <% @previous_poll.chain[1..-1].each do |poll| %>
   <br/>

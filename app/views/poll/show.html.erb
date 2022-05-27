@@ -1,15 +1,15 @@
 <%=
+  container_class = "liveupdate-#{rand(1_000_000_000)}"
   edit_privilege = @edit_mode ? "?editkey=#{@poll.editkey}" : ''
-  title_container_id = rand(1_000_000_000)
   render partial: "polling", locals: {
     path: "/poll/title/#{@poll.id}#{edit_privilege}",
     interval: 3000,
-    container_id: title_container_id
+    container_class: container_class
   }
 %>
 
 <h3>
-  <div id="<%= title_container_id %>"><%= @poll.title %></div>
+  <div class="<%= container_class %>"><%= @poll.title %></div>
 </h3>
 
 <% if @edit_mode %>
@@ -38,16 +38,16 @@
 <% end %>
 
 <%=
+  skip_container_class = "liveupdate-skip-#{rand(1_000_000_000)}"
   edit_privilege = @edit_mode ? "?editkey=#{@poll.editkey}" : ''
-  skip_container_id = rand(1_000_000_000)
   render partial: "polling", locals: {
     path: "/poll/skip/#{@poll.id}#{edit_privilege}",
     interval: 3000,
-    container_id: skip_container_id
+    container_class: skip_container_class
   }
 %>
 
-<div id="<%= skip_container_id %>">Loading...</div>
+<div class="<%= skip_container_class %>">Loading...</div>
 
 <br/>
 <% if @chart %>
