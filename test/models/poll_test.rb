@@ -53,16 +53,14 @@ class PollTest < ActiveSupport::TestCase
 
     Poll.remove_old
 
-    # Old polls and votes don't exist after calling remove_old.
-    [poll0, poll1].each do |poll|
-      assert_raises(ActiveRecord::RecordNotFound) { Poll.find(poll.id) }
-      poll.votes.each do |v|
-        assert_raises(ActiveRecord::RecordNotFound) { Vote.find(v.id) }
-      end
+    # Unchained old polls and votes don't exist after calling remove_old.
+    assert_raises(ActiveRecord::RecordNotFound) { Poll.find(poll0.id) }
+    poll0.votes.each do |v|
+      assert_raises(ActiveRecord::RecordNotFound) { Vote.find(v.id) }
     end
 
-    # Newer polls and votes still exist.
-    [poll2].each do |poll|
+    # Newer polls and old polls chained to newer polls still exist.
+    [poll1, poll2].each do |poll|
       # assert_equal old_date.month, Poll.find(poll.id).updated_at.month
       Poll.find(poll.id)
       poll.votes.each { Vote.find(_1.id) }
