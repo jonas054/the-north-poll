@@ -33,6 +33,51 @@ class PollTest < ActiveSupport::TestCase
     assert_equal %w[1 3 3], poll.current_votes.map(&:content)
   end
 
+  test '.remove_old should remove polls and votes that are older than 1 month' do
+    old_date = 2.months.ago
+    scale = Scale.create(list: '1,2,3,4,5,6,7,8,9,10')
+    poll0 = create_poll_with_votes(scale, old_date)
+    poll1 = create_poll_with_votes(scale, old_date)
+    poll2 = create_poll_with_votes(scale, 2.days.ago)
+
+    link(poll1, poll2)
+    Poll.update(poll1.id, updated_at: old_date)
+    Poll.update(poll2.id, updated_at: old_date)
+
+    # Polls and votes exist before calling remove_old.
+    [poll0, poll1, poll2].each do |poll|
+      assert_equal old_date.month, Poll.find(poll.id).updated_at.month
+      Poll.find(poll.id)
+      poll.votes.each { Vote.find(_1.id) }
+    end
+
+    Poll.remove_old
+
+    # Old polls and votes don't exist after calling remove_old.
+    [poll0, poll1].each do |poll|
+      assert_raises(ActiveRecord::RecordNotFound) { Poll.find(poll.id) }
+      poll.votes.each do |v|
+        assert_raises(ActiveRecord::RecordNotFound) { Vote.find(v.id) }
+      end
+    end
+
+    # Newer polls and votes still exist.
+    [poll2].each do |poll|
+      # assert_equal old_date.month, Poll.find(poll.id).updated_at.month
+      Poll.find(poll.id)
+      poll.votes.each { Vote.find(_1.id) }
+    end
+  end
+
+  def create_poll_with_votes(scale, updated_at)
+    poll = Poll.create(scale: scale, updated_at: updated_at)
+    poll.votes << Vote.create(content: '1', is_archived: false, updated_at: updated_at)
+    poll.votes << Vote.create(content: '1', is_archived: true, updated_at: updated_at)
+    poll.votes << Vote.create(content: '3', updated_at: updated_at)
+    poll.votes << Vote.create(content: '3', updated_at: updated_at)
+    poll
+  end
+
   test '#results should return all votes' do
     poll = Poll.find(22)
     assert_equal %w[2 3], poll.results.keys
@@ -96,12 +141,15 @@ class PollTest < ActiveSupport::TestCase
     poll1 = Poll.create(scale: Scale.new(list: '1,2,3'))
     poll2 = Poll.create(scale: Scale.new(list: '1,2,3'), previous_poll_id: poll1.id)
     poll3 = Poll.create(scale: Scale.new(list: '1,2,3'), previous_poll_id: poll2.id)
-    Poll.update(poll1.id, next_poll_id: poll2.id)
-    Poll.update(poll2.id, next_poll_id: poll3.id)
-    Poll.update(poll2.id, previous_poll_id: poll1.id)
-    Poll.update(poll3.id, previous_poll_id: poll2.id)
+    link(poll1, poll2)
+    link(poll2, poll3)
     Poll.find(poll2.id).remove_links_to
     assert_nil Poll.find(poll1.id).next_poll_id
     assert_nil Poll.find(poll3.id).previous_poll_id
+  end
+
+  def link(poll1, poll2)
+    Poll.update(poll1.id, next_poll_id: poll2.id)
+    Poll.update(poll2.id, previous_poll_id: poll1.id)
   end
 end

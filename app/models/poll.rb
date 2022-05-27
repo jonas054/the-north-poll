@@ -62,6 +62,22 @@ class Poll < ApplicationRecord
     set_to_nil(next_poll_id, :previous_poll_id)
   end
 
+  # Remove old polls with only old votes. Also remove scales that are
+  # no longer used.
+  def self.remove_old
+    age_limit = 1.month.ago
+    oldest = all.select do |poll|
+      poll.updated_at < age_limit &&
+        poll.votes.all? { |vote| vote.updated_at < age_limit }
+    end
+
+    oldest.each do |old|
+      old.remove_links_to
+      old.scale.destroy if old.scale&.polls == [old]
+      old.destroy
+    end
+  end
+
   private
 
   def set_to_nil(linked_id, key)

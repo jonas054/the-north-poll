@@ -147,20 +147,8 @@ class PollController < ApplicationController
     end
   end
 
-  # Remove old polls with only old votes. Also remove scales that are
-  # no longer used.
   def do_housekeeping
-    age_limit = 1.month.ago
-    oldest = Poll.all.select do |poll|
-      poll.updated_at < age_limit &&
-        poll.votes.all? { |vote| vote.updated_at < age_limit }
-    end
-
-    oldest.each do |old|
-      old.remove_links_to
-      old.scale.destroy if old.scale&.polls == [old]
-      old.destroy
-    end
+    Poll.remove_old
   end
 
   def archive_old_votes
