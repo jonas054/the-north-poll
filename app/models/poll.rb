@@ -87,8 +87,7 @@ class Poll < ApplicationRecord
   end
 
   def old?
-    age_limit = 1.month.ago
-    updated_at < age_limit && votes.all? { _1.old?(age_limit) }
+    updated_at < 1.month.ago && votes.all? { _1.old? }
   end
 
   private

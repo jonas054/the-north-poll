@@ -149,6 +149,7 @@ class PollController < ApplicationController
 
   def do_housekeeping
     Poll.remove_old
+    Vote.remove_old
   end
 
   def archive_old_votes
