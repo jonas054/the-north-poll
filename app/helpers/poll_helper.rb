@@ -3,6 +3,6 @@ module PollHelper
     digits = string[/\d+\.?\d*/]
     Integer(digits)
   rescue StandardError
-    Float(digits)
+    digits ? Float(digits) : 0
   end
 end
