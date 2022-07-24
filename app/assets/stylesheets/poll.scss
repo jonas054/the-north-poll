@@ -7,6 +7,10 @@ td, th {
     padding: 10px;
 }
 
+td.noborder {
+    border: 0px;
+}
+
 div.two-columns {
     column-count: 2;
     padding-top: 2mm;

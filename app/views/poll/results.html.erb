@@ -2,9 +2,9 @@
 
 <%=
   container_class = "liveupdate-#{rand(1_000_000_000)}"
-  edit_privilege = @edit_mode ? "?editkey=#{@poll.editkey}" : ''
+  edit_privilege = @edit_mode ? "&editkey=#{@poll.editkey}" : ''
   render partial: "polling", locals: {
-    path: "/poll/#{@poll.id}/single_results#{edit_privilege}",
+    path: "/poll/#{@poll.id}/single_results?vote=#{@vote}#{edit_privilege}",
     interval: 3000,
     container_class: container_class
   }

@@ -10,6 +10,9 @@
         <%= '🟦 ' * votes.size %>
         <%= votes.size %>
       </td>
+      <td class="noborder">
+        <%= @vote == content ? '⬅ you' : '' %>
+      </td>
     </tr>
   <% end %>
 </table>
