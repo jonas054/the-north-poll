@@ -1,1 +1,5 @@
-<%= @poll.title %> (<%= pluralize(@poll.current_votes.size, 'vote') %>)
+<% if @poll.current_votes.size > 0 %>
+  <%= @poll.title %> (<%= pluralize(@poll.current_votes.size, 'vote') %>)
+<% else %>
+  <%= @poll.title %>
+<% end %>
