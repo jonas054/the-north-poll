@@ -3,7 +3,7 @@ class PollController < ApplicationController
 
   before_action :validate_params, only: [:create]
   before_action :do_housekeeping, only: [:create]
-  before_action :archive_old_votes, only: [:show]
+  before_action :archive_old_votes, only: %i[show create_linked]
 
   def index
   end
@@ -155,7 +155,7 @@ class PollController < ApplicationController
   end
 
   def archive_old_votes
-    Vote.all.where(['updated_at < ?', 3.days.ago]).each do |vote|
+    Vote.all.where(['updated_at < ?', 12.hours.ago]).each do |vote|
       vote.is_archived = true
       vote.save
     end
