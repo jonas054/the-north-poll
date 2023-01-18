@@ -1,6 +1,4 @@
 <br/>
-Don't want to vote?
-<br/>
 <% if @poll.next_poll_id %>
   <% edit_privilege = @edit_mode ? "&editkey=#{@next_poll.editkey}" : '' %>
   <%=
@@ -8,5 +6,13 @@ Don't want to vote?
             "/poll/#{@next_poll.id}?key=#{@next_poll.key}#{edit_privilege}"
   %>
 <% else %>
+  <% if @edit_mode %>
+    <%=
+      link_to "Add more polls to this series >",
+              "/poll/create_linked/#{@poll.id}?key=#{@poll.key}"
+    %>
+    <br />
+  <% end %>
+  Don't want to vote?
   <%= link_to "Skip to results >", "/poll/list/#{@poll.id}" %>
 <% end %>
