@@ -49,6 +49,10 @@ class Poll < ApplicationRecord
 
   delegate :choices, to: :scale
 
+  def find_chain
+    next_poll_id ? Poll.find(next_poll_id).find_chain : chain
+  end
+
   def chain
     if previous_poll_id
       Poll.find(previous_poll_id).chain + [self]

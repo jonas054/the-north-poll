@@ -1,0 +1,20 @@
+<% @chains.each do |chain| %>
+  <table>
+    <thead>
+      <% chain.each do |poll| %>
+        <th title="<%= poll.votes.map(&:updated_at).first %>"><%= poll.title %></th>
+      <% end %>
+    </thead>
+
+    <tbody>
+      <% chain.each do |poll| %>
+        <td>
+          <% poll.votes.each do |vote| %>
+            <span class="<%= vote.is_archived? ? 'strikethrough' : '' %>"><%= vote.content %></span>
+          <% end %>
+        </td>
+      <% end %>
+    </tbody>
+  </table>
+  <p/>
+<% end %>

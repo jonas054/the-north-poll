@@ -9,4 +9,8 @@ class VoteController < ApplicationController
     end
     redirect_to destination
   end
+
+  def index
+    @chains = Poll.where(previous_poll_id: nil).map(&:find_chain)
+  end
 end
