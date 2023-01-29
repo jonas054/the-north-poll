@@ -2,7 +2,9 @@
   <table>
     <thead>
       <% chain.each do |poll| %>
-        <th title="<%= poll.votes.map(&:updated_at).first %>"><%= poll.title %></th>
+      <th title="<%= poll.key %>">
+        <%= link_to poll.title, "/poll/#{poll.id}?key=#{poll.key}&editkey=#{poll.editkey}" %>
+      </th>
       <% end %>
     </thead>
 
