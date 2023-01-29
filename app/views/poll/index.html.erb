@@ -9,6 +9,13 @@
   function hide(id) {
     document.getElementById(id).setAttribute("hidden", true);
   }
+
+  function fill_alphabet(id) {
+    const titleInput = document.getElementById(id);
+    if (!titleInput.value) {
+      titleInput.value = "<%= ('A'..'Z').to_a.join(';')%>";
+    }
+  }
 </script>
 
 <%= form_with(url: 'poll') do %>
@@ -21,7 +28,7 @@
   <% Scale.default_lists.each_with_index do |list, ix| %>
   <tr class="striped">
   <td style="border: 0px">
-    <%= radio_button("scale", "list", list.join(','), checked: ix == 0) %>
+    <%= radio_button("scale", "list", list.join(','), checked: ix == 0, onclick: 'fill_alphabet("title")') %>
   </td>
   <td style="border: 0px">
     <p class="scaletext">
