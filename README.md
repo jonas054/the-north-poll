@@ -68,6 +68,8 @@ Scroll down to find the Create new poll button.
 After creating the series, you come to the listing page. The URL of this page is what you distribute to the team.
 That link can be reused for every meeting where you want to vote using the chosen scale.
 
+![Listing](https://user-images.githubusercontent.com/336720/216363048-20ef5c09-18dc-4962-b9ed-cc6d519c41ac.png)
+
 The top link "A" goes to the first poll in the series. It includes editing privileges so that the person who
 followed that link can update the titles during the meeting to something more meaningful than A, B, C, etc.
 
