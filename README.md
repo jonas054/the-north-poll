@@ -82,6 +82,8 @@ At the bottom of the page for the first poll in the series, there's a QR code an
 finding this page in other ways (not through a distributed URL). The QR code should be scanned on a phone device,
 and the numerical code can be entered on the landing page.
 
+![QR and numerical codes](https://user-images.githubusercontent.com/336720/216363463-404cc834-b6ce-4dab-b619-caf25f5b808f.png)
+
 Now the voting takes place, and each participant can see the current result after their vote. The diagram is
 updated live until no more votes are cast.
 
