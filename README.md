@@ -66,12 +66,15 @@ Scroll down to find the Create new poll button.
 ![Creation button](https://user-images.githubusercontent.com/336720/216359142-f76db4b9-c1c8-494e-a512-2e9d8892ed60.png)
 
 After creating the series, you come to the listing page. The URL of this page is what you distribute to the team.
-That link can be reused for every meeting where you want to vote using the chosen scale.
+That link can be reused for every meeting where you want to vote using the chosen scale. Votes are automatically
+erased after 12 hours. If you want a new series of polls within 12 hours, you should create a new poll series.
+If the next meeting is the next day or later, reuse the old one.
 
 ![Listing](https://user-images.githubusercontent.com/336720/216363048-20ef5c09-18dc-4962-b9ed-cc6d519c41ac.png)
 
-The top link "A" goes to the first poll in the series. It includes editing privileges so that the person who
-followed that link can update the titles during the meeting to something more meaningful than A, B, C, etc.
+The link "A" goes to the first poll in the series. The top one includes editing privileges so that the person who
+followed that link can update the titles during the meeting to something more meaningful than A, B, C, etc. The other
+"A" link is for other participants who want to vote but not edit titles.
 
 ![First poll in edit mode](https://user-images.githubusercontent.com/336720/216360187-a3c30939-ea39-43f7-91dd-3a1f0b525967.png)
 
