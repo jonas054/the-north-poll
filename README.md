@@ -40,9 +40,9 @@ distribution to participants.
 When all choices are numeric, average and standard deviation is presented on
 the result pages.
 
-## Exmaple usage, planning poker
+## Example usage, planning poker
 
-There are a few features built in to the app for supporting the so-called
+There are a few features built into the app for supporting the so-called
 planning poker sessions that are typically part of refinement meetings
 in agile development methodologies. Here's a sequence of actions to
 showcase these features.
