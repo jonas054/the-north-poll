@@ -91,3 +91,9 @@ Now the voting takes place, and each participant can see the current result afte
 updated live until no more votes are cast.
 
 ![Results](https://user-images.githubusercontent.com/336720/216361521-ee0f8d47-8e63-4822-a40b-458564ae59bb.png)
+
+When you reach the end of the series, the person doing the editing can click on a link to add more polls, if necessary.
+
+![Add more polls](https://user-images.githubusercontent.com/336720/216656648-2951d3c9-0ee6-41ee-8782-e880b18a1a51.png)
+
+Note that the web browser's back and forward buttons work as expected with this app.
