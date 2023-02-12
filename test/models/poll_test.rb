@@ -149,17 +149,24 @@ class PollTest < ActiveSupport::TestCase
   test '.reset_to_alphabetical sets titles to A;B;C... if titles are edited a long time ago' do
     chain = build_chain(%w[X-001 X-002 X-003 D E F])
     fake_old_timestamps(chain)
-
     Poll.reset_to_alphabetical
-
     assert_equal %w[A B C D E F],
                  Poll.find(chain.first.id).find_chain.map { |poll| poll.title }
   end
 
-  test '.reset_to_alphabetical does nothing if titles are edited recently' do
+  test '.reset_to_alphabetical does nothing if all titles are edited recently' do
     chain = build_chain(%w[X-001 X-002 X-003 D E F])
     Poll.reset_to_alphabetical
-    assert_equal %w[X-001 X-002 X-003 D E F], chain.map { |poll| poll.title }
+    assert_equal %w[X-001 X-002 X-003 D E F],
+                 Poll.find(chain.first.id).find_chain.map { |poll| poll.title }
+  end
+
+  test '.reset_to_alphabetical does nothing if some titles are edited recently' do
+    chain = build_chain(%w[X-001 X-002 X-003 D E F])
+    fake_old_timestamps(chain[0..1])
+    Poll.reset_to_alphabetical
+    assert_equal %w[X-001 X-002 X-003 D E F],
+                 Poll.find(chain.first.id).find_chain.map { |poll| poll.title }
   end
 
   test '.reset_to_alphabetical does nothing if chain does not end alphabetically' do

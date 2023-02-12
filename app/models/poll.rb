@@ -130,7 +130,7 @@ class Poll < ApplicationRecord
   end
 
   def updated_recently?(whole_chain)
-    whole_chain.none? { |poll| poll.updated_at < 12.hours.ago }
+    whole_chain.any? { |poll| poll.updated_at > 12.hours.ago }
   end
 
   def set_to_nil(linked_id, key)
