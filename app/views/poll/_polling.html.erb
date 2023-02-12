@@ -1,6 +1,6 @@
 <script>
 (function() {
-  var maxUpdates = 1000;
+  var maxUpdates = <%= ENV['TNP_MAX_UPDATES'] || 1000 %>;
   var updates = 0;
   var _makeRequest = function() {
     var request = new XMLHttpRequest();
