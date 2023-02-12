@@ -18,6 +18,20 @@ class PollController < ApplicationController
     redirect_to "/poll/#{poll.id}?key=#{key}"
   end
 
+  def show
+    find_current_and_next
+    if params[:key] != @poll.key
+      render 'authorization_error'
+    elsif params.key?(:qr)
+      @chart = qr_code
+    end
+    choices = @poll.choices
+    if choices.size > 5 && choices.all? { |choice| choice.chars.length < 6 }
+      @choices_class = 'two-columns'
+    end
+    @edit_mode = params[:editkey] == @poll.editkey
+  end
+
   def create
     previous_poll_id = params.dig(:previous_poll, :id)
 
@@ -64,20 +78,6 @@ class PollController < ApplicationController
   end
 
   alias list results
-
-  def show
-    find_current_and_next
-    if params[:key] != @poll.key
-      render 'authorization_error'
-    elsif params.key?(:qr)
-      @chart = qr_code
-    end
-    choices = @poll.choices
-    if choices.size > 5 && choices.all? { |choice| choice.chars.length < 6 }
-      @choices_class = 'two-columns'
-    end
-    @edit_mode = params[:editkey] == @poll.editkey
-  end
 
   def set_title
     @poll = find_poll
