@@ -94,44 +94,7 @@ class Poll < ApplicationRecord
     updated_at < 1.month.ago && votes.all? { _1.old? }
   end
 
-  def self.reset_to_alphabetical
-    where(previous_poll_id: nil).each do |poll|
-      next if poll.title == 'A' || !poll.resettable_series?
-
-      new_title = 'A'
-      until poll.title == new_title
-        poll.title = new_title
-        poll.save
-        break unless poll.next_poll_id
-
-        poll = Poll.find(poll.next_poll_id)
-        new_title = new_title.succ
-      end
-    end
-  end
-
-  def resettable_series?
-    whole_chain = find_chain
-    alphabet = ('A'..'Z').to_a[0, whole_chain.size]
-    whole_chain.map(&:title) != alphabet &&
-      ends_alphabetically?(whole_chain, alphabet) &&
-      !has_current_votes?(whole_chain) &&
-      !updated_recently?(whole_chain)
-  end
-
   private
-
-  def ends_alphabetically?(whole_chain, alphabet)
-    whole_chain.last(3).map(&:title) == alphabet.last(3)
-  end
-
-  def has_current_votes?(whole_chain)
-    whole_chain.map(&:current_votes).flatten.any?
-  end
-
-  def updated_recently?(whole_chain)
-    whole_chain.none? { |poll| poll.updated_at < 12.hours.ago }
-  end
 
   def set_to_nil(linked_id, key)
     Poll.update(linked_id, key => nil) if linked_id && Poll.exists?(linked_id)

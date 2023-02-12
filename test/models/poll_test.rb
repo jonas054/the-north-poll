@@ -146,65 +146,6 @@ class PollTest < ActiveSupport::TestCase
     assert_nil Poll.find(poll3.id).previous_poll_id
   end
 
-  test '.reset_to_alphabetical sets titles to A;B;C... if titles are edited a long time ago' do
-    chain = build_chain(%w[X-001 X-002 X-003 D E F])
-    fake_old_timestamps(chain)
-
-    Poll.reset_to_alphabetical
-
-    assert_equal %w[A B C D E F],
-                 Poll.find(chain.first.id).find_chain.map { |poll| poll.title }
-  end
-
-  test '.reset_to_alphabetical does nothing if titles are edited recently' do
-    chain = build_chain(%w[X-001 X-002 X-003 D E F])
-    Poll.reset_to_alphabetical
-    assert_equal %w[X-001 X-002 X-003 D E F], chain.map { |poll| poll.title }
-  end
-
-  test '.reset_to_alphabetical does nothing if chain does not end alphabetically' do
-    chain = build_chain(%w[X-001 X-002 X-003 D E F ZZ])
-    fake_old_timestamps(chain)
-    Poll.reset_to_alphabetical
-    assert_equal %w[X-001 X-002 X-003 D E F ZZ],
-                 Poll.find(chain.first.id).find_chain.map { |poll| poll.title }
-  end
-
-  test '.reset_to_alphabetical does nothing if there are current votes' do
-    chain = build_chain(%w[X-001 X-002 X-003 D E F])
-    chain.first.votes << Vote.create(content: '1.5') << Vote.create(content: '2')
-    fake_old_timestamps(chain)
-    Poll.reset_to_alphabetical
-    assert_equal %w[X-001 X-002 X-003 D E F],
-                 Poll.find(chain.first.id).find_chain.map { |poll| poll.title }
-  end
-
-  test '.reset_to_alphabetical sets to A;B;C... if there are only archived votes' do
-    chain = build_chain(%w[X-001 X-002 X-003 D E F])
-    chain.first.votes << Vote.create(content: '1.5', is_archived: true)
-    fake_old_timestamps(chain)
-    Poll.reset_to_alphabetical
-    assert_equal %w[A B C D E F],
-                 Poll.find(chain.first.id).find_chain.map { |poll| poll.title }
-  end
-
-  def build_chain(titles)
-    scale = Scale.new(list: '1,2,3')
-    previous = nil
-    titles.each do |title|
-      poll = Poll.create(scale: scale, title: title)
-      link(previous, poll) if previous
-      previous = poll
-    end
-    Poll.find(previous.id).find_chain
-  end
-
-  def fake_old_timestamps(chain)
-    ActiveRecord::Base.record_timestamps = false
-    chain.each { |poll| Poll.update(poll.id, updated_at: 1.day.ago) }
-    ActiveRecord::Base.record_timestamps = true
-  end
-
   def link(poll1, poll2)
     Poll.update(poll1.id, next_poll_id: poll2.id)
     Poll.update(poll2.id, previous_poll_id: poll1.id)
