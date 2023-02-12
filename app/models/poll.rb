@@ -91,11 +91,11 @@ class Poll < ApplicationRecord
   end
 
   def old?
-    updated_at < 1.month.ago && votes.all? { _1.old? }
+    updated_at < 1.month.ago && votes.all?(&:old?)
   end
 
   def self.reset_to_alphabetical
-    where(previous_poll_id: nil).each do |poll|
+    where(previous_poll_id: nil).find_each do |poll|
       next if poll.title == 'A' || !poll.resettable_series?
 
       new_title = 'A'
@@ -137,8 +137,8 @@ class Poll < ApplicationRecord
     Poll.update(linked_id, key => nil) if linked_id && Poll.exists?(linked_id)
   end
 
-  def mapped_mean(&block)
-    numerical_votes.map(&block).reduce(0.0, :+) / numerical_votes.size
+  def mapped_mean(&)
+    numerical_votes.map(&).reduce(0.0, :+) / numerical_votes.size
   end
 
   def numerical_votes
