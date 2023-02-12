@@ -4,6 +4,7 @@ class PollController < ApplicationController
   before_action :validate_params, only: [:create]
   before_action :do_housekeeping, only: [:create]
   before_action :archive_old_votes, only: %i[show create_linked]
+  before_action :reset_to_alphabetical, only: %i[show create_linked]
 
   def index
   end
@@ -152,6 +153,10 @@ class PollController < ApplicationController
   def do_housekeeping
     Poll.remove_old
     Vote.remove_old
+  end
+
+  def reset_to_alphabetical
+    Poll.reset_to_alphabetical
   end
 
   def archive_old_votes
