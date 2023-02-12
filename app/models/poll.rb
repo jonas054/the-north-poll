@@ -115,7 +115,7 @@ class Poll < ApplicationRecord
     alphabet = ('A'..'Z').to_a[0, whole_chain.size]
     whole_chain.map(&:title) != alphabet &&
       ends_alphabetically?(whole_chain, alphabet) &&
-      !has_current_votes?(whole_chain) &&
+      !current_votes?(whole_chain) &&
       !updated_recently?(whole_chain)
   end
 
@@ -125,7 +125,7 @@ class Poll < ApplicationRecord
     whole_chain.last(3).map(&:title) == alphabet.last(3)
   end
 
-  def has_current_votes?(whole_chain)
+  def current_votes?(whole_chain)
     whole_chain.map(&:current_votes).flatten.any?
   end
 

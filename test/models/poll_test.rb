@@ -146,51 +146,47 @@ class PollTest < ActiveSupport::TestCase
     assert_nil Poll.find(poll3.id).previous_poll_id
   end
 
-  test '.reset_to_alphabetical sets titles to A;B;C... if titles are edited a long time ago' do
+  test '.reset_to_alphabetical sets titles to A;B;C... if titles are edited a long ' \
+       'time ago' do
     chain = build_chain(%w[X-001 X-002 X-003 D E F])
     fake_old_timestamps(chain)
-    Poll.reset_to_alphabetical
-    assert_equal %w[A B C D E F], Poll.find(chain.first.id).find_chain.map(&:title)
+    reset_and_check_titles(chain, %w[A B C D E F])
   end
 
   test '.reset_to_alphabetical does nothing if all titles are edited recently' do
     chain = build_chain(%w[X-001 X-002 X-003 D E F])
-    Poll.reset_to_alphabetical
-    assert_equal %w[X-001 X-002 X-003 D E F],
-                 Poll.find(chain.first.id).find_chain.map(&:title)
+    reset_and_check_titles(chain, %w[X-001 X-002 X-003 D E F])
   end
 
   test '.reset_to_alphabetical does nothing if some titles are edited recently' do
     chain = build_chain(%w[X-001 X-002 X-003 D E F])
     fake_old_timestamps(chain[0..1])
-    Poll.reset_to_alphabetical
-    assert_equal %w[X-001 X-002 X-003 D E F],
-                 Poll.find(chain.first.id).find_chain.map(&:title)
+    reset_and_check_titles(chain, %w[X-001 X-002 X-003 D E F])
   end
 
   test '.reset_to_alphabetical does nothing if chain does not end alphabetically' do
     chain = build_chain(%w[X-001 X-002 X-003 D E F ZZ])
     fake_old_timestamps(chain)
-    Poll.reset_to_alphabetical
-    assert_equal %w[X-001 X-002 X-003 D E F ZZ],
-                 Poll.find(chain.first.id).find_chain.map(&:title)
+    reset_and_check_titles(chain, %w[X-001 X-002 X-003 D E F ZZ])
   end
 
   test '.reset_to_alphabetical does nothing if there are current votes' do
     chain = build_chain(%w[X-001 X-002 X-003 D E F])
     chain.first.votes << Vote.create(content: '1.5') << Vote.create(content: '2')
     fake_old_timestamps(chain)
-    Poll.reset_to_alphabetical
-    assert_equal %w[X-001 X-002 X-003 D E F],
-                 Poll.find(chain.first.id).find_chain.map(&:title)
+    reset_and_check_titles(chain, %w[X-001 X-002 X-003 D E F])
   end
 
   test '.reset_to_alphabetical sets to A;B;C... if there are only archived votes' do
     chain = build_chain(%w[X-001 X-002 X-003 D E F])
     chain.first.votes << Vote.create(content: '1.5', is_archived: true)
     fake_old_timestamps(chain)
+    reset_and_check_titles(chain, %w[A B C D E F])
+  end
+
+  def reset_and_check_titles(chain, expected_titles)
     Poll.reset_to_alphabetical
-    assert_equal %w[A B C D E F], Poll.find(chain.first.id).find_chain.map(&:title)
+    assert_equal expected_titles, Poll.find(chain.first.id).find_chain.map(&:title)
   end
 
   def build_chain(titles)
