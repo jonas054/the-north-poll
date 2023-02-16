@@ -1,3 +1,12 @@
+<% if @hide_archived %>
+  <%= link_to "Show archived votes", "/vote/?hide_archived=false" %>
+<% else %>
+  <%= link_to "Hide archived votes", "/vote/?hide_archived=true" %>
+<% end %>
+
+<br />
+<br />
+
 <% @chains.each do |chain| %>
   <table>
     <thead>
@@ -12,7 +21,8 @@
       <% chain.each do |poll| %>
         <td>
           <% poll.votes.each do |vote| %>
-            <span class="<%= vote.is_archived? ? 'strikethrough' : '' %>"><%= vote.content %></span>
+            <% archived_class = @hide_archived ? 'invisible' : 'strikethrough' %>
+            <span class="<%= vote.is_archived? ? archived_class : '' %>"><%= vote.content %></span>
           <% end %>
         </td>
       <% end %>
