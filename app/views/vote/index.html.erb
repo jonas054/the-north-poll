@@ -1,7 +1,15 @@
 <% if @hide_archived %>
-  <%= link_to "Show archived votes", "/vote/?hide_archived=false" %>
+  <%= link_to "Show archived votes", "/vote/?hide_archived=false&hide_empty=#{@hide_empty}" %>
 <% else %>
-  <%= link_to "Hide archived votes", "/vote/?hide_archived=true" %>
+  <%= link_to "Hide archived votes", "/vote/?hide_archived=true&hide_empty=#{@hide_empty}" %>
+<% end %>
+
+❅
+
+<% if @hide_empty %>
+  <%= link_to "Show empty series", "/vote/?hide_archived=#{@hide_archived}&hide_empty=false" %>
+<% else %>
+  <%= link_to "Hide empty series", "/vote/?hide_archived=#{@hide_archived}&hide_empty=true" %>
 <% end %>
 
 <br />

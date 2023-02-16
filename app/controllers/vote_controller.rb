@@ -1,7 +1,12 @@
 class VoteController < ApplicationController
   def index
-    @chains = Poll.where(previous_poll_id: nil).map(&:find_chain)
     @hide_archived = params['hide_archived'] == 'true'
+    @hide_empty = params['hide_empty'] == 'true'
+    @chains = Poll.where(previous_poll_id: nil).map(&:find_chain).select do |chain|
+      next true unless @hide_empty
+
+      chain.any? { |poll| @hide_archived ? poll.current_votes.any? : poll.votes.any? }
+    end
   end
 
   def create
