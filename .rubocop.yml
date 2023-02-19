@@ -104,3 +104,7 @@ Style/Documentation:
 
 Layout/LineLength:
   Max: 90
+
+Metrics/ClassLength:
+  Exclude:
+    - test/**/*.rb
