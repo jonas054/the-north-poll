@@ -1,5 +1,6 @@
 class PollController < ApplicationController
   SITE = 'the-north-poll.herokuapp.com'.freeze
+require 'rqrcode'
 
   before_action :validate_params, only: [:create]
   before_action :do_housekeeping, only: [:create]
@@ -98,7 +99,7 @@ class PollController < ApplicationController
     # Rickrolling easter egg.
     url = 'https://tinyurl.com/yckkezm3' if @poll.title == 'RA-1234'
 
-    GoogleQr.new(data: url, size: '500x500', margin: 4, error_correction: 'L').to_s
+    RQRCode::QRCode.new(url)
   end
 
   def creation_error_destination(previous_poll_id)

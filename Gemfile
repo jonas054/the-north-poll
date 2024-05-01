@@ -69,3 +69,4 @@ end
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'matrix', '~> 0.4.2'
+gem 'rqrcode', '~> 2.2.0'

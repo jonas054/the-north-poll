@@ -55,7 +55,7 @@
   <tbody>
     <tr>
       <td class="noborder">
-        <img src="<%= @chart %>" />
+        <%= raw(@chart.as_svg) %>
       </td>
       <td class="noborder">
         Code: <%= @poll.key %>
