@@ -1,7 +1,6 @@
-class PollController < ApplicationController
-  SITE = 'the-north-poll.herokuapp.com'.freeze
 require 'rqrcode'
 
+class PollController < ApplicationController
   before_action :validate_params, only: [:create]
   before_action :do_housekeeping, only: [:create]
   before_action :archive_old_votes, only: %i[show create_linked]
@@ -94,7 +93,8 @@ require 'rqrcode'
   private
 
   def qr_code
-    url = "https://#{SITE}/poll/#{@poll.id}?qr&key=#{@poll.key}"
+    url =
+      "#{request.protocol}#{request.host_with_port}/poll/#{@poll.id}?qr&key=#{@poll.key}"
 
     # Rickrolling easter egg.
     url = 'https://tinyurl.com/yckkezm3' if @poll.title == 'RA-1234'
