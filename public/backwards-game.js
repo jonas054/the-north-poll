@@ -17,6 +17,7 @@ let slowness = 20;
 
 let objects = [];
 let timer = null;
+let controlsActive = false;
 
 const random = max => Math.random() * max;
 const randomBrightness = () => random(maxBrightness);
@@ -87,22 +88,36 @@ document.addEventListener('keydown', function(event) {
 });
 
 canvas.addEventListener('click', function(event) {
+  if (controlsActive) {
+    return;
+  }
   // Show a table of plus and minus buttons that will have the same effects as the keyboard keys 0-9.
   // The table should be centered in the canvas and have a background color of rgba(0, 0, 0, 0.5).
   // The table should be removed when the user clicks anywhere on the canvas.
   const table = document.createElement('table');
   table.style.position = 'absolute';
-  table.style.top = `${canvas.height / 2 - 100}px`;
-  table.style.left = `${canvas.width / 2 - 100}px`;
+  table.style.top = `${canvas.height / 20}px`;
+  table.style.left = `${canvas.width / 20}px`;
   table.style.backgroundColor = 'rgba(0, 0, 0, 0.4)';
   table.style.color = 'white';
   table.style.padding = '20px';
   table.style.borderRadius = '10px';
   table.style.zIndex = '1';
   table.style.cursor = 'pointer';
-  table.addEventListener('click', function() {
+  const tr = document.createElement('tr');
+  const th1 = document.createElement('th');
+  const th2 = document.createElement('th');
+  th2.textContent = '❌';
+  th2.style.textAlign = 'right';
+  th2.style.padding = '15px';
+  tr.appendChild(th1);
+  tr.appendChild(th2);
+  table.appendChild(tr);
+  th2.addEventListener('click', function() {
     table.remove();
+    controlsActive = false;
   });
+
   // Add buttons inside the table.
   for (let i = 1; i <= 5; i++) {
     const tr = document.createElement('tr');
@@ -111,8 +126,12 @@ canvas.addEventListener('click', function(event) {
     const tdMinus = document.createElement('td');
     tdMinus.textContent = titles[(i - 1) * 2 + 1];
     tdMinus.style.padding = '5px';
+    tdMinus.style.fontSize = `${Math.min(40, canvas.width / 30)}px`;
     tdMinus.style.textAlign = 'left';
     tdMinus.style.cursor = 'pointer';
+    tdMinus.style.border = '1px solid white'; // Add border
+    tdMinus.style.borderRadius = '10px'; // Add border radius
+    tdMinus.style.backgroundColor = '#3f3f3f'; // Add background color
     tdMinus.addEventListener('click', function() {
       const textFn = adjustments[((i - 1) * 2 + 1).toString()];
       showMessage(textFn());
@@ -123,8 +142,12 @@ canvas.addEventListener('click', function(event) {
     const tdPlus = document.createElement('td');
     tdPlus.textContent = titles[i * 2];
     tdPlus.style.padding = '5px';
+    tdPlus.style.fontSize = `${Math.min(40, canvas.width / 30)}px`;
     tdPlus.style.textAlign = 'left';
     tdPlus.style.cursor = 'pointer';
+    tdPlus.style.border = '1px solid white'; // Add border
+    tdPlus.style.borderRadius = '10px'; // Add border radius
+    tdPlus.style.backgroundColor = '#3f3f3f'; // Add background color
     tdPlus.addEventListener('click', function() {
       const textFn = adjustments[(i * 2 % 10).toString()];
       showMessage(textFn());
@@ -135,6 +158,7 @@ canvas.addEventListener('click', function(event) {
   }
   // Show the table on the canvas
   canvas.parentElement.appendChild(table);
+  controlsActive = true;
 });
 
 function draw() {
@@ -158,10 +182,6 @@ function draw() {
 
   objects = objects.filter(obj => obj.radius > 0.1 && withinLimit(obj.x) && withinLimit(obj.y));
   objects.forEach(obj => drawOnCanvas(obj));
-
-  if (random(100) < 1) {
-    console.log('number of objects: ', objects.length);
-  }
 
   for (let i = 0; Math.random() < spawn; i++) {
     createObject();
