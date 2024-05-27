@@ -114,7 +114,7 @@ canvas.addEventListener('click', function(event) {
     tdMinus.style.textAlign = 'left';
     tdMinus.style.cursor = 'pointer';
     tdMinus.addEventListener('click', function() {
-      const textFn = adjustments[((i % 10 - 1) * 2 + 1).toString()];
+      const textFn = adjustments[((i - 1) * 2 + 1).toString()];
       showMessage(textFn());
     });
     tr.appendChild(tdMinus);
@@ -126,7 +126,7 @@ canvas.addEventListener('click', function(event) {
     tdPlus.style.textAlign = 'left';
     tdPlus.style.cursor = 'pointer';
     tdPlus.addEventListener('click', function() {
-      const textFn = adjustments[((i % 10) * 2).toString()];
+      const textFn = adjustments[(i * 2 % 10).toString()];
       showMessage(textFn());
     });
     tr.appendChild(tdPlus);
