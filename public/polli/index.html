@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pollinations Image Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+        }
+
+        button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .image-container img {
+            display: inline;
+            margin: 10px 0;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pollinations Image Generator</h1>
+    <textarea id="message" placeholder="Write your message here..."></textarea>
+    <button id="generate">Generate Images</button>
+    <button id="clear">Clear</button>
+    <div id="images" class="image-container"></div>
+    <button id="continue" style="display: none;">Continue</button>
+
+    <script type="application/javascript">
+        document.getElementById('generate').addEventListener('click', function() {
+            const message = encodeURIComponent(document.getElementById('message').value);
+            generateImages(message, 1, 5);
+        });
+
+        document.getElementById('continue').addEventListener('click', function() {
+            const message = encodeURIComponent(document.getElementById('message').value);
+            const currentSeed = document.querySelectorAll('.image-container img').length + 1;
+            generateImages(message, currentSeed, 5);
+        });
+
+        document.getElementById('clear').addEventListener('click', function() {
+            document.getElementById('images').innerHTML = '';
+            document.getElementById('continue').style.display = 'none';
+        });
+
+        function generateImages(message, startSeed, count) {
+            let seed = startSeed;
+            document.getElementById('continue').style.display = 'none';
+            const row = document.createElement('div');
+            row.style.display = 'block ruby';
+            document.getElementById('images').appendChild(row);
+            const intervalId = setInterval(() => {
+                if (seed < startSeed + count) {
+                    const img = document.createElement('img');
+                    img.src = `https://pollinations.ai/p/${message}?seed=${seed}`;
+                    img.style.width = '19%';
+                    img.style.height = 'auto';
+                    img.style.border = '1px solid black';
+                    const link = document.createElement('a');
+                    link.href = img.src;
+                    link.target = '_blank';
+                    link.appendChild(img);
+                    row.appendChild(link);
+                    seed++;
+                } else {
+                    clearInterval(intervalId);
+                    document.getElementById('continue').style.display = 'block';
+                }
+            }, 8000);
+        }
+    </script>
+</body>
+</html>
