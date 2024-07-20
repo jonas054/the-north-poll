@@ -31,21 +31,21 @@
 <body>
     <h1>Pollinations Image Generator</h1>
     <textarea id="message" placeholder="Write your message here..."></textarea>
-    <button id="generate">Generate Images</button>
-    <button id="clear">Clear</button>
+    <button id="generate">Generate</button>
+    <button id="clear">Clear images</button>
     <div id="images" class="image-container"></div>
     <button id="continue" style="display: none;">Continue</button>
 
     <script type="application/javascript">
         document.getElementById('generate').addEventListener('click', function() {
             const message = encodeURIComponent(document.getElementById('message').value);
-            generateImages(message, 1, 5);
+            generateImages(message, 1);
         });
 
         document.getElementById('continue').addEventListener('click', function() {
             const message = encodeURIComponent(document.getElementById('message').value);
             const currentSeed = document.querySelectorAll('.image-container img').length + 1;
-            generateImages(message, currentSeed, 5);
+            generateImages(message, currentSeed);
         });
 
         document.getElementById('clear').addEventListener('click', function() {
@@ -53,7 +53,8 @@
             document.getElementById('continue').style.display = 'none';
         });
 
-        function generateImages(message, startSeed, count) {
+        function generateImages(message, startSeed) {
+            const count = 5;
             let seed = startSeed;
             document.getElementById('continue').style.display = 'none';
             const row = document.createElement('div');
@@ -63,9 +64,10 @@
                 if (seed < startSeed + count) {
                     const img = document.createElement('img');
                     img.src = `https://pollinations.ai/p/${message}?seed=${seed}`;
-                    img.style.width = '19%';
+                    img.style.width = '16%';
                     img.style.height = 'auto';
                     img.style.border = '1px solid black';
+                    img.style.margin = '4px';
                     const link = document.createElement('a');
                     link.href = img.src;
                     link.target = '_blank';
@@ -74,9 +76,17 @@
                     seed++;
                 } else {
                     clearInterval(intervalId);
+                    const reloadButton = document.createElement('button');
+                    reloadButton.textContent = '↻'; // Reload emoji
+                    reloadButton.style.verticalAlign = 'top';
+                    reloadButton.addEventListener('click', function() {
+                        row.innerHTML = '';
+                        generateImages(message, startSeed);
+                    });
+                    row.appendChild(reloadButton);
                     document.getElementById('continue').style.display = 'block';
                 }
-            }, 8000);
+            }, 100);
         }
     </script>
 </body>
