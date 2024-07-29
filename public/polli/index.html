@@ -19,12 +19,16 @@
             margin: 10px 0;
             padding: 10px;
             font-size: 16px;
+            cursor: pointer;
         }
 
         .image-container img {
             display: inline;
-            margin: 10px 0;
+            margin: 2px;
             max-width: 100%;
+            width: 16%;
+            height: auto;
+            border: 1px solid black;
         }
     </style>
 </head>
@@ -37,60 +41,53 @@
     <button id="continue" style="display: none;">Continue</button>
 
     <script type="application/javascript">
-        document.getElementById('generate').addEventListener('click', function() {
-            const message = encodeURIComponent(document.getElementById('message').value);
-            generateImages(message, 1);
-        });
-
-        document.getElementById('continue').addEventListener('click', function() {
-            const message = encodeURIComponent(document.getElementById('message').value);
-            const currentSeed = document.querySelectorAll('.image-container img').length + 1;
-            generateImages(message, currentSeed);
-        });
+        const images = document.getElementById('images');
+        const encodedPrompt = () => encodeURIComponent(document.getElementById('message').value);
+        let nextSeed = 1;
+        addClickListener('generate', () => generateImages(encodedPrompt(), nextSeed = 1));
+        addClickListener('continue', () => generateImages(encodedPrompt(), nextSeed += 5));
 
         document.getElementById('clear').addEventListener('click', function() {
-            document.getElementById('images').innerHTML = '';
-            document.getElementById('continue').style.display = 'none';
+            images.innerHTML = '';
+            showContinueButton(false);
         });
 
+        function addClickListener(id, func) {
+            document.getElementById(id).addEventListener('click', func);
+        }
+
+        function showContinueButton(value) {
+            document.getElementById('continue').style.display = value ? 'block' : 'none';
+        }
+
         function generateImages(message, startSeed) {
-            const count = 5;
-            let seed = startSeed;
-            document.getElementById('continue').style.display = 'none';
+            showContinueButton(false);
+            const endSeed = startSeed + 4;
             const row = document.createElement('div');
             const headingParagraph = document.createElement('p');
-            headingParagraph.textContent = decodeURIComponent(message + ` (${startSeed} - ${startSeed + count - 1})`);
-            row.style.display = 'block ruby';
-            document.getElementById('images').appendChild(headingParagraph);
-            document.getElementById('images').appendChild(row);
-            const intervalId = setInterval(() => {
-                if (seed < startSeed + count) {
-                    const img = document.createElement('img');
-                    img.src = `https://pollinations.ai/p/${message}?seed=${seed}`;
-                    img.style.width = '16%';
-                    img.style.height = 'auto';
-                    img.style.border = '1px solid black';
-                    img.style.margin = '2px';
-                    const link = document.createElement('a');
-                    link.href = img.src;
-                    link.target = '_blank';
-                    link.appendChild(img);
-                    row.appendChild(link);
-                    seed++;
-                } else {
-                    clearInterval(intervalId);
-                    const reloadButton = document.createElement('button');
-                    reloadButton.textContent = '↻'; // Reload emoji
-                    reloadButton.style.verticalAlign = 'top';
-                    reloadButton.addEventListener('click', function() {
-                        row.innerHTML = '';
-                        headingParagraph.innerHTML = '';
-                        generateImages(message, startSeed);
-                    });
-                    row.appendChild(reloadButton);
-                    document.getElementById('continue').style.display = 'block';
-                }
-            }, 100);
+            headingParagraph.textContent = decodeURIComponent(message + ` (${startSeed} - ${endSeed})`);
+            row.style.display = 'block';
+            images.appendChild(headingParagraph);
+            images.appendChild(row);
+            for (let seed = startSeed; seed <= endSeed; seed++) {
+                const img = document.createElement('img');
+                img.src = `https://pollinations.ai/p/${message.trim()}?seed=${seed}`;
+                const link = document.createElement('a');
+                link.href = img.src;
+                link.target = '_blank';
+                link.appendChild(img);
+                row.appendChild(link);
+            }
+            const reloadButton = document.createElement('button');
+            reloadButton.textContent = '↻'; // Reload emoji
+            reloadButton.style.verticalAlign = 'top';
+            reloadButton.addEventListener('click', function() {
+                row.innerHTML = '';
+                headingParagraph.innerHTML = '';
+                generateImages(message, startSeed);
+            });
+            row.appendChild(reloadButton);
+            showContinueButton(true);
         }
     </script>
 </body>
