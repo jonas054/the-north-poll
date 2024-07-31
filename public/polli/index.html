@@ -36,58 +36,69 @@
     <h1>Pollinations Image Generator</h1>
     <textarea id="message" placeholder="Write your prompt here..."></textarea>
     <button id="generate">Generate</button>
-    <button id="clear">Clear images</button>
+    <button id="clear" style="display: none">Clear images</button>
     <div id="images" class="image-container"></div>
-    <button id="continue" style="display: none;">Continue</button>
+    <button id="continue" style="display: none">Continue</button>
 
     <script type="application/javascript">
         const images = document.getElementById('images');
-        const encodedPrompt = () => encodeURIComponent(document.getElementById('message').value);
+        const prompt = document.getElementById('message');
         let nextSeed = 1;
-        addClickListener('generate', () => generateImages(encodedPrompt(), nextSeed = 1));
-        addClickListener('continue', () => generateImages(encodedPrompt(), nextSeed += 5));
 
-        document.getElementById('clear').addEventListener('click', function() {
+        addClickListener('generate', () => generateImages(prompt.value, nextSeed = 1));
+        addClickListener('continue', () => generateImages(prompt.value, nextSeed += 5));
+        addClickListener('clear', () => {
             images.innerHTML = '';
-            showContinueButton(false);
+            setDisplay('continue', 'none');
+            setDisplay('clear', 'none');
         });
 
         function addClickListener(id, func) {
             document.getElementById(id).addEventListener('click', func);
         }
 
-        function showContinueButton(value) {
-            document.getElementById('continue').style.display = value ? 'block' : 'none';
-        }
-
-        function generateImages(message, startSeed) {
-            showContinueButton(false);
+        function generateImages(prompt, startSeed) {
+            setDisplay('continue', 'none');
+            setDisplay('clear', 'inline');
             const endSeed = startSeed + 4;
             const row = document.createElement('div');
             const headingParagraph = document.createElement('p');
-            headingParagraph.textContent = decodeURIComponent(message + ` (${startSeed} - ${endSeed})`);
+            headingParagraph.textContent = `${prompt} (${startSeed} - ${endSeed})`;
             row.style.display = 'block';
             images.appendChild(headingParagraph);
             images.appendChild(row);
+            const encodedPrompt = encodeURIComponent(prompt.trim())
             for (let seed = startSeed; seed <= endSeed; seed++) {
                 const img = document.createElement('img');
-                img.src = `https://pollinations.ai/p/${message.trim()}?seed=${seed}`;
-                const link = document.createElement('a');
-                link.href = img.src;
-                link.target = '_blank';
-                link.appendChild(img);
-                row.appendChild(link);
+                img.src = `https://pollinations.ai/p/${encodedPrompt}?seed=${seed}`;
+                row.appendChild(createImageLink(img));
             }
-            const reloadButton = document.createElement('button');
-            reloadButton.textContent = '↻'; // Reload emoji
-            reloadButton.style.verticalAlign = 'top';
-            reloadButton.addEventListener('click', function() {
+            row.appendChild(createReloadButton(() => {
                 row.innerHTML = '';
                 headingParagraph.innerHTML = '';
-                generateImages(message, startSeed);
-            });
-            row.appendChild(reloadButton);
-            showContinueButton(true);
+                generateImages(prompt, startSeed);
+            }));
+            setDisplay('continue', 'block');
+        }
+
+        function setDisplay(id, value) {
+            document.getElementById(id).style.display = value;
+        }
+
+        function createImageLink(img) {
+            const link = document.createElement('a');
+            link.href = img.src;
+            link.target = '_blank';
+            link.appendChild(img);
+            return link;
+        }
+
+        function createReloadButton(func) {
+            const button = document.createElement('button');
+            button.textContent = '↻'; // Reload emoji
+            button.style.verticalAlign = 'top';
+            button.addEventListener('click', func);
+            return button;
         }
     </script>
 </body>
