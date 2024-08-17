@@ -47,8 +47,8 @@
     <label for="size-select">Size:</label>
     <select id="size-select">
         <option value="default">Default</option>
-        <option value="900x1500">900 × 1500</option>
-        <option value="1500x900">1500 × 900</option>
+        <option value="900x1500">Portrait 900 × 1500</option>
+        <option value="1500x900">Landscape 1500 × 900</option>
     </select>
     <textarea id="message" placeholder="Write your prompt here..."></textarea>
     <div>
@@ -72,6 +72,8 @@
         dimensionsSelect.addEventListener('change', () => {
             dimensions = dimensionsSelect.value;
         });
+        const setDisplay = (id, value) => document.getElementById(id).style.display = value;
+        const addClickListener = (id, func) => document.getElementById(id).addEventListener('click', func);
 
         addClickListener('generate', () => generateImages(prompt.value, nextSeed = 1));
         addClickListener('continue', () => generateImages(prompt.value, nextSeed += 5));
@@ -80,10 +82,6 @@
             setDisplay('continue', 'none');
             setDisplay('clear', 'none');
         });
-
-        function addClickListener(id, func) {
-            document.getElementById(id).addEventListener('click', func);
-        }
 
         function generateImages(prompt, startSeed) {
             setDisplay('continue', 'none');
@@ -113,10 +111,6 @@
             const [width, height] = dimensions === 'default' ? [null, null] : dimensions.split('x');
             const dim = width ? `&width=${width}&height=${height}` : ''
             return `https://pollinations.ai/p/${encodedPrompt}?seed=${seed}${dim}&model=${model}`;
-        }
-
-        function setDisplay(id, value) {
-            document.getElementById(id).style.display = value;
         }
 
         function createImageLink(img) {
