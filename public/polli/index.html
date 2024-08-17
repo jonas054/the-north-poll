@@ -38,10 +38,16 @@
     <div>
         <button id="generate">Generate</button>
         <button id="clear" style="display: none">Clear images</button>
-        <label>Model:</label>
+        <label for="model-select">Model:</label>
         <select id="model-select">
             <option value="flux">Flux</option>
             <option value="turbo">Turbo</option>
+        </select>
+        <label for="size-select">Size:</label>
+        <select id="size-select">
+            <option value="default">Default</option>
+            <option value="900x1500">900 × 1500</option>
+            <option value="1500x900">1500 × 900</option>
         </select>
     </div>
     <div id="images" class="image-container"></div>
@@ -51,11 +57,15 @@
         const images = document.getElementById('images');
         const prompt = document.getElementById('message');
         let nextSeed = 1;
-        const dropdown = document.getElementById('model-select');
-        let model = dropdown.value;
-        dropdown.addEventListener('change', () => {
-            model = dropdown.value;
-            console.log('Selected value:', model);
+        const modelSelect = document.getElementById('model-select');
+        let model = modelSelect.value;
+        modelSelect.addEventListener('change', () => {
+            model = modelSelect.value;
+        });
+        const dimensionsSelect = document.getElementById('size-select');
+        let dimensions = dimensionsSelect.value;
+        dimensionsSelect.addEventListener('change', () => {
+            dimensions = dimensionsSelect.value;
         });
 
         addClickListener('generate', () => generateImages(prompt.value, nextSeed = 1));
@@ -76,14 +86,16 @@
             const endSeed = startSeed + 4;
             const row = document.createElement('div');
             const headingParagraph = document.createElement('p');
-            headingParagraph.textContent = `${prompt} [${model}] (${startSeed} - ${endSeed})`;
+            headingParagraph.textContent = `${prompt} [${model}, ${dimensions}] (seeds ${startSeed} - ${endSeed})`;
             row.style.display = 'block';
             images.appendChild(headingParagraph);
             images.appendChild(row);
             const encodedPrompt = encodeURIComponent(prompt.trim())
             for (let seed = startSeed; seed <= endSeed; seed++) {
                 const img = document.createElement('img');
-                img.src = `https://pollinations.ai/p/${encodedPrompt}?seed=${seed}&width=2000&height=1200&model=${model}`;
+                const {width, height} = getWidthAndHeight(dimensions);
+                const dim = width ? `&width=${width}&height=${height}` : ''
+                img.src = `https://pollinations.ai/p/${encodedPrompt}?seed=${seed}${dim}&model=${model}`;
                 row.appendChild(createImageLink(img));
             }
             row.appendChild(createReloadButton(() => {
@@ -92,6 +104,14 @@
                 generateImages(prompt, startSeed);
             }));
             setDisplay('continue', 'block');
+        }
+
+        function getWidthAndHeight(dimensions) {
+            if (dimensions === 'default') {
+                return { width: null, height: null };
+            }
+            const [w, h] = dimensions.split('x');
+            return { width: w, height: h };
         }
 
         function setDisplay(id, value) {
