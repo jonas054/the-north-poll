@@ -22,6 +22,11 @@
             cursor: pointer;
         }
 
+        select {
+            margin-bottom: 1em;
+            margin-right: 1em;
+        }
+
         .image-container img {
             display: inline;
             margin: 2px;
@@ -33,22 +38,22 @@
     </style>
 </head>
 <body>
-    <h1>Pollinations Image Generator</h1>
+    <h2>Pollinations Image Generator</h2>
+    <label for="model-select">Model:</label>
+    <select id="model-select">
+        <option value="flux">Flux</option>
+        <option value="turbo">Turbo</option>
+    </select>
+    <label for="size-select">Size:</label>
+    <select id="size-select">
+        <option value="default">Default</option>
+        <option value="900x1500">900 × 1500</option>
+        <option value="1500x900">1500 × 900</option>
+    </select>
     <textarea id="message" placeholder="Write your prompt here..."></textarea>
     <div>
         <button id="generate">Generate</button>
         <button id="clear" style="display: none">Clear images</button>
-        <label for="model-select">Model:</label>
-        <select id="model-select">
-            <option value="flux">Flux</option>
-            <option value="turbo">Turbo</option>
-        </select>
-        <label for="size-select">Size:</label>
-        <select id="size-select">
-            <option value="default">Default</option>
-            <option value="900x1500">900 × 1500</option>
-            <option value="1500x900">1500 × 900</option>
-        </select>
     </div>
     <div id="images" class="image-container"></div>
     <button id="continue" style="display: none">Continue</button>
