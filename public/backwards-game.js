@@ -36,8 +36,8 @@ function createObject() {
   });
 }
 
-function showMessage(message) {
-  centerMessage = { text: message, brightness: 255 };
+function showMessage(key, message) {
+  centerMessage = { text: `${key}: ${titles[key]} ${message}`, brightness: 255 };
   if (timer) {
     clearInterval(timer);
   }
@@ -56,16 +56,16 @@ const increase = value => Math.round(value * 3 / 2);
 const decrease = value => Math.round(value * 2 / 3);
 
 const adjustments = {
-  '1': () => `1: Darker (${maxBrightness = decrease(maxBrightness)})`,
-  '2': () => `2: Brighter (${maxBrightness += Math.round((255 - maxBrightness) / 3)})`,
-  '3': () => `3: Smaller (${initialObjectSize = decrease(initialObjectSize)})`,
-  '4': () => `4: Larger (${initialObjectSize = increase(initialObjectSize)})`,
-  '5': () => `5: Fewer (${spawn = roundTo3DecimalPlaces(spawn * 2 / 3)})`,
-  '6': () => `6: More (${spawn = roundTo3DecimalPlaces(spawn + (0.99 - spawn) / 3)})`,
-  '7': () => `7: Less skew (${skewFactor = decrease(skewFactor)})`,
-  '8': () => `8: More skew (${skewFactor = increase(skewFactor)})`,
-  '9': () => `9: Slower (${slowness = increase(slowness)})`,
-  '0': () => `0: Faster (${slowness = decrease(slowness)})`
+  '1': () => `(${maxBrightness = decrease(maxBrightness)})`,
+  '2': () => `(${maxBrightness += Math.round((255 - maxBrightness) / 3)})`,
+  '3': () => `(${initialObjectSize = decrease(initialObjectSize)})`,
+  '4': () => `(${initialObjectSize = increase(initialObjectSize)})`,
+  '5': () => `(${spawn = roundTo3DecimalPlaces(spawn * 2 / 3)})`,
+  '6': () => `(${spawn = roundTo3DecimalPlaces(spawn + (0.99 - spawn) / 3)})`,
+  '7': () => `(${skewFactor = decrease(skewFactor)})`,
+  '8': () => `(${skewFactor = increase(skewFactor)})`,
+  '9': () => `(${slowness = increase(slowness)})`,
+  '0': () => `(${slowness = decrease(slowness)})`
 };
 const titles = {
   1: 'Darker',
@@ -83,7 +83,7 @@ const titles = {
 document.addEventListener('keydown', function(event) {
   const textFn = adjustments[event.key];
   if (textFn) {
-    showMessage(textFn());
+    showMessage(event.key, textFn());
   }
 });
 
@@ -107,7 +107,7 @@ canvas.addEventListener('click', function(event) {
   const tr = document.createElement('tr');
   const th1 = document.createElement('th');
   const th2 = document.createElement('th');
-  th2.textContent = '❌';
+  th2.textContent = '❌'; // Close
   th2.style.textAlign = 'right';
   th2.style.padding = '15px';
   tr.appendChild(th1);
@@ -122,37 +122,8 @@ canvas.addEventListener('click', function(event) {
   for (let i = 1; i <= 5; i++) {
     const tr = document.createElement('tr');
 
-    // Create minus td
-    const tdMinus = document.createElement('td');
-    tdMinus.textContent = titles[(i - 1) * 2 + 1];
-    tdMinus.style.padding = '5px';
-    tdMinus.style.fontSize = `${Math.min(40, canvas.width / 30)}px`;
-    tdMinus.style.textAlign = 'left';
-    tdMinus.style.cursor = 'pointer';
-    tdMinus.style.border = '1px solid white'; // Add border
-    tdMinus.style.borderRadius = '10px'; // Add border radius
-    tdMinus.style.backgroundColor = '#3f3f3f'; // Add background color
-    tdMinus.addEventListener('click', function() {
-      const textFn = adjustments[((i - 1) * 2 + 1).toString()];
-      showMessage(textFn());
-    });
-    tr.appendChild(tdMinus);
-
-    // Create plus td
-    const tdPlus = document.createElement('td');
-    tdPlus.textContent = titles[i * 2];
-    tdPlus.style.padding = '5px';
-    tdPlus.style.fontSize = `${Math.min(40, canvas.width / 30)}px`;
-    tdPlus.style.textAlign = 'left';
-    tdPlus.style.cursor = 'pointer';
-    tdPlus.style.border = '1px solid white'; // Add border
-    tdPlus.style.borderRadius = '10px'; // Add border radius
-    tdPlus.style.backgroundColor = '#3f3f3f'; // Add background color
-    tdPlus.addEventListener('click', function() {
-      const textFn = adjustments[(i * 2 % 10).toString()];
-      showMessage(textFn());
-    });
-    tr.appendChild(tdPlus);
+    tr.appendChild(createTd((i - 1) * 2 + 1));
+    tr.appendChild(createTd(i * 2));
 
     table.appendChild(tr);
   }
@@ -160,6 +131,23 @@ canvas.addEventListener('click', function(event) {
   canvas.parentElement.appendChild(table);
   controlsActive = true;
 });
+
+function createTd(index) {
+  const td = document.createElement('td');
+  td.textContent = titles[index];
+  td.style.padding = '0.5rem';
+  td.style.fontSize = `${Math.min(40, canvas.width / 30)}px`;
+  td.style.textAlign = 'left';
+  td.style.cursor = 'pointer';
+  td.style.border = '1px solid white';
+  td.style.borderRadius = '1rem';
+  td.style.backgroundColor = '#3f3f3f';
+  td.addEventListener('click', function () {
+    const textFn = adjustments[(index % 10).toString()];
+    showMessage(index % 10, textFn());
+  });
+  return td;
+}
 
 function draw() {
   const drawOnCanvas = obj => {
@@ -219,6 +207,5 @@ function getRandomXYFromCenter(center) {
   return { x, y };
 }
 
-showMessage('Space Balls');
 createObject(); // Initial object
 draw(); // Start the animation loop
