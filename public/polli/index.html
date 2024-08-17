@@ -98,9 +98,7 @@
             const encodedPrompt = encodeURIComponent(prompt.trim())
             for (let seed = startSeed; seed <= endSeed; seed++) {
                 const img = document.createElement('img');
-                const {width, height} = getWidthAndHeight(dimensions);
-                const dim = width ? `&width=${width}&height=${height}` : ''
-                img.src = `https://pollinations.ai/p/${encodedPrompt}?seed=${seed}${dim}&model=${model}`;
+                img.src = createUrl(encodedPrompt, seed);
                 row.appendChild(createImageLink(img));
             }
             row.appendChild(createReloadButton(() => {
@@ -111,12 +109,10 @@
             setDisplay('continue', 'block');
         }
 
-        function getWidthAndHeight(dimensions) {
-            if (dimensions === 'default') {
-                return { width: null, height: null };
-            }
-            const [w, h] = dimensions.split('x');
-            return { width: w, height: h };
+        function createUrl(encodedPrompt, seed) {
+            const [width, height] = dimensions === 'default' ? [null, null] : dimensions.split('x');
+            const dim = width ? `&width=${width}&height=${height}` : ''
+            return `https://pollinations.ai/p/${encodedPrompt}?seed=${seed}${dim}&model=${model}`;
         }
 
         function setDisplay(id, value) {
