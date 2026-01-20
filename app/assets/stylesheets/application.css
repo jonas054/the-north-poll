@@ -16,25 +16,25 @@
 
 /* Mobile-first design: default sizes for phone screens */
 h1 {
-    font-size: 20mm;
+    font-size: 4.75rem;
 }
 
 h2 {
-    font-size: 16mm;
+    font-size: 3.8rem;
 }
 
 .appname {
-    font-size: 25mm;
+    font-size: 5.9rem;
     vertical-align: top;
 }
 
 .radiotext {
-    font-size: 20mm;
+    font-size: 4.75rem;
     vertical-align: super;
 }
 
 p.scaletext {
-    font-size: 16mm;
+    font-size: 3.8rem;
     vertical-align: super;
     margin-block-start: 0.1em;
     margin-block-end: 0.1em;
@@ -49,7 +49,7 @@ p.scaletext {
 }
 
 .rename-form input {
-    margin: 2mm 2mm;
+    margin: 0.5rem 0.5rem;
 }
 
 .rename-form input[type='text'] {
@@ -59,12 +59,12 @@ p.scaletext {
 input[type='radio'] {
     height: 1.5em;
     width: 1.5em;
-    margin: 7mm 9mm 6mm 20mm;
+    margin: 1.65rem 2.15rem 1.4rem 4.75rem;
 }
 
 
 * {
-    font-size: 14mm;
+    font-size: 3.3rem;
 }
 
 .error {
@@ -82,45 +82,45 @@ input[type='radio'] {
 
 .help {
     color: gray;
-    font-size: 11mm;
+    font-size: 2.6rem;
 }
 
 /* Responsive design: smaller font sizes for tablets and desktops */
 @media (min-width: 768px) {
     h1 {
-        font-size: 8mm;
+        font-size: 1.9rem;
     }
 
     h2 {
-        font-size: 6mm;
+        font-size: 1.4rem;
     }
 
     .appname {
-        font-size: 10mm;
+        font-size: 2.4rem;
     }
 
     .radiotext {
-        font-size: 8mm;
+        font-size: 1.9rem;
     }
 
     p.scaletext {
-        font-size: 6mm;
+        font-size: 1.4rem;
     }
 
     * {
-        font-size: 5.5mm;
+        font-size: 1.3rem;
     }
 
     .help {
-        font-size: 4.5mm;
+        font-size: 1.05rem;
     }
 
     input[type='radio'] {
-        margin: 3mm 4mm 3mm 8mm;
+        margin: 0.7rem 0.95rem 0.7rem 1.9rem;
     }
 
     .rename-form input {
-        margin: 1mm 1mm;
+        margin: 0.25rem 0.25rem;
     }
 }
 
