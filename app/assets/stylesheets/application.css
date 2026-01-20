@@ -16,25 +16,25 @@
 
 /* Mobile-first design: default sizes for phone screens */
 h1 {
-    font-size: 4.75rem;
+    font-size: 2rem;
 }
 
 h2 {
-    font-size: 3.8rem;
+    font-size: 1.6rem;
 }
 
 .appname {
-    font-size: 5.9rem;
+    font-size: 2.5rem;
     vertical-align: top;
 }
 
 .radiotext {
-    font-size: 4.75rem;
+    font-size: 2rem;
     vertical-align: super;
 }
 
 p.scaletext {
-    font-size: 3.8rem;
+    font-size: 1.6rem;
     vertical-align: super;
     margin-block-start: 0.1em;
     margin-block-end: 0.1em;
@@ -59,12 +59,12 @@ p.scaletext {
 input[type='radio'] {
     height: 1.5em;
     width: 1.5em;
-    margin: 1.65rem 2.15rem 1.4rem 4.75rem;
+    margin: 0.7rem 0.9rem 0.6rem 2rem;
 }
 
 
 * {
-    font-size: 3.3rem;
+    font-size: 1.4rem;
 }
 
 .error {
@@ -82,7 +82,7 @@ input[type='radio'] {
 
 .help {
     color: gray;
-    font-size: 2.6rem;
+    font-size: 1.1rem;
 }
 
 /* Responsive design: smaller font sizes for tablets and desktops */
