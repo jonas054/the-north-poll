@@ -14,6 +14,7 @@
  *= require_self
  */
 
+/* Mobile-first design: default sizes for phone screens */
 h1 {
     font-size: 20mm;
 }
@@ -82,6 +83,45 @@ input[type='radio'] {
 .help {
     color: gray;
     font-size: 11mm;
+}
+
+/* Responsive design: smaller font sizes for tablets and desktops */
+@media (min-width: 768px) {
+    h1 {
+        font-size: 8mm;
+    }
+
+    h2 {
+        font-size: 6mm;
+    }
+
+    .appname {
+        font-size: 10mm;
+    }
+
+    .radiotext {
+        font-size: 8mm;
+    }
+
+    p.scaletext {
+        font-size: 6mm;
+    }
+
+    * {
+        font-size: 5.5mm;
+    }
+
+    .help {
+        font-size: 4.5mm;
+    }
+
+    input[type='radio'] {
+        margin: 3mm 4mm 3mm 8mm;
+    }
+
+    .rename-form input {
+        margin: 1mm 1mm;
+    }
 }
 
 .column {
